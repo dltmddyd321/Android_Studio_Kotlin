@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/dfsafsd" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/landing_backgroud"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnViewSavedImages"
+        android:layout_width="match_parent"
+        android:layout_height="45sp"
+        android:layout_marginStart="12sp"
+        android:layout_marginEnd="12sp"
+        android:layout_marginBottom="12sp"
+        android:includeFontPadding="false"
+        android:text="SAVED IMAGES"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        android:backgroundTint="@color/buttonSaved"
+        app:cornerRadius="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnEditNewImg"
+        android:layout_width="match_parent"
+        android:layout_height="45sp"
+        android:layout_marginStart="12sp"
+        android:layout_marginEnd="12sp"
+        android:layout_marginBottom="4sp"
+        android:includeFontPadding="false"
+        android:text="EDIT NEW IMAGE"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        android:backgroundTint="@color/buttonEdit"
+        app:cornerRadius="20sp"
+        app:layout_constraintBottom_toTopOf="@id/btnViewSavedImages"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:padding="10sp"
+        android:layout_marginStart="10sp"
+        android:text="Let's create something new!"
+        app:layout_constraintBottom_toTopOf="@id/btnEditNewImg"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
