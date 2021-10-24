@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/psych/AndroidStudioProjects/PicApp/app/src/main/res/drawable/landing_backgroud.xml" value="0.38229166666666664" />
+        <entry key="..\:/Users/psych/AndroidStudioProjects/PicApp/app/src/main/res/layout/activity_edit_image.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/psych/AndroidStudioProjects/PicApp/app/src/main/res/layout/activity_main.xml" value="0.3515625" />
         <entry key="..\:/Users/psych/AndroidStudioProjects/PicApp/app/src/main/res/layout/item_container_filter.xml" value="0.36614583333333334" />
       </map>

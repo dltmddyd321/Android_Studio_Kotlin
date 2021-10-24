@@ -9,6 +9,8 @@
     <com.makeramen.roundedimageview.RoundedImageView
         android:layout_width="70sp"
         android:layout_height="70sp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
         android:scaleType="centerCrop"
         android:src="@drawable/ic_launcher_background"
         android:id="@+id/imgFilterPreview"
