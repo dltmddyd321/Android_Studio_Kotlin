@@ -1,46 +1,149 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/white"
     android:paddingHorizontal="20dp"
-    android:paddingVertical="10dp"
-    android:background="@color/purple_500"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:paddingVertical="10dp">
 
     <ImageView
-        android:id="@+id/img_rv_photo"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:id="@+id/secondDoctor"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginLeft="228dp"
+        android:layout_marginTop="20dp"
         android:transitionName="image"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintBottom_toBottomOf="@id/firstDoctorName"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/mainText"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
-        android:id="@+id/tv_rv_name"
+        android:id="@+id/secondDoctorName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="이름"
-        android:transitionName="name"
+        android:textColor="@color/black"
+        android:textSize="16sp"
         android:textStyle="bold"
-        android:layout_marginRight="20dp"
-        android:textSize="24sp"
-        android:textColor="@color/white"
-        app:layout_constraintRight_toLeftOf="@id/img_rv_photo"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintEnd_toStartOf="@id/secondDoctorJob"
+        app:layout_constraintTop_toBottomOf="@id/secondDoctor" />
 
     <TextView
-        android:id="@+id/tv_rv_age"
+        android:id="@+id/secondDoctorJob"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="나이"
+        android:layout_marginLeft="188dp"
+        android:text="(직업)"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toRightOf="@id/firstDoctorName"
+        app:layout_constraintTop_toBottomOf="@id/firstDoctor" />
+
+    <TextView
+        android:id="@+id/secondHospitalName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="236dp"
+        android:layout_marginTop="8dp"
+        android:text="병원 이름"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/firstDoctorTag" />
+
+    <TextView
+        android:id="@+id/secondDoctorTag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="248dp"
+        android:layout_marginTop="8dp"
+        android:text="태그"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/firstDoctorJob" />
+
+    <TextView
+        android:id="@+id/mainText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="활동이 많은 전문가"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:src="@drawable/ic_baseline_format_list_bulleted_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/firstDoctor"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="20dp"
+        android:transitionName="image"
+        app:layout_constraintBottom_toBottomOf="@id/firstDoctorName"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/mainText"
+        app:layout_constraintVertical_bias="1.0"
+        tools:layout_editor_absoluteX="48dp" />
+
+    <TextView
+        android:id="@+id/firstDoctorName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="40dp"
+        android:text="이름"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@id/firstDoctor"
+        app:layout_constraintTop_toBottomOf="@id/firstDoctor" />
+
+    <TextView
+        android:id="@+id/firstDoctorJob"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="(직업)"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toRightOf="@id/firstDoctorName"
+        app:layout_constraintTop_toBottomOf="@id/firstDoctor" />
+
+    <TextView
+        android:id="@+id/firstDoctorTag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="57dp"
         android:layout_marginTop="10dp"
-        android:layout_marginRight="20dp"
-        android:textSize="18sp"
-        android:textColor="@color/white"
-        app:layout_constraintRight_toLeftOf="@id/img_rv_photo"
-        app:layout_constraintTop_toBottomOf="@id/tv_rv_name"/>
+        android:text="태그"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/firstDoctorJob" />
+
+    <TextView
+        android:id="@+id/firstHospitalName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="45dp"
+        android:layout_marginTop="10dp"
+        android:text="병원 이름"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/firstDoctorTag" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
