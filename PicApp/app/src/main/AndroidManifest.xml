@@ -10,10 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ImageFilters">
         <activity
-            android:name=".EditImageActivity"
+            android:name=".activities.editimage.EditImageActivity"
             android:exported="true" />
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.main.MainActivity"
             android:exported="true"
             android:theme="@style/FullScreen">
             <intent-filter>
