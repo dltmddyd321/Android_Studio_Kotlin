@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">MyCalendar1</string>
+    <string name="calendar_year_month_format">y년M월</string>
+</resources>
