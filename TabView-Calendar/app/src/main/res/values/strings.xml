@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">workout</string>
+    <!--  CreateRoutine Fragment - list_item_workout  -->
+    <string name="create_set_text">%1$s set</string>
+    <string name="create_prep_text">%1$s prep(s)</string>
+    <string name="create_workout_text">%1$s workout(s)</string>
+    <string name="create_rest_text">%1$s rest(s)</string>
+
+    <string name="calendar_year_month_format">y년M월</string>
+</resources>
