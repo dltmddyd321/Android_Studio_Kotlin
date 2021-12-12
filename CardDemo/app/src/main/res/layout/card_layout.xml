@@ -8,7 +8,9 @@
     app:cardBackgroundColor="#81C784"
     app:cardCornerRadius="12dp"
     app:cardElevation="3dp"
-    app:contentPadding="4dp">
+    app:contentPadding="4dp"
+    android:foreground="?selectableItemBackground"
+    android:clickable="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/relativeLayout"
