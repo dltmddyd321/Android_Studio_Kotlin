@@ -3,7 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/psych/KotlinBasic/app/src/main/res/layout/activity_main.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/psych/CardDemo/app/src/main/res/layout/activity_main.xml" value="0.34791666666666665" />
+        <entry key="..\:/Users/psych/CardDemo/app/src/main/res/layout/card_layout.xml" value="0.34791666666666665" />
+        <entry key="..\:/Users/psych/CardDemo/app/src/main/res/layout/content_main.xml" value="0.1691995947315096" />
       </map>
     </option>
   </component>
