@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.displayhash.DisplayHashManager
+import android.widget.Toast
 
 class MainActivity : AppCompatActivity() {
 
@@ -26,6 +27,12 @@ class MainActivity : AppCompatActivity() {
         val height = size.y
 
         Log.d(tag, "$width / $height")
+
+        if(width == 884) {
+            Toast.makeText(this,"작은 화면!",Toast.LENGTH_SHORT).show()
+        } else if(width == 1768) {
+            Toast.makeText(this,"폴드 화면!",Toast.LENGTH_SHORT).show()
+        }
         //width fold : 884 / unfold : 1768
     }
 
