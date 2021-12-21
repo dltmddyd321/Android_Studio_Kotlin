@@ -24,11 +24,13 @@
             tools:ignore="UseAppTint" />
 
         <RadioGroup
+            android:id="@+id/search_term_radio_group"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <com.google.android.material.radiobutton.MaterialRadioButton
+                android:id="@+id/photoSearchBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="20dp"
@@ -36,6 +38,7 @@
                 android:text="사진 검색" />
 
             <com.google.android.material.radiobutton.MaterialRadioButton
+                android:id="@+id/userSearchBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="사용자 검색" />
@@ -65,6 +68,12 @@
                 android:maxLength="12" />
 
         </com.google.android.material.textfield.TextInputLayout>
+
+        <include
+            layout="@layout/layout_btn_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"/>
 
     </LinearLayout>
 

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/frameSearchBtn">
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnSearch"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:textColor="#fff"
+        android:text="검색"
+        android:textStyle="bold"
+        android:clickable="true"/>
+    
+    <ProgressBar
+        android:id="@+id/btnProgress"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_gravity="center"
+        android:indeterminateTint="#fff"
+        android:visibility="invisible"/>
+
+</FrameLayout>
