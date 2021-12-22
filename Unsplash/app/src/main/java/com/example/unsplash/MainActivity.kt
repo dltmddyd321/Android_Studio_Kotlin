@@ -9,6 +9,7 @@ import android.hardware.display.DisplayManager
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -55,11 +56,30 @@ class MainActivity : AppCompatActivity() {
         searchEditText.onMyTextChanged {
             if(it.toString().count() > 0) {
                 frameSearchBtn.visibility = View.VISIBLE
+                searchTextLayout.helperText = " "
                 //스크롤바 초기 상태 지정
                 mainScrollView.scrollTo(0, 200)
             } else {
                 frameSearchBtn.visibility = View.INVISIBLE
+                searchTextLayout.helperText = "검색어를 입력해주세요."
+            }
+            if(it.toString().count() >= 12) {
+                Toast.makeText(this, "검색어는 12자 까지만 입력 가능!", Toast.LENGTH_SHORT).show()
             }
         }
+
+        btnSearch.setOnClickListener {
+            this.handleSearchBtnUi()
+        }
+    }
+
+    private fun handleSearchBtnUi() {
+        btnProgress.visibility = View.VISIBLE
+        btnSearch.text = ""
+
+        Handler().postDelayed({
+            btnProgress.visibility = View.INVISIBLE
+            btnSearch.text = "검색"
+        }, 1500)
     }
 }
