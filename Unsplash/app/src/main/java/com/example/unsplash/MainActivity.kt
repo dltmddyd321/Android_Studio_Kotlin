@@ -16,8 +16,10 @@ import android.util.Log
 import android.view.View
 import android.view.displayhash.DisplayHashManager
 import android.widget.Toast
+import com.example.unsplash.retrofit.RetrofitManager
 import com.example.unsplash.utils.Constants
 import com.example.unsplash.utils.Constants.TAG
+import com.example.unsplash.utils.RESPONSE_STATE
 import com.example.unsplash.utils.SEARCH_TYPE
 import com.example.unsplash.utils.onMyTextChanged
 import kotlinx.android.synthetic.main.activity_main.*
@@ -69,6 +71,17 @@ class MainActivity : AppCompatActivity() {
         }
 
         btnSearch.setOnClickListener {
+
+            RetrofitManager.instance.searchPhotos(searchTerm = searchEditText.toString(), completion = { responseState, responseBody ->
+                when(responseState) {
+                    RESPONSE_STATE.OKAY -> {
+
+                    }
+                    RESPONSE_STATE.FAIL -> {
+                        Toast.makeText(this, "API 호출 에러!", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            })
             this.handleSearchBtnUi()
         }
     }
