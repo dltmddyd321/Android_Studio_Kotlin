@@ -25,7 +25,12 @@ class RetrofitManager {
 
         call.enqueue(object : retrofit2.Callback<JsonElement>{
             override fun onResponse(call: Call<JsonElement>, response: Response<JsonElement>) {
-                completion(RESPONSE_STATE.OKAY, response.body().toString())
+
+                when(response.code()) {
+                    200 -> {
+                        completion(RESPONSE_STATE.OKAY, response.body().toString())
+                    }
+                }
             }
 
             override fun onFailure(call: Call<JsonElement>, t: Throwable) {
@@ -33,7 +38,6 @@ class RetrofitManager {
                 //에러에 대한 확인 전송
                 completion(RESPONSE_STATE.FAIL, t.toString())
             }
-
         })
     }
 }

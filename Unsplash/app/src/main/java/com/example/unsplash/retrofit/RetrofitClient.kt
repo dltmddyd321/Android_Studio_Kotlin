@@ -1,11 +1,15 @@
 package com.example.unsplash.retrofit
 
+import android.os.Looper
 import android.util.Log
+import android.widget.Toast
+import com.example.unsplash.App
 import com.example.unsplash.utils.API
 import com.example.unsplash.utils.Constants
 import com.example.unsplash.utils.isJsonArray
 import com.example.unsplash.utils.isJsonObject
 import com.google.gson.JsonObject
+import okhttp3.Handshake
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
@@ -14,6 +18,7 @@ import org.json.JSONObject
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
+import java.util.logging.Handler
 
 object RetrofitClient {
 
@@ -65,7 +70,19 @@ object RetrofitClient {
                     .method(originalRequest.method, originalRequest.body)
                     .build()
 
-                return chain.proceed(finalRequest)
+                //return chain.proceed(finalRequest)
+
+                val response = chain.proceed(finalRequest)
+
+                if(response.code != 200) {
+
+                    //UI Thread Go
+                    android.os.Handler(Looper.getMainLooper()).post {
+                        Toast.makeText(App.instance, "${response.code} Error!", Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+                return response
             }
         })
 
