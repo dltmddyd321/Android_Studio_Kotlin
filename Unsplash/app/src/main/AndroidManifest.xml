@@ -22,6 +22,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".PhotoCollectionActivity"/>
         <meta-data
             android:name="android.allow_multiple_resumed_activities" android:value="true" />
     </application>

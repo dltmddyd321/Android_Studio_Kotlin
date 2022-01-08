@@ -3,6 +3,7 @@ package com.example.unsplash
 import android.annotation.SuppressLint
 import android.content.ComponentCallbacks
 import android.content.Context
+import android.content.Intent
 import android.content.res.Configuration
 import android.graphics.Point
 import android.hardware.display.DisplayManager
@@ -72,10 +73,22 @@ class MainActivity : AppCompatActivity() {
 
         btnSearch.setOnClickListener {
 
-            RetrofitManager.instance.searchPhotos(searchTerm = searchEditText.toString(), completion = { responseState, responseBody ->
+            val userSearchInput = searchEditText.text.toString()
+
+            RetrofitManager.instance.searchPhotos(searchTerm = searchEditText.text.toString(), completion = { responseState, responseDataArrayList ->
                 when(responseState) {
                     RESPONSE_STATE.OKAY -> {
+                        val intent = Intent(this, PhotoCollectionActivity::class.java)
 
+                        //직렬화로 데이터 저장
+                        val bundle = Bundle()
+                        bundle.putSerializable("photoArrayList", responseDataArrayList)
+
+                        //파싱한 데이터와 입력한 검색어 값 넘기기
+                        intent.putExtra("arrayBundle", bundle)
+                        intent.putExtra("searchTerm", userSearchInput)
+
+                        startActivity(intent)
                     }
                     RESPONSE_STATE.FAIL -> {
                         Toast.makeText(this, "API 호출 에러!", Toast.LENGTH_SHORT).show()

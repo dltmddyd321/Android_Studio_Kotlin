@@ -2,6 +2,7 @@ package com.example.unsplash
 
 import android.app.Application
 
+//Singleton Instance
 class App : Application() {
     companion object {
         lateinit var instance: App
