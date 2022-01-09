@@ -3,9 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/psych/Unsplash/app/src/main/res/drawable/round_bg_pink.xml" value="0.35846153846153844" />
         <entry key="..\:/Users/psych/Unsplash/app/src/main/res/layout/activity_main.xml" value="0.34791666666666665" />
         <entry key="..\:/Users/psych/Unsplash/app/src/main/res/layout/activity_photo_collection.xml" value="0.34791666666666665" />
         <entry key="..\:/Users/psych/Unsplash/app/src/main/res/layout/layout_btn_search.xml" value="0.33605072463768115" />
+        <entry key="..\:/Users/psych/Unsplash/app/src/main/res/layout/layout_photo_item.xml" value="0.34791666666666665" />
+        <entry key="..\:/Users/psych/Unsplash/app/src/main/res/menu/top_app_bar.xml" value="0.34791666666666665" />
       </map>
     </option>
   </component>

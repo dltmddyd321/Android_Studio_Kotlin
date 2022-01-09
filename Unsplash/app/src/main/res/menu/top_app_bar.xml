@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/search"
+        android:contentDescription="사진 검색하기"
+        android:icon="@drawable/ic_baseline_search_24"
+        android:title="검색"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/more"
+        android:contentDescription="더보기 메뉴"
+        android:icon="@drawable/ic_baseline_more_vert_24"
+        android:title="더보기"
+        app:showAsAction="ifRoom" />
+
+</menu>
