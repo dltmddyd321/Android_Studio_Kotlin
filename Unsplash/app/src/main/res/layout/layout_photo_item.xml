@@ -12,6 +12,7 @@
         android:layout_height="match_parent">
 
         <ImageView
+            android:id="@+id/photoImg"
             android:layout_width="match_parent"
             android:layout_height="180dp"
             android:scaleType="centerCrop"
@@ -39,6 +40,7 @@
                 android:src="@drawable/ic_baseline_favorite_24" />
 
             <TextView
+                android:id="@+id/likeCntText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="999"
@@ -49,26 +51,32 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/round_bg_pink"
+            android:layout_margin="5dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingHorizontal="10dp">
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="3dp"
+                android:background="#F4F4F4"
+                android:padding="5dp"
                 android:src="@drawable/ic_baseline_favorite_24" />
 
-            <TextView
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="999"
-                android:textColor="#fff" />
+                android:layout_marginEnd="3dp"
+                android:background="#F4F4F4"
+                android:padding="5dp"
+                android:src="@drawable/ic_baseline_favorite_24" />
 
         </LinearLayout>
 
         <TextView
+            android:id="@+id/createdText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
