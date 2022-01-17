@@ -22,6 +22,8 @@ class PhotoCollectionActivity: AppCompatActivity() {
 
         photoList = bundle?.getSerializable("photoArrayList") as ArrayList<Photo>
 
+        top_app_bar.title = searchTerm
+
         this.photoGridRecyclerviewAdapter = PhotoGridRecyclerviewAdapter()
         this.photoGridRecyclerviewAdapter.submitList(photoList)
         photoRecyclerview.layoutManager = GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false)
