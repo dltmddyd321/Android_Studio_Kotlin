@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">SendbirdChat</string>
+    <string name="sendbird_key">4852DA91-9FF8-4CD7-9501-570BF2581937</string>
+    <string name="currentUser">TestUser1</string>
+    <string name="opponentUser">TestUser2</string>
+</resources>

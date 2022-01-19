@@ -18,11 +18,8 @@ import android.view.View
 import android.view.displayhash.DisplayHashManager
 import android.widget.Toast
 import com.example.unsplash.retrofit.RetrofitManager
-import com.example.unsplash.utils.Constants
+import com.example.unsplash.utils.*
 import com.example.unsplash.utils.Constants.TAG
-import com.example.unsplash.utils.RESPONSE_STATE
-import com.example.unsplash.utils.SEARCH_TYPE
-import com.example.unsplash.utils.onMyTextChanged
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.layout_btn_search.*
 import kotlinx.coroutines.MainScope
@@ -73,11 +70,13 @@ class MainActivity : AppCompatActivity() {
 
         btnSearch.setOnClickListener {
 
+            this.handleSearchBtnUi()
+
             val userSearchInput = searchEditText.text.toString()
 
             RetrofitManager.instance.searchPhotos(searchTerm = searchEditText.text.toString(), completion = { responseState, responseDataArrayList ->
                 when(responseState) {
-                    RESPONSE_STATE.OKAY -> {
+                    RESPONSE_STATUS.OKAY -> {
                         val intent = Intent(this, PhotoCollectionActivity::class.java)
 
                         //직렬화로 데이터 저장
@@ -90,22 +89,23 @@ class MainActivity : AppCompatActivity() {
 
                         startActivity(intent)
                     }
-                    RESPONSE_STATE.FAIL -> {
+                    RESPONSE_STATUS.FAIL -> {
                         Toast.makeText(this, "API 호출 에러!", Toast.LENGTH_SHORT).show()
                     }
+
+                    RESPONSE_STATUS.NO_CONTENT -> {
+                        Toast.makeText(this, "검색 결과 없음", Toast.LENGTH_SHORT).show()
+                    }
                 }
+                btnProgress.visibility = View.INVISIBLE
+                btnSearch.text = "검색"
+                searchEditText.setText("")
             })
-            this.handleSearchBtnUi()
         }
     }
 
     private fun handleSearchBtnUi() {
         btnProgress.visibility = View.VISIBLE
         btnSearch.text = ""
-
-        Handler().postDelayed({
-            btnProgress.visibility = View.INVISIBLE
-            btnSearch.text = "검색"
-        }, 1500)
     }
 }
