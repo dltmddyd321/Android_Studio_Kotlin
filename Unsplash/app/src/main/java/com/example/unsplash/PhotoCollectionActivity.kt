@@ -78,6 +78,16 @@ class PhotoCollectionActivity: AppCompatActivity(), SearchView.OnQueryTextListen
 
     //SearchView 검색어 입력 이벤트
     override fun onQueryTextSubmit(query: String?): Boolean {
+
+        if(!query.isNullOrEmpty()) {
+            this.top_app_bar.title = query
+
+            //TODO: API 호출
+        }
+//        this.mySearchView.setQuery("", false)
+//        this.mySearchView.clearFocus()
+        this.top_app_bar.collapseActionView()
+
         return true
     }
 
