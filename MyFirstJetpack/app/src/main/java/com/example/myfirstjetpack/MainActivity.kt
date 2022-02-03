@@ -15,6 +15,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -59,6 +61,44 @@ fun Greeting(name: String) {
 //    Text(text = "Hello $name!",
 //        modifier = Modifier.padding(24.dp),
 //        color = Color.White)
+}
+
+@Composable
+fun BasicGreeting(name : String) {
+    Text(text = "Hello, $name!")
+}
+
+@Composable
+fun ScaffoldEx() {
+    Scaffold(topBar = {
+        TopAppBar(
+            title = {
+                Text(text = "Title")
+        },
+        actions = {
+            IconButton(onClick = { /*TODO*/ }) {
+                Icon(Icons.Filled.Favorite, contentDescription = null)
+            }
+        })
+    }) { innerPadding ->
+        BodyContent(Modifier.padding(innerPadding).padding(8.dp))
+    }
+}
+
+@Composable
+fun BodyContent(modifier: Modifier = Modifier) {
+    Column(modifier = modifier.padding(8.dp)) {
+        Text(text = "Hi there!")
+        Text(text = "Thanks for going through the Layouts codelab")
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun ScaffoldExPreview() {
+    MyFirstJetpackTheme {
+        ScaffoldEx()
+    }
 }
 
 @Composable
