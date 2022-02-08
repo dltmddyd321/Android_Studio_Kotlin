@@ -9,7 +9,9 @@ import android.os.PersistableBundle
 import android.text.InputFilter
 import android.util.Log
 import android.view.Menu
+import android.view.View
 import android.widget.AutoCompleteTextView
+import android.widget.CompoundButton
 import android.widget.EditText
 import androidx.appcompat.widget.SearchView
 import android.widget.Toast
@@ -19,7 +21,7 @@ import com.example.unsplash.model.Photo
 import com.example.unsplash.recyclerview.PhotoGridRecyclerviewAdapter
 import kotlinx.android.synthetic.main.activity_photo_collection.*
 
-class PhotoCollectionActivity: AppCompatActivity(), SearchView.OnQueryTextListener{
+class PhotoCollectionActivity: AppCompatActivity(), SearchView.OnQueryTextListener, CompoundButton.OnCheckedChangeListener, View.OnClickListener{
 
     private var photoList = ArrayList<Photo>()
     private lateinit var photoGridRecyclerviewAdapter: PhotoGridRecyclerviewAdapter
@@ -34,6 +36,9 @@ class PhotoCollectionActivity: AppCompatActivity(), SearchView.OnQueryTextListen
         val searchTerm = intent.getStringExtra("searchTerm")
 
         photoList = bundle?.getSerializable("photoArrayList") as ArrayList<Photo>
+
+        searchHistoryModeSwitch.setOnCheckedChangeListener(this)
+        clearSearchHistoryBtn.setOnClickListener(this)
 
         top_app_bar.title = searchTerm
 
@@ -58,10 +63,10 @@ class PhotoCollectionActivity: AppCompatActivity(), SearchView.OnQueryTextListen
             this.setOnQueryTextFocusChangeListener { _, hasExpanded ->
                 when (hasExpanded) {
                     true -> {
-
+                        linearSearchHistoryView.visibility = View.VISIBLE
                     }
                     false -> {
-
+                        linearSearchHistoryView.visibility = View.INVISIBLE
                     }
                 }
             }
@@ -100,5 +105,25 @@ class PhotoCollectionActivity: AppCompatActivity(), SearchView.OnQueryTextListen
         }
 
         return true
+    }
+
+    override fun onCheckedChanged(switch: CompoundButton?, isChecked: Boolean) {
+        when(switch) {
+            searchHistoryModeSwitch -> {
+                if(isChecked) {
+                    Log.d("TAG", "검색어 저장 기능 ON")
+                } else {
+                    Log.d("TAG", "검색어 저장 기능 OFF")
+                }
+            }
+        }
+    }
+
+    override fun onClick(view: View?) {
+        when(view) {
+            clearSearchHistoryBtn -> {
+                Log.d("TAG", "검색 기록 삭제!")
+            }
+        }
     }
 }
