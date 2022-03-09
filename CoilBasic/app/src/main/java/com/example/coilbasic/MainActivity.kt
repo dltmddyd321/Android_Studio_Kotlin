@@ -2,6 +2,8 @@ package com.example.coilbasic
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.ViewTreeObserver
+import android.widget.Toast
 import coil.api.load
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -27,5 +29,13 @@ class MainActivity : AppCompatActivity() {
 //            - RoundedCornersTransformation
 //            사이즈에 맞도록 이미지를 자르고 이미지 모서리를 둥글게 라운드를 적용합니다.
         }
+
+        coilView.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+            override fun onGlobalLayout() {
+                Toast.makeText(this@MainActivity, "${coilView.height}", Toast.LENGTH_SHORT).show()
+
+                coilView.viewTreeObserver.removeOnGlobalLayoutListener(this)
+            }
+        })
     }
 }
