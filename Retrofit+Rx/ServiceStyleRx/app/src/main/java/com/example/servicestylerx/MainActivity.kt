@@ -3,23 +3,27 @@ package com.example.servicestylerx
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import com.example.servicestylerx.databinding.ActivityMainBinding
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
+import timber.log.Timber
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivityMainBinding
+    var disposable : Disposable ?= null
     private val rxApiTask by lazy {
         RxApiTask.getApi()
     }
 
-    var disposable : Disposable ?= null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
+        Timber.plant(Timber.DebugTree())
         beginSearch("cat")
     }
 
@@ -29,12 +33,12 @@ class MainActivity : AppCompatActivity() {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 { result ->
-                    Log.d("Result Hits", result.toString())
-                    textView.text = result.query.searchinfo.totalhits.toString()
-                    textView2.text = result.query.searchinfo.suggestion
+                    Timber.d("Result -> $result")
+                    binding.textView.text = result.query.searchinfo.totalhits.toString()
+                    binding.textView2.text = result.query.searchinfo.suggestion
                 },
                 { error ->
-                    Log.d("Result Error", error.message.toString())
+                    Timber.d("Error -> $error")
                 }
             )
     }
