@@ -5,6 +5,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
+enum class ActionType {
+    PLUS, MINUS
+}
+
 //데이터의 변경
 //뷰모델은 데이터의 변경사항을 알려주는 라이브 데이터를 가지고 있다.
 class NumberViewModel : ViewModel() {
@@ -22,6 +26,16 @@ class NumberViewModel : ViewModel() {
     init {
         Log.d(TAG, "생성자 호출")
         _currentValue.value = 0
+    }
+
+    //뷰모델이 가지고 있는 값을 변경하는 메서드
+    fun updateValue(actionType: ActionType, input: Int) {
+        when(actionType) {
+            ActionType.PLUS ->
+                _currentValue.value = _currentValue.value?.plus(input)
+            ActionType.MINUS ->
+                _currentValue.value = _currentValue.value?.minus(input)
+        }
     }
 
 
