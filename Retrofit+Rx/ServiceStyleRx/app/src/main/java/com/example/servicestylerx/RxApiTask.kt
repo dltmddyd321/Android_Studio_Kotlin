@@ -23,14 +23,14 @@ open class RxApiTask {
             .writeTimeout(15, SECONDS)
             .build()
 
-        fun getApi() : WikiApi {
+        fun getApi() : WikiMapApi {
             val retrofit = Retrofit.Builder()
                 .baseUrl("https://en.wikipedia.org/w/")
                 .client(client)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build()
-            return retrofit.create(WikiApi::class.java)
+            return retrofit.create(WikiMapApi::class.java)
         }
     }
 }
@@ -44,6 +44,15 @@ interface WikiApi{
         @retrofit2.http.Query("list") list : String,
         @retrofit2.http.Query("srsearch") srsearch : String) : Single<Result>
     //네트워크 통신에서 한번의 결과를 받아오므로 Single<> 사용
+}
+
+interface WikiMapApi {
+    @GET("api.php")
+    fun hitCountCheck(
+        @retrofit2.http.Query("action") action : String,
+        @retrofit2.http.Query("format") format : String,
+        @retrofit2.http.QueryMap options : Map<String, String>
+    ) : Single<Result>
 }
 
 //변수명은 실제 가져올 JSON 파라미터의 이름과 일치해야 한다.
