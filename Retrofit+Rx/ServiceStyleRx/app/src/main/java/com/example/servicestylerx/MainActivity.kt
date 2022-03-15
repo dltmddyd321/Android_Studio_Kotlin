@@ -1,5 +1,6 @@
 package com.example.servicestylerx
 
+import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -25,6 +26,22 @@ class MainActivity : AppCompatActivity() {
 
         Timber.plant(Timber.DebugTree())
         beginSearch("cat")
+        checkPeriod()
+        MaintenanceApiTask.checkMaintenance()
+    }
+
+    @SuppressLint("CheckResult")
+    private fun checkPeriod() {
+        PeriodApiTask.getApi().getPeriod()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                { result ->
+                    binding.textView3.text = result.limit_date
+                }, { error ->
+                    Timber.d("Error -> $error")
+                }
+            )
     }
 
     private fun beginSearch(srsearch : String) {

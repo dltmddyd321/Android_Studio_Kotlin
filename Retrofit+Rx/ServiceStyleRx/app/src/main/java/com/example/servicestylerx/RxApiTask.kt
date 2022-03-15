@@ -43,7 +43,7 @@ interface WikiApi{
         @retrofit2.http.Query("format") format : String,
         @retrofit2.http.Query("list") list : String,
         @retrofit2.http.Query("srsearch") srsearch : String) : Single<Result>
-    //네트워크 통신에서 한번의 결과를 받아오므로 Single<> 사용
+        //네트워크 통신에서 성공시 JSON 데이터 하나를 받아오므로 Single<> 사용
 }
 
 interface WikiMapApi {
