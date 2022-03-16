@@ -37,7 +37,9 @@ class MainActivity : AppCompatActivity() {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 { result ->
-                    binding.textView3.text = result.limit_date
+                    if(result.isSuccessful) {
+                        binding.textView3.text = result.body()?.limit_date
+                    }
                 }, { error ->
                     Timber.d("Error -> $error")
                 }

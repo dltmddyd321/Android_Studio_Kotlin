@@ -3,6 +3,7 @@ package com.example.servicestylerx
 import com.google.gson.GsonBuilder
 import io.reactivex.Single
 import okhttp3.OkHttpClient
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -37,7 +38,7 @@ open class PeriodApiTask {
 
 interface PeriodApi {
     @GET("maintenance/limitedPeriodOfServiceProvision.json")
-    fun getPeriod() : Single<Date>
+    fun getPeriod() : Single<Response<Date>>
 }
 
 data class Date(val limit_date : String)
