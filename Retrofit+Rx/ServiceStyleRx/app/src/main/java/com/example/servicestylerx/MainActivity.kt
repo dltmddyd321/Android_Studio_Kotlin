@@ -1,5 +1,6 @@
 package com.example.servicestylerx
 
+import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -25,10 +26,32 @@ class MainActivity : AppCompatActivity() {
 
         Timber.plant(Timber.DebugTree())
         beginSearch("cat")
+        checkPeriod()
+        MaintenanceApiTask.checkMaintenance()
+    }
+
+    @SuppressLint("CheckResult")
+    private fun checkPeriod() {
+        PeriodApiTask.getApi().getPeriod()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                { result ->
+                    if(result.isSuccessful) {
+                        binding.textView3.text = result.body()?.limit_date
+                    }
+                }, { error ->
+                    Timber.d("Error -> $error")
+                }
+            )
     }
 
     private fun beginSearch(srsearch : String) {
-        disposable = rxApiTask.hitCountCheck("query", "json", "search", srsearch)
+        val options : HashMap<String, String> = HashMap()
+        options["list"] = "search"
+        options["srsearch"] = srsearch
+
+        disposable = rxApiTask.hitCountCheck("query", "json", options)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
@@ -36,11 +59,23 @@ class MainActivity : AppCompatActivity() {
                     Timber.d("Result -> $result")
                     binding.textView.text = result.query.searchinfo.totalhits.toString()
                     binding.textView2.text = result.query.searchinfo.suggestion
-                },
-                { error ->
+                }, { error ->
                     Timber.d("Error -> $error")
                 }
             )
+//        disposable = rxApiTask.hitCountCheck("query", "json", "search", srsearch)
+//            .subscribeOn(Schedulers.io())
+//            .observeOn(AndroidSchedulers.mainThread())
+//            .subscribe(
+//                { result ->
+//                    Timber.d("Result -> $result")
+//                    binding.textView.text = result.query.searchinfo.totalhits.toString()
+//                    binding.textView2.text = result.query.searchinfo.suggestion
+//                },
+//                { error ->
+//                    Timber.d("Error -> $error")
+//                }
+//            )
     }
 
     override fun onDestroy() {
