@@ -11,13 +11,21 @@ import android.text.Spanned
 import android.text.SpannedString
 import android.text.method.LinkMovementMethod
 import android.text.style.*
+import android.util.Log
 import android.view.View
+import android.view.ViewTreeObserver
+import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.text.set
 
 class MainActivity : AppCompatActivity() {
 
+    companion object {
+        const val TAG = "[VIEW DEBUG]"
+    }
+
+    lateinit var btn : Button
     lateinit var txt_example : TextView
     lateinit var txt_example2 : TextView
     lateinit var mContext : Context
@@ -29,9 +37,13 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         mContext = applicationContext
+        btn = findViewById(R.id.btn)
         txt_example = findViewById(R.id.txt_example)
         txt_example2 = findViewById(R.id.txt_example2)
         img = resources.getDrawable(R.drawable.ic_launcher_foreground, null)
+
+        //생성 전
+        Log.d(TAG, "Button Width1 = ${btn.width}")
 
         val span : Spannable = txt_example.text as Spannable
         span.setSpan(ForegroundColorSpan(Color.RED), 4, 7, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
@@ -48,5 +60,16 @@ class MainActivity : AppCompatActivity() {
         img.setBounds(0, 0, img.intrinsicWidth, img.intrinsicHeight)
         drawableSpan.setSpan(ImageSpan(img),4, 7, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
 
+        btn.viewTreeObserver.addOnGlobalLayoutListener(ButtonGlobalLayoutListener(btn))
+
+    }
+
+    inner class ButtonGlobalLayoutListener(private val btn : Button) : ViewTreeObserver.OnGlobalLayoutListener {
+        override fun onGlobalLayout() {
+            //생성 후
+            Log.d(TAG, "Button Width2 = ${btn.width}")
+
+            btn.viewTreeObserver.removeOnGlobalLayoutListener(this)
+        }
     }
 }
