@@ -3,13 +3,17 @@ package com.example.servicestylerx
 import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import com.example.servicestylerx.databinding.ActivityMainBinding
+import io.reactivex.Observable
+import io.reactivex.Scheduler
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
 import timber.log.Timber
+import java.util.*
+import java.util.concurrent.TimeUnit
+import kotlin.collections.HashMap
 
 class MainActivity : AppCompatActivity() {
 
@@ -19,10 +23,25 @@ class MainActivity : AppCompatActivity() {
         RxApiTask.getApi()
     }
 
+    @SuppressLint("CheckResult")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        cntBtn.text = "0"
+
+        cntBtn.setOnClickListener {
+            cntBtn.isClickable = false
+
+            Observable
+                .interval(0, 1, TimeUnit.SECONDS)
+                .subscribe {
+                    runOnUiThread {
+                        textView.text = it.toString()
+                    }
+                }
+        }
 
         Timber.plant(Timber.DebugTree())
         beginSearch("cat")

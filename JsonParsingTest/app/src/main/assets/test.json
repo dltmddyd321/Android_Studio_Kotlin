@@ -1,0 +1,20 @@
+{
+  "view": {
+    "contentType": "string"
+  },
+  "model": {
+    "additionalProp1": null,
+    "additionalProp2": {},
+    "additionalProp3": {}
+  },
+  "status": "100 CONTINUE",
+  "viewName": "string",
+  "modelMap": {
+    "empty": true,
+    "additionalProp1": null,
+    "additionalProp2": {},
+    "additionalProp3": {}
+  },
+  "reference": true,
+  "empty": true
+}
