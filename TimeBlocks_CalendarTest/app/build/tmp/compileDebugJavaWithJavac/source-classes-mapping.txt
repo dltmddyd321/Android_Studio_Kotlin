@@ -1,0 +1,2 @@
+com/example/timeblocks_calendartest/BuildConfig.java
+ com.example.timeblocks_calendartest.BuildConfig
