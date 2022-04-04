@@ -15,6 +15,7 @@ abstract class ContactDatabase : RoomDatabase() {
 
         fun getInstance(context: Context) : ContactDatabase? {
             if(INSTANCE == null) {
+                //여러 스레드가 접근하지 못하도록 synchronized
                 synchronized(ContactDatabase::class) {
                     INSTANCE = Room.databaseBuilder(context.applicationContext,
                     ContactDatabase::class.java, "contact")
