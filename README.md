@@ -1,2 +1,2 @@
-# 코틀린 예제 모음
-### 코틀린을 기반으로 한 각종 안드로이드 스튜디오 예제를 정리한 공간
+# Examples of Kotlin
+### A collection of basic example sources using Android Studio with JAVA
