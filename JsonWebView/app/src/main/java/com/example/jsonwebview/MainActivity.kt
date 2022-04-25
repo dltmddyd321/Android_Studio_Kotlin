@@ -1,18 +1,25 @@
 package com.example.jsonwebview
 
 import android.annotation.SuppressLint
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import androidx.appcompat.app.AppCompatActivity
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import org.jsoup.Jsoup
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
 
 class MainActivity : AppCompatActivity() {
 
+    var executorService: ExecutorService = Executors.newSingleThreadExecutor()
+    val USER_AGENT = "Mozilla/5.0 AppleWebKit/535.19 Chrome/56.0.0 Mobile Safari/535.19"
+    val URL = "https://img.gettimeblocks.com/maintenance/limitedPeriodOfServiceProvision.json"
     private lateinit var webView : WebView
-    private val USER_AGENT = "Mozilla/5.0 AppleWebKit/535.19 Chrome/56.0.0 Mobile Safari/535.19"
-    private val URL = "https://img.gettimeblocks.com/maintenance/maintenance.json"
 
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,6 +34,11 @@ class MainActivity : AppCompatActivity() {
         webView.loadUrl(URL)
         webView.webViewClient = WebViewClient()
         setContentView(webView)
+
+        executorService.execute {
+            val doc = Jsoup.connect(URL).get()
+            Log.d("TestPlay", doc.toString())
+        }
     }
 
     inner class JsonWebViewClient : WebViewClient() {
@@ -43,4 +55,19 @@ class MainActivity : AppCompatActivity() {
             Log.d("WebName", "Result : $url")
         }
     }
+
+//    private fun getJsonObject(url : String) : String {
+//        var inputStream : InputStream? = null
+//        var response = ""
+//        var result = ""
+//        inputStream = URL(url).openStream()
+//        val rd = BufferedReader(InputStreamReader(inputStream, "UTF-8"))
+//        val buffer = StringBuffer()
+//        response = rd.readLine()
+//        while (response != null) {
+//            buffer.append(response)
+//        }
+//        result = buffer.toString()
+//        return result
+//    }
 }
