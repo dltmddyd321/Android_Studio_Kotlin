@@ -3,6 +3,7 @@ package com.example.jsonwebview
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
+import android.webkit.CookieManager
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
@@ -32,6 +33,11 @@ class MainActivity : AppCompatActivity() {
         webSettings.javaScriptEnabled = true
         webSettings.allowFileAccess = true
         webSettings.userAgentString = USER_AGENT
+
+        //웹뷰의 쿠키를 강제로 삭제하기
+        CookieManager.getInstance().removeAllCookies(null)
+        CookieManager.getInstance().flush()
+
         webView.loadUrl(URL)
         webView.webViewClient = JsonWebViewClient()
         setContentView(webView)
