@@ -1,0 +1,7 @@
+package com.example.postservice.presentation.addtrackingitem
+
+import androidx.fragment.app.Fragment
+import org.koin.androidx.scope.ScopeFragment
+
+class AddTrackingItemFragment : Fragment() {
+}

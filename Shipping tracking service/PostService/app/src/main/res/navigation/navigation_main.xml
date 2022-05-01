@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_main"
+    app:startDestination="@id/tracking_items_dest">
+
+    <fragment
+        android:id="@+id/tracking_items_dest"
+        android:name="com.example.postservice.presentation.trackingitems.TrackingItemsFragment"
+        android:label="택배 조회"
+        tools:layout="@layout/fragment_tracking_items">
+
+        <action
+            android:id="@+id/to_add_tracking_item"
+            app:destination="@id/add_tracking_item_dest" />
+
+        <action
+            android:id="@+id/to_tracking_history"
+            app:destination="@id/tracking_history_dest" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/add_tracking_item_dest"
+        android:name="com.example.postservice.presentation.addtrackingitem.AddTrackingItemFragment"
+        android:label="운송장 추가"
+        tools:layout="@layout/fragment_add_tracking_item">
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/tracking_history_dest"
+        android:name="com.example.postservice.presentation.trackinghistory.TrackingHistoryFragment"
+        android:label="배송 상세"
+        tools:layout="@layout/fragment_tracking_history">
+
+    </fragment>
+
+</navigation>
