@@ -6,7 +6,6 @@ import com.example.postservice.entity.TrackingInformation
 import com.example.postservice.entity.TrackingItem
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
-import okhttp3.Dispatcher
 
 class TrackingItemRepositoryImpl (
     private val trackerApi : SweetTrackerApi,
