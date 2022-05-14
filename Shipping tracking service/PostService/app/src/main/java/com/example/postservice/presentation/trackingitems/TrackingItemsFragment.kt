@@ -10,24 +10,30 @@ import com.example.postservice.R
 import com.example.postservice.databinding.FragmentTrackingItemsBinding
 import com.example.postservice.entity.TrackingInformation
 import com.example.postservice.entity.TrackingItem
+import com.example.postservice.extension.toGone
+import com.example.postservice.extension.toInvisible
+import com.example.postservice.extension.toVisible
 import org.koin.android.ext.android.inject
 import org.koin.androidx.scope.ScopeFragment
 
 class TrackingItemsFragment : ScopeFragment(), TrackingItemsContract.View {
     override fun showLoadingIndicator() {
-        TODO("Not yet implemented")
+        binding?.progressBar?.toVisible()
     }
 
     override fun hideLoadingIndicator() {
-        TODO("Not yet implemented")
+        binding?.progressBar?.toGone()
+        binding?.refreshLayout?.isRefreshing = false
     }
 
     override fun showNoDataDescription() {
-        TODO("Not yet implemented")
+        binding?.refreshLayout?.toInvisible()
+        binding?.noDataContainer?.toVisible()
     }
 
     override fun showTrackingItemInformation(trackingInformation: List<Pair<TrackingItem, TrackingInformation>>) {
-        TODO("Not yet implemented")
+        binding?.refreshLayout?.toVisible()
+        binding?.noDataContainer?.toGone()
     }
 
     override val presenter: TrackingItemsContract.Presenter by inject()
@@ -56,5 +62,10 @@ class TrackingItemsFragment : ScopeFragment(), TrackingItemsContract.View {
         binding?.addTrackingItemFloatingActionButton?.setOnClickListener { _ ->
             findNavController().navigate(R.id.to_add_tracking_item)
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        presenter.onDestroyView()
     }
 }
