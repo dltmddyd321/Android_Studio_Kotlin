@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.postservice.R
 import com.example.postservice.databinding.FragmentTrackingItemsBinding
 import com.example.postservice.entity.TrackingInformation
@@ -34,6 +36,17 @@ class TrackingItemsFragment : ScopeFragment(), TrackingItemsContract.View {
     override fun showTrackingItemInformation(trackingInformation: List<Pair<TrackingItem, TrackingInformation>>) {
         binding?.refreshLayout?.toVisible()
         binding?.noDataContainer?.toGone()
+        (binding?.recyclerView?.adapter as? TrackingItemsAdapter)?.apply {
+            this.data = trackingInformation
+            notifyDataSetChanged()
+        }
+    }
+
+    private fun initViews() {
+        binding?.recyclerView?.apply {
+            layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+            adapter = TrackingItemsAdapter()
+        }
     }
 
     override val presenter: TrackingItemsContract.Presenter by inject()
@@ -50,6 +63,9 @@ class TrackingItemsFragment : ScopeFragment(), TrackingItemsContract.View {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initViews()
+        bindView()
+        presenter.onViewCreated()
     }
 
     private fun bindView() {
@@ -62,10 +78,18 @@ class TrackingItemsFragment : ScopeFragment(), TrackingItemsContract.View {
         binding?.addTrackingItemFloatingActionButton?.setOnClickListener { _ ->
             findNavController().navigate(R.id.to_add_tracking_item)
         }
+        (binding?.recyclerView?.adapter as? TrackingItemsAdapter)?.onClickListener = { item, information ->
+            findNavController().navigate(TrackingItemsFragmentDirections)
+        }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         presenter.onDestroyView()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter.onDestroy()
     }
 }
