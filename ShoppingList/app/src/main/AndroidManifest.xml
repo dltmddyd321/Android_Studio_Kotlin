@@ -14,7 +14,7 @@
         android:theme="@style/Theme.ShoppingList"
         tools:targetApi="31">
         <activity
-            android:name=".ShoppingActivity"
+            android:name=".ui.ShoppingActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
