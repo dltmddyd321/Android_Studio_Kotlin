@@ -2,8 +2,10 @@ package com.example.mvpbasic
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import com.example.mvpbasic.databinding.ActivityMainBinding
 import org.json.JSONObject
+import javax.inject.Inject
 
 /*
 Model은 데이터의 처리, View는 데이터의 출력, Presenter는 MV의 중재자 -> MVP 패턴
@@ -15,10 +17,17 @@ class MainActivity : AppCompatActivity(), Contractor.View {
     private lateinit var repository: InfoRepository
     private lateinit var binding: ActivityMainBinding
 
+    @Inject
+    lateinit var test: String
+
+    private val TAG = "HILT"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityMainBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+
+        Log.d(TAG, test)
 
         repository = InfoRepository(this)
         presenter = Presenter(this@MainActivity, repository)
