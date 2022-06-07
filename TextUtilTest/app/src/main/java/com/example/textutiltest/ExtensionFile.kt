@@ -10,6 +10,10 @@ class Person(val name: String) {
 fun Person.walk() = "unknown function"
 fun Person.nameToUpperCase() = this.name.uppercase(Locale.getDefault())
 
+fun Int.nineMultiply(nine: Int, input: Int) : Int {
+    return nine * 9 * input
+}
+
 //Extension Property
 var Person.lastMan: String
     get() = this.nameList.last()
@@ -21,6 +25,9 @@ fun main() {
 
     //The member method takes precedence.
     println(person.walk())
+
+    val cnt = 1
+    println(cnt.nineMultiply(9, 1111))
 }
 
 /*
