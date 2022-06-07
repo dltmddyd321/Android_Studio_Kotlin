@@ -4,10 +4,16 @@ import java.util.*
 
 class Person(val name: String) {
     fun walk() = "person is walking"
+    var nameList = mutableListOf<String>()
 }
 
 fun Person.walk() = "unknown function"
 fun Person.nameToUpperCase() = this.name.uppercase(Locale.getDefault())
+
+//Extension Property
+var Person.lastMan: String
+    get() = this.nameList.last()
+    set(value) { this.nameList.add(value) }
 
 fun main() {
     val person = Person("leesy")
