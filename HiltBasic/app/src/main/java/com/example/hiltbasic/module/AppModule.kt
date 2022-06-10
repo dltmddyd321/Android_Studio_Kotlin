@@ -1,4 +1,4 @@
-package com.example.hiltbasic
+package com.example.hiltbasic.module
 
 import dagger.Module
 import dagger.Provides
