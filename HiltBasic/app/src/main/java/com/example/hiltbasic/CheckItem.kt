@@ -1,7 +1,5 @@
 package com.example.hiltbasic
 
-import com.google.gson.annotations.SerializedName
-
 data class InformationResult(
     val responseStatus: String,
     val errorNumber: Int,

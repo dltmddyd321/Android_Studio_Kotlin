@@ -15,6 +15,10 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
+/*
+의존성을 주입할 때 외부 라이브러리는 Hilt가 인스턴스를 생성하지 못하는 경우가 있다.
+해당 인스턴스는 어떻게 생성해야 하는지 개발자가 명시한다.
+ */
 @Module
 @InstallIn(SingletonComponent::class)
 object ApiModule {
