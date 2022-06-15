@@ -4,9 +4,9 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.flow.buffer
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.filter
 
 class MainActivity : AppCompatActivity() {
 
@@ -18,15 +18,19 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val flow = flow<String> {
+        val flow = flow {
             for(i in 1..10) {
-                emit("Hello Flow!")
+                emit(i)
                 delay(1000L)
             }
         }
 
         GlobalScope.launch {
-            flow.buffer().collect {
+            flow.buffer().filter {
+                it % 2 == 0
+            }.map {
+                it * it
+            }.collect {
                 //1000L의 간격으로 Hello Flow! 출력
                 println(it)
                 //기존 1000L 간격에 2000L 간격이 추가되어 출력
