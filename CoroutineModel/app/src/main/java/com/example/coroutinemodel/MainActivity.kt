@@ -3,18 +3,36 @@ package com.example.coroutinemodel
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.buffer
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flow
 
 class MainActivity : AppCompatActivity() {
 
     private val RESULT_OK = "OK!"
 
+    @Suppress("OPT_IN_IS_NOT_ENABLED")
+    @OptIn(DelicateCoroutinesApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        val flow = flow<String> {
+            for(i in 1..10) {
+                emit("Hello Flow!")
+                delay(1000L)
+            }
+        }
+
+        GlobalScope.launch {
+            flow.buffer().collect {
+                //1000L의 간격으로 Hello Flow! 출력
+                println(it)
+                //기존 1000L 간격에 2000L 간격이 추가되어 출력
+                delay(2000L)
+            }
+        }
 
         CoroutineScope(Dispatchers.Main).launch {
             //메인 쓰레드에 대한 Context이며 UI 갱신이나 Toast 등의 View 작업에 사용된다.
