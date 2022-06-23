@@ -1,7 +1,9 @@
 package com.sycompany.moshibasic
 
+import com.squareup.moshi.Json
+
 data class Advice(
-    val slip : Slip
+    @Json(name = "slip") val slip : Slip
 )
 
 data class Slip(
