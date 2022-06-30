@@ -3,8 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-
+    <data>  
+        <variable
+            name="fragment"
+            type="com.example.presentation.view.WomanNameFragment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
