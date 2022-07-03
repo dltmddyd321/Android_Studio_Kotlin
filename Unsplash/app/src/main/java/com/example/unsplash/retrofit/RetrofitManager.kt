@@ -34,7 +34,7 @@ class RetrofitManager {
                         //값이 있다면 JsonObject 형식으로 가져오기
                         response.body()?.let {
 
-                            var parsedPhotoDataArray = ArrayList<Photo>()
+                            val parsedPhotoDataArray = ArrayList<Photo>()
                             val body = it.asJsonObject
                             val results = body.getAsJsonArray("results")
                             val total = body.get("total").asInt

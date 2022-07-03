@@ -54,7 +54,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
         searchEditText.onMyTextChanged {
-            if(it.toString().count() > 0) {
+            if(it.toString().isNotEmpty()) {
                 frameSearchBtn.visibility = View.VISIBLE
                 searchTextLayout.helperText = " "
                 //스크롤바 초기 상태 지정
