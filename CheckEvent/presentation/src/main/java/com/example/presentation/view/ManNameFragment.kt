@@ -5,12 +5,17 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import com.example.presentation.R
 import com.example.presentation.databinding.FragmentManNameBinding
 import com.example.presentation.view.base.BaseFragment
 
 class ManNameFragment : BaseFragment<FragmentManNameBinding>(R.layout.fragment_man_name) {
     override fun init() {
+        binding.fragment = this
     }
 
+    fun nextBtn(view: View) {
+        this.findNavController().navigate(R.id.action_manNameFragment_to_resultFragment)
+    }
 }

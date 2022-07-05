@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="fragment"
+            type="com.example.presentation.view.ManNameFragment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -45,6 +47,7 @@
             android:gravity="center"
             android:padding="15dp"
             android:text="궁합보기"
+            android:onClick="@{fragment::nextBtn}"
             android:textSize="15sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"

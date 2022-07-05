@@ -18,7 +18,11 @@
         android:id="@+id/resultFragment"
         android:name="com.example.presentation.view.ResultFragment"
         android:label="fragment_result"
-        tools:layout="@layout/fragment_result" />
+        tools:layout="@layout/fragment_result" >
+        <action
+            android:id="@+id/action_resultFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
     <fragment
         android:id="@+id/manNameFragment"
         android:name="com.example.presentation.view.ManNameFragment"
