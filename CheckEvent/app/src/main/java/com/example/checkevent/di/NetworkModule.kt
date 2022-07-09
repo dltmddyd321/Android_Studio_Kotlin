@@ -1,5 +1,7 @@
 package com.example.checkevent.di
 
+import com.example.checkevent.di.utils.Utils.BASE_URL
+import com.example.data.remote.api.LoveCalculatorApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -42,12 +44,17 @@ object NetworkModule {
         gsonConverterFactory: GsonConverterFactory
     ): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("BASE_URL")
+            .baseUrl(BASE_URL)
             .client(okHttpClient)
             .addConverterFactory(gsonConverterFactory)
             .build()
     }
 
+    @Provides
+    @Singleton
+    fun provideLoveCalculatorApiService(retrofit: Retrofit) : LoveCalculatorApi {
+        return retrofit.create(LoveCalculatorApi::class.java)
+    }
 
     private fun getLoggingInterceptor(): HttpLoggingInterceptor =
         HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY }
