@@ -28,6 +28,16 @@ fun main() {
 
     val cnt = 1
     println(cnt.nineMultiply(9, 1111))
+
+    val connectType = ConnectType.Login
+    println(connectType.name.toLowerCase(Locale.getDefault()))
+}
+
+enum class ConnectType {
+    Join,
+    Login,
+    Apple,
+    Facebook
 }
 
 /*
