@@ -20,6 +20,12 @@
                 bind:indentText="@{@string/text1}"
                 tools:text="Suppose we are building a Kingdom and we have to build only one path for entry and exit from the Kingdom ie. only one path is there to use. That's the concept of Singleton Class in Kotlin." />
 
+            <EditText
+                android:id="@+id/editText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="텍스트 입력"/>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
+
 </layout>
