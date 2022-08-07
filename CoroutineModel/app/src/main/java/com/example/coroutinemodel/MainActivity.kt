@@ -18,6 +18,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        CoroutineScope(Dispatchers.Main.immediate).launch {
+            println("Immediate First")
+        }
+        println("Immediate Second")
+
         val flow = flow {
             for(i in 1..10) {
                 emit(i)

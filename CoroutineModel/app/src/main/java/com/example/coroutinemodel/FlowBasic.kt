@@ -1,8 +1,7 @@
 package com.example.coroutinemodel
 
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.runBlocking
 
 fun sendNumbers() : Flow<Int> = flow {
     val primesList = listOf(2, 3, 5, 7, 11, 13, 17, 19, 23, 29)
