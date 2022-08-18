@@ -41,5 +41,12 @@ class MainActivity : AppCompatActivity() {
                 Log.d("afterTextChanged", "s: $s")
             }
         })
+
+        Toast.makeText(this, nullTest(), Toast.LENGTH_SHORT).show()
+    }
+
+    private fun nullTest() : String {
+        var msg: String? = null
+        return msg!!
     }
 }
