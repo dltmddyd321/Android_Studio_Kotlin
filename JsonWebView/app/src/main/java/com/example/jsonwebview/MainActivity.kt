@@ -1,6 +1,7 @@
 package com.example.jsonwebview
 
 import android.annotation.SuppressLint
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.text.Html
@@ -61,7 +62,7 @@ class MainActivity : AppCompatActivity() {
         fun getHtml(html : String) {
             Log.d("자바스크립트", html)
             val result = Html.fromHtml(html, HtmlCompat.FROM_HTML_MODE_LEGACY).toString()
-            Toast.makeText(applicationContext, result, Toast.LENGTH_SHORT).show()
+//            Toast.makeText(applicationContext, result, Toast.LENGTH_SHORT).show()
             Log.d("result", result)
             html.let {
                 val body = Jsoup.parse(it).body()
@@ -85,6 +86,7 @@ class MainActivity : AppCompatActivity() {
         override fun onPageFinished(view: WebView?, url: String?) {
             Log.d("WebName", "Result : $url")
             view?.loadUrl("javascript:window.Android.getHtml(document.getElementsByTagName('html')[0].innerHTML);")
+            initPort(webView)
         }
     }
 
@@ -100,6 +102,26 @@ class MainActivity : AppCompatActivity() {
             .build()
         val response = client.newCall(request).execute()
         return JSONObject(response.body()?.string())
+    }
+
+    private fun initPort(webView: WebView) {
+        lateinit var port: WebMessagePort
+        val channels = webView.createWebMessageChannel()
+        port = channels[0]
+        port.setWebMessageCallback(object : WebMessagePort.WebMessageCallback() {
+            override fun onMessage(port: WebMessagePort?, message: WebMessage?) {
+                super.onMessage(port, message)
+                Toast.makeText(this@MainActivity, message?.data, Toast.LENGTH_SHORT).show()
+            }
+        })
+        webView.postWebMessage(
+            WebMessage("", arrayOf(channels[1])),
+            Uri.EMPTY
+        )
+
+        port.postMessage(
+            WebMessage("Kathy")
+        )
     }
 
 //    private fun getJsonObject(url : String) : String {
