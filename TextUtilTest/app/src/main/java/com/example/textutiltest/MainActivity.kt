@@ -16,9 +16,13 @@ import org.w3c.dom.Text
 import java.util.*
 import kotlin.Comparator
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), TestInterface {
 
     private lateinit var binding: ActivityMainBinding
+
+    override fun onTestStart(cnt: Int) {
+        super.onTestStart(cnt)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
