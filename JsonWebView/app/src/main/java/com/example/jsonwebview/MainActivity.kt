@@ -54,6 +54,21 @@ class MainActivity : AppCompatActivity() {
 //                Toast.makeText(this, result.getString("limit_date"), Toast.LENGTH_SHORT).show()
 //            }
 //        }
+
+        // channel[0] and channel[1] represent the two ports.
+        // They are already entangled with each other and have been started.
+        val channel: Array<out WebMessagePort> = webView.createWebMessageChannel()
+
+        // Create handler for channel[0] to receive messages.
+        channel[0].setWebMessageCallback(object : WebMessagePort.WebMessageCallback() {
+
+            override fun onMessage(port: WebMessagePort, message: WebMessage) {
+                Log.d("MSG", "On port $port, received this message: $message")
+            }
+        })
+
+        // Send a message from channel[1] to channel[0].
+        channel[1].postMessage(WebMessage("My secure message"))
     }
 
     inner class MyJavaScriptInterface {
