@@ -1,8 +1,11 @@
 package com.example.grocercyservice
 
 import android.annotation.SuppressLint
+import android.app.Dialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Button
+import android.widget.EditText
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -37,8 +40,38 @@ class MainActivity : AppCompatActivity(), GroceryListAdapter.GroceryItemClickLis
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun showDialog() {
-        //TODO: Dialog Implement
+        val dialog = Dialog(this)
+        dialog.setContentView(R.layout.grocery_add_dialog)
+        val cancelBtn = dialog.findViewById<Button>(R.id.cancelBtn)
+        val addBtn = dialog.findViewById<Button>(R.id.addBtn)
+        val itemEditName = dialog.findViewById<EditText>(R.id.editTextName)
+        val itemEditQauntity = dialog.findViewById<EditText>(R.id.editTextQauntity)
+        val itemEditPrice = dialog.findViewById<EditText>(R.id.editTextPrice)
+
+        cancelBtn.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        addBtn.setOnClickListener {
+            val itemName = itemEditName.text.toString()
+            val itemPrice = itemEditPrice.text.toString()
+            val itemQuantity = itemEditQauntity.text.toString()
+            val quantity = itemQuantity.toInt()
+            val price = itemPrice.toInt()
+
+            if (itemName.isNotEmpty() && itemPrice.isNotEmpty() && itemQuantity.isNotEmpty()) {
+                val items = GroceryItems(itemName, quantity, price)
+                groceryViewModel.insert(items)
+                Toast.makeText(applicationContext, "Item inserted!", Toast.LENGTH_SHORT).show()
+                groceryListAdapter.notifyDataSetChanged()
+                dialog.dismiss()
+            } else {
+                Toast.makeText(applicationContext, "Please enter all the data..", Toast.LENGTH_SHORT).show()
+            }
+        }
+        dialog.show()
     }
 
     @SuppressLint("NotifyDataSetChanged")

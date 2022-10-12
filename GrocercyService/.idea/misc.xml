@@ -3,7 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/psych/GrocercyService/app/src/main/res/drawable/custom_cancel_btn.xml" value="0.219" />
         <entry key="..\:/Users/psych/GrocercyService/app/src/main/res/layout/activity_main.xml" value="0.34791666666666665" />
+        <entry key="..\:/Users/psych/GrocercyService/app/src/main/res/layout/custom_btn_cancel.xml" value="0.2846153846153846" />
+        <entry key="..\:/Users/psych/GrocercyService/app/src/main/res/layout/grocery_add_dialog.xml" value="0.34791666666666665" />
         <entry key="..\:/Users/psych/GrocercyService/app/src/main/res/layout/view_item_grocery.xml" value="0.34791666666666665" />
       </map>
     </option>
