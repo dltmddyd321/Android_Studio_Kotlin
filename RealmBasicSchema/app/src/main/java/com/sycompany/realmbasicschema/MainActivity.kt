@@ -19,8 +19,20 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        fun insertPet(pet: Pet) {
+            realm?.executeTransactionAsync {
+                it.insertOrUpdate(pet)
+            }
+        }
+
         fun getAllUser(): RealmResults<User> {
             return realm.where<User>()
+                .sort("id", Sort.ASCENDING)
+                .findAll()
+        }
+
+        fun getAllPet(): RealmResults<Pet> {
+            return realm.where<Pet>()
                 .sort("id", Sort.ASCENDING)
                 .findAll()
         }
@@ -41,12 +53,18 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        val newUser = User(1, "LEESY", 100)
+        val newUser = User(1, "Korea","LEESY", 100)
+        val newPet = Pet(1, 2009,"Puppy", 10)
 
         insert(newUser)
+        insertPet(newPet)
 
         getAllUser().forEach {
-            Log.d("Realm-Test", it.name.toString())
+            Log.d("Realm-Test : User -> ", it.name.toString())
+        }
+
+        getAllPet().forEach {
+            Log.d("Realm-Test : Pet -> ", it.name.toString())
         }
     }
 }
