@@ -18,6 +18,8 @@ class MainActivity : AppCompatActivity() {
             val doc = Jsoup.connect(searchSite + keyword).get()
             withContext(CoroutineScope(Dispatchers.Main).coroutineContext) {
                 Log.d("TEST", doc.toString())
+
+                Log.d("TEST", doc.location() + doc.title())
             }
         }
     }
