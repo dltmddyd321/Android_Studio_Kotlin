@@ -4,6 +4,7 @@ import android.app.PendingIntent
 import android.app.PendingIntent.FLAG_IMMUTABLE
 import android.content.ComponentName
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -45,6 +46,7 @@ class MainActivity : AppCompatActivity() {
                         }
                     }
                 })
+                val bitmap = BitmapFactory.decodeResource(applicationContext.resources, R.drawable.ic_launcher_background)
                 val customTabsIntentBuilder = CustomTabsIntent.Builder(session)
                 val menuItemTitle = "my menu"
                 val actionIntent = Intent(
@@ -54,6 +56,8 @@ class MainActivity : AppCompatActivity() {
                     applicationContext, 1, actionIntent, PendingIntent.FLAG_IMMUTABLE
                 )
                 customTabsIntentBuilder.addMenuItem(menuItemTitle, menuItemPendingIntent)
+                customTabsIntentBuilder.setShowTitle(true)
+                customTabsIntentBuilder.setCloseButtonIcon(bitmap)
                 val customTabsIntent = customTabsIntentBuilder.build()
                 customTabsIntent.intent.setPackage("com.android.chrome")
                 customTabsIntent.intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
