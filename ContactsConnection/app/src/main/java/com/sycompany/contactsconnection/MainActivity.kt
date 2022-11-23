@@ -26,21 +26,19 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
     @SuppressLint("Range")
     private fun getContacts() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_CONTACTS), 0)
         }
-
-        val resolver = contentResolver
-        val uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI
-        val cursor = resolver.query(uri, null, null, null, null)
-        if (cursor != null && cursor.count > 0) {
+        val cursor = getBirthByContacts()
+        val bDayColumn = cursor?.getColumnIndex(ContactsContract.CommonDataKinds.Event.START_DATE) ?: 0
+        val peopleName = cursor?.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME) ?: 0
+        if (cursor != null) {
             while (cursor.moveToNext()) {
-                val contactName = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME))
-                val contactNumber = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER))
-                Log.i("연락처 가져오기 테스트", "Contact Result: NAME -> $contactName NUM -> $contactNumber")
+                val bDay = cursor.getString(bDayColumn)
+                val pName = cursor.getString(peopleName)
+                Log.i("연락처 가져오기 테스트", "Contact Result: Birth $bDay Who $pName")
             }
         }
     }
@@ -50,7 +48,6 @@ class MainActivity : AppCompatActivity() {
 
         val projection = arrayOf(
             ContactsContract.Contacts.DISPLAY_NAME,
-            ContactsContract.CommonDataKinds.Event.CONTACT_ID,
             ContactsContract.CommonDataKinds.Event.START_DATE
         )
 
@@ -60,7 +57,6 @@ class MainActivity : AppCompatActivity() {
         val selectionArgs = arrayOf(
             ContactsContract.CommonDataKinds.Event.CONTENT_ITEM_TYPE
         )
-        val sortOrder: String? = null
-        return managedQuery(uri, projection, where, selectionArgs, sortOrder)
+        return contentResolver.query(uri, projection, where, selectionArgs, null)
     }
 }
