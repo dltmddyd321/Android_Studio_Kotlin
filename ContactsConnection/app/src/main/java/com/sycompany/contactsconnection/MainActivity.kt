@@ -12,6 +12,7 @@ import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import java.util.Calendar
 
 class MainActivity : AppCompatActivity() {
 
@@ -36,11 +37,22 @@ class MainActivity : AppCompatActivity() {
         val peopleName = cursor?.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME) ?: 0
         if (cursor != null) {
             while (cursor.moveToNext()) {
-                val bDay = cursor.getString(bDayColumn)
+                val bDay = cursor.getString(bDayColumn).checkValidNumbers()
                 val pName = cursor.getString(peopleName)
                 Log.i("연락처 가져오기 테스트", "Contact Result: Birth $bDay Who $pName")
+                val birthCal = Calendar.getInstance()
+                val birthMonth = bDay.substring(bDay.length - 4 until bDay.length - 2)
+                val birthDate = bDay.substring(bDay.length - 2 until bDay.length)
+                birthCal.set(Calendar.MONTH, birthMonth.toInt() - 1)
+                birthCal.set(Calendar.DATE, birthDate.toInt())
+                Log.i("연락처 가져오기 테스트", "날짜 확인 : ${birthCal.time}")
             }
         }
+    }
+
+    private fun String.checkValidNumbers(): String {
+        val regexPickNumber = "[^0-9]".toRegex()
+        return this.replace(regexPickNumber, "")
     }
 
     private fun getBirthByContacts(): Cursor? {
