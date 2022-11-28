@@ -10,11 +10,26 @@
         android:id="@+id/contactBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Get Contacts!"
         android:onClick="btnGetContacts"
+        android:text="Get Contacts!"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.379" />
+
+    <Button
+        android:id="@+id/contactGoBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="btnGetContacts"
+        android:text="GO Contacts!"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.562" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
