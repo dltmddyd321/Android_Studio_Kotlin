@@ -10,14 +10,17 @@ import android.os.Bundle
 import android.provider.ContactsContract
 import android.util.Log
 import android.widget.Button
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.bumptech.glide.Glide
 import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
 
+    private var imgView: ImageView? = null
     private var mBtnLogin: Button? = null
     private var gBtn: Button? = null
 
@@ -30,15 +33,15 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         mBtnLogin = findViewById(R.id.contactBtn)
         gBtn = findViewById(R.id.contactGoBtn)
+        imgView = findViewById(R.id.imgView)
+
         mBtnLogin?.setOnClickListener {
             getContacts()
         }
 
-
-
-        val uri = Uri.withAppendedPath(ContactsContract.CommonDataKinds.Phone.CONTENT_FILTER_URI, Uri.encode("content://com.android.contacts/display_photo/4"))
-
-
+        Glide.with(this)
+            .load("content://com.android.contacts/display_photo/4")
+            .into(imgView!!)
 
         val phoneUri = ContactsContract.Contacts.getLookupUri(54600, "0r6666-271C73DB188FB3.847r12337-271C73DB188FB3")
 
@@ -58,7 +61,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    @SuppressLint("Range")
     private fun getContacts() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_CONTACTS), 0)
@@ -68,6 +70,7 @@ class MainActivity : AppCompatActivity() {
         val peopleName = cursor?.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME) ?: 0
         val contactId = cursor?.getColumnIndex(ContactsContract.PhoneLookup._ID) ?: 0
         val look = cursor?.getColumnIndex(ContactsContract.PhoneLookup.LOOKUP_KEY) ?: 0
+        val photo = cursor?.getColumnIndex(ContactsContract.CommonDataKinds.Photo.PHOTO_URI) ?: 0
         if (cursor != null) {
             while (cursor.moveToNext()) {
                 val bDay = cursor.getString(bDayColumn)
@@ -75,7 +78,7 @@ class MainActivity : AppCompatActivity() {
                 val contacts = cursor.getLong(contactId)
                 val lookup = cursor.getString(look)
                 "--05-22".convertToDateArray()
-                Log.i("연락처 가져오기 테스트", "Contact Result: Birth $bDay Who $pName contact $contacts lookup $lookup")
+                Log.i("연락처 가져오기 테스트", "Contact Result: Birth $bDay Who $pName contact $contacts lookup $lookup \n 사진: $photo")
                 lookupId = lookup
                 contactIdKey = contacts
                 val birthCal = Calendar.getInstance()
@@ -94,6 +97,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun String.convertToDateArray(): List<String> {
+
+
+
         val dateList = mutableListOf<String>()
         val regexDateConverter: Regex
         val matchResult: MatchResult
@@ -115,6 +121,7 @@ class MainActivity : AppCompatActivity() {
         val uri: Uri = ContactsContract.Data.CONTENT_URI
 
         val projection = arrayOf(
+            ContactsContract.CommonDataKinds.Photo.PHOTO_URI,
             ContactsContract.PhoneLookup.LOOKUP_KEY,
             ContactsContract.PhoneLookup._ID,
             ContactsContract.Contacts.DISPLAY_NAME,
