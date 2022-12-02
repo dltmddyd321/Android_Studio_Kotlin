@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/draweeView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </androidx.cardview.widget.CardView>
+
+<!--    <com.facebook.drawee.view.SimpleDraweeView-->
+<!--        android:id="@+id/draweeView"-->
+<!--        android:layout_width="50dp"-->
+<!--        android:layout_height="50dp"-->
+<!--        app:actualImageScaleType="fitXY"-->
+<!--        app:actualImageUri=""-->
+<!--        app:failureImage="@drawable/ic_launcher_background"-->
+<!--        app:failureImageScaleType="centerInside"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:placeholderImage="@drawable/ic_launcher_foreground"-->
+<!--        app:placeholderImageScaleType="fitXY"-->
+<!--        app:roundAsCircle="true"-->
+<!--        app:roundBottomLeft="false"-->
+<!--        app:roundBottomRight="true"-->
+<!--        app:roundTopLeft="true"-->
+<!--        app:roundTopRight="false"-->
+<!--        app:roundedCornerRadius="20dp" />-->
+</androidx.constraintlayout.widget.ConstraintLayout>
