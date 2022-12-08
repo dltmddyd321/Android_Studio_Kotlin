@@ -4,11 +4,14 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.res.Resources
 import android.database.Cursor
+import android.graphics.Rect
 import android.net.Uri
 import android.os.Bundle
 import android.provider.ContactsContract
 import android.util.Log
+import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
@@ -77,8 +80,8 @@ class MainActivity : AppCompatActivity() {
                 val pName = cursor.getString(peopleName)
                 val contacts = cursor.getLong(contactId)
                 val lookup = cursor.getString(look)
-                "--05-22".convertToDateArray()
-                Log.i("연락처 가져오기 테스트", "Contact Result: Birth $bDay Who $pName contact $contacts lookup $lookup \n 사진: $photo")
+                val photoUri = cursor.getString(photo)
+                Log.i("연락처 가져오기 테스트", "Contact Result: birth $bDay name $pName contactId $contacts lookupKey $lookup \n photo: $photoUri")
                 lookupId = lookup
                 contactIdKey = contacts
                 val birthCal = Calendar.getInstance()
@@ -97,9 +100,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun String.convertToDateArray(): List<String> {
-
-
-
         val dateList = mutableListOf<String>()
         val regexDateConverter: Regex
         val matchResult: MatchResult
@@ -135,5 +135,17 @@ class MainActivity : AppCompatActivity() {
             ContactsContract.CommonDataKinds.Event.CONTENT_ITEM_TYPE
         )
         return contentResolver.query(uri, projection, where, selectionArgs, null)
+    }
+
+    fun View.isVisible(): Boolean {
+        if (!isShown) {
+            return false
+        }
+        val actualPosition = Rect()
+        val isGlobalVisible = getGlobalVisibleRect(actualPosition)
+        val screenWidth = Resources.getSystem().displayMetrics.widthPixels
+        val screenHeight = Resources.getSystem().displayMetrics.heightPixels
+        val screen = Rect(0, 0, screenWidth, screenHeight)
+        return isGlobalVisible && Rect.intersects(actualPosition, screen)
     }
 }
