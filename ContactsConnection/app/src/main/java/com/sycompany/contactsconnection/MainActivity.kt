@@ -14,6 +14,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.ScrollView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -148,4 +149,18 @@ class MainActivity : AppCompatActivity() {
         val screen = Rect(0, 0, screenWidth, screenHeight)
         return isGlobalVisible && Rect.intersects(actualPosition, screen)
     }
+
+    fun ScrollView.isShowInScrollArea(childView: View): Boolean {
+        var topValue = 0f
+        var child = childView
+        val showingScrollArea = Rect()
+        this.getDrawingRect(showingScrollArea)
+        while (child !is ScrollView){
+            topValue += (child).y
+            child = child.parent as View
+        }
+        val bottomValue = topValue + childView.height
+        return showingScrollArea.top < topValue && showingScrollArea.bottom > bottomValue
+    }
+
 }
