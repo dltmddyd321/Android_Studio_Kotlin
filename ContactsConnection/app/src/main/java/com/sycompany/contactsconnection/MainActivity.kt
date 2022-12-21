@@ -19,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
+import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -38,6 +39,8 @@ class MainActivity : AppCompatActivity() {
         mBtnLogin = findViewById(R.id.contactBtn)
         gBtn = findViewById(R.id.contactGoBtn)
         imgView = findViewById(R.id.imgView)
+
+        checkRegDate()
 
         mBtnLogin?.setOnClickListener {
             getContacts()
@@ -163,4 +166,24 @@ class MainActivity : AppCompatActivity() {
         return showingScrollArea.top < topValue && showingScrollArea.bottom > bottomValue
     }
 
+    private fun checkWeekDays() {
+        val calOne = Calendar.getInstance()
+        calOne.timeInMillis = System.currentTimeMillis()
+        calOne.set(Calendar.HOUR_OF_DAY, 0)
+        calOne.set(Calendar.MINUTE, 0)
+        calOne.set(Calendar.SECOND, 0)
+        calOne.set(Calendar.MILLISECOND, 0)
+        calOne.add(Calendar.DATE, 7 - calOne.get(Calendar.DAY_OF_WEEK))
+
+        Log.d("Calendar Test!", "이번주 종료 시간 : ${calOne.timeInMillis}")
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    private fun checkRegDate() {
+        val now = System.currentTimeMillis()
+        val date = Date(now)
+        val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+        val strDate = sdf.format(date)
+        Log.d("날짜 문자열 확인", "result : $strDate")
+    }
 }
