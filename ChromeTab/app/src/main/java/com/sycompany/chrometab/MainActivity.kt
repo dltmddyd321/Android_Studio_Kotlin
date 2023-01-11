@@ -7,6 +7,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.browser.customtabs.CustomTabsCallback
 import androidx.browser.customtabs.CustomTabsClient
@@ -16,18 +17,27 @@ import androidx.core.content.ContextCompat
 
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var text: TextView
+
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val uri = Uri.parse("http://gagebu.hosoft.kr/?bbs_tb=bbs&bbs_kind_i=4&t=bbs_view&id=5108")
+        text = findViewById(R.id.testText)
+        text.setOnClickListener {
+            openChromeWebService(this,"https://stackoverflow.com/")
+        }
 
-        val intentBuilder = CustomTabsIntent.Builder()
-        intentBuilder.setToolbarColor(ContextCompat.getColor(this, R.color.purple_200))
-
-        val customTabsIntent = intentBuilder.build()
-
-        customTabsIntent.launchUrl(this, uri)
+//        val uri = Uri.parse("http://gagebu.hosoft.kr/?bbs_tb=bbs&bbs_kind_i=4&t=bbs_view&id=5108")
+//
+//        val intentBuilder = CustomTabsIntent.Builder()
+//        intentBuilder.setToolbarColor(ContextCompat.getColor(this, R.color.purple_200))
+//
+//        val customTabsIntent = intentBuilder.build()
+//
+//        customTabsIntent.launchUrl(this, uri)
 //        CustomTabsClient.bindCustomTabsService(
 //            applicationContext,
 //            "com.android.chrome",
