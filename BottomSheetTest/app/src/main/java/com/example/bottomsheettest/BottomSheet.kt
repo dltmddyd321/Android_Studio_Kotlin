@@ -9,7 +9,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCa
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 
-class BottomSheet : BottomSheetDialogFragment() {
+open class BottomSheet : BottomSheetDialogFragment() {
     var sheetBehavior: BottomSheetBehavior<*>? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
