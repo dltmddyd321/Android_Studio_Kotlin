@@ -2,6 +2,7 @@ package com.example.textutiltest
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.telephony.PhoneNumberFormattingTextWatcher
 import android.text.Editable
 import android.text.SpannableStringBuilder
 import android.text.TextUtils
@@ -28,6 +29,8 @@ class MainActivity : AppCompatActivity(), TestInterface {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
+        binding.numberEdit.addTextChangedListener(PhoneNumberFormattingTextWatcher())
+
         val cutText = "Base g83fdj90jd=="
 
         val token = cutText.split(" ")
@@ -48,7 +51,7 @@ class MainActivity : AppCompatActivity(), TestInterface {
             }
         })
 
-        Toast.makeText(this, nullTest(), Toast.LENGTH_SHORT).show()
+//        Toast.makeText(this, nullTest(), Toast.LENGTH_SHORT).show()
     }
 
     private fun nullTest(): String {
