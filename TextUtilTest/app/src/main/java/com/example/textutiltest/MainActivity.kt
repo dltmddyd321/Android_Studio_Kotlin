@@ -1,5 +1,8 @@
 package com.example.textutiltest
 
+import android.content.ActivityNotFoundException
+import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.telephony.PhoneNumberFormattingTextWatcher
@@ -30,6 +33,16 @@ class MainActivity : AppCompatActivity(), TestInterface {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         binding.numberEdit.addTextChangedListener(PhoneNumberFormattingTextWatcher())
+
+        binding.instaBtn.setOnClickListener {
+            val likeIng = Intent(Intent.ACTION_VIEW, Uri.parse("https://instagram.com/_u/win_dr.0"))
+            likeIng.setPackage("com.instagram.android")
+            try {
+                startActivity(likeIng)
+            } catch (e: ActivityNotFoundException) {
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://www.instagram.com/win_dr.0/feed")))
+            }
+        }
 
         val cutText = "Base g83fdj90jd=="
 

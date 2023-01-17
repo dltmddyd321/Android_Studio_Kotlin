@@ -24,13 +24,20 @@
                 android:id="@+id/editText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="텍스트 입력"/>
+                android:hint="텍스트 입력" />
 
             <EditText
                 android:id="@+id/numberEdit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="전화번호 입력"/>
+                android:hint="전화번호 입력" />
+
+            <ImageButton
+                android:id="@+id/instaBtn"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/insta"
+                android:background="@android:color/transparent"/>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
