@@ -54,7 +54,9 @@ class MainActivity : AppCompatActivity() {
         promptBuilder.setTitle("Biometric login for my app")
         promptBuilder.setSubtitle("Log in using your biometric credential")
         promptBuilder.setNegativeButtonText("Use account password")
-        promptBuilder.setAllowedAuthenticators(BiometricManager.Authenticators.BIOMETRIC_STRONG or BiometricManager.Authenticators.DEVICE_CREDENTIAL)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            promptBuilder.setAllowedAuthenticators(BiometricManager.Authenticators.BIOMETRIC_STRONG or BiometricManager.Authenticators.DEVICE_CREDENTIAL)
+        }
 
         promptInfo = promptBuilder.build()
         return promptInfo as BiometricPrompt.PromptInfo
@@ -140,11 +142,15 @@ class MainActivity : AppCompatActivity() {
     * 지문 등록 화면으로 이동
     */
     private fun goBiometricSettings() {
-        val enrollIntent = Intent(Settings.ACTION_BIOMETRIC_ENROLL).apply {
-            putExtra(
-                Settings.EXTRA_BIOMETRIC_AUTHENTICATORS_ALLOWED,
-                BIOMETRIC_STRONG or DEVICE_CREDENTIAL
-            )
+        val enrollIntent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            Intent(Settings.ACTION_BIOMETRIC_ENROLL).apply {
+                putExtra(
+                    Settings.EXTRA_BIOMETRIC_AUTHENTICATORS_ALLOWED,
+                    BIOMETRIC_STRONG or DEVICE_CREDENTIAL
+                )
+            }
+        } else {
+            Intent(Settings.ACTION_SECURITY_SETTINGS)
         }
         loginLauncher.launch(enrollIntent)
     }
