@@ -1,12 +1,12 @@
 package com.example.biometricseries
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.hardware.biometrics.BiometricManager.Authenticators.BIOMETRIC_STRONG
 import android.hardware.biometrics.BiometricManager.Authenticators.DEVICE_CREDENTIAL
-import android.os.Build
+import android.os.*
 import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
 import android.widget.Toast
@@ -25,6 +25,8 @@ class MainActivity : AppCompatActivity() {
         const val TAG = "BiometricTest"
     }
 
+    private val pattern = longArrayOf(0, 50, 0)
+    private lateinit var vibrator: Vibrator
     private lateinit var binding: ActivityMainBinding
     private var biometricPrompt: BiometricPrompt? = null
     private var promptInfo: BiometricPrompt.PromptInfo? = null
@@ -46,6 +48,9 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        vibrator =
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) (getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager).defaultVibrator
+            else @Suppress("DEPRECATION") getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
     }
 
     private fun setPromptInfo(): BiometricPrompt.PromptInfo {
@@ -54,9 +59,7 @@ class MainActivity : AppCompatActivity() {
         promptBuilder.setTitle("Biometric login for my app")
         promptBuilder.setSubtitle("Log in using your biometric credential")
         promptBuilder.setNegativeButtonText("Use account password")
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            promptBuilder.setAllowedAuthenticators(BiometricManager.Authenticators.BIOMETRIC_STRONG or BiometricManager.Authenticators.DEVICE_CREDENTIAL)
-        }
+        promptBuilder.setConfirmationRequired(false)
 
         promptInfo = promptBuilder.build()
         return promptInfo as BiometricPrompt.PromptInfo
@@ -153,5 +156,11 @@ class MainActivity : AppCompatActivity() {
             Intent(Settings.ACTION_SECURITY_SETTINGS)
         }
         loginLauncher.launch(enrollIntent)
+    }
+
+    private fun startVibrate(pattern: LongArray) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            vibrator.vibrate(VibrationEffect.createWaveform(pattern, VibrationEffect.DEFAULT_AMPLITUDE))
+        }
     }
 }
