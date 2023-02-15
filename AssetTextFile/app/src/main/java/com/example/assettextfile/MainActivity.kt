@@ -45,7 +45,8 @@ class MainActivity : AppCompatActivity() {
         assetManager = resources.assets
 
         btn.setOnClickListener {
-            getData()
+            startActivity(Intent(this, PhotoActivity::class.java))
+//            getData()
         }
 
         btnPhoto.setOnClickListener {
