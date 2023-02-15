@@ -11,6 +11,13 @@
         android:onClick="mOnAssetData"
         android:text="데이터 가져오기" />
 
+    <Button
+        android:id="@+id/btnPhoto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="mOnAssetData"
+        android:text="사진 찍기" />
+
     <TextView
         android:id="@+id/txtData"
         android:layout_width="match_parent"
@@ -20,6 +27,11 @@
     <EditText
         android:id="@+id/editText"
         android:layout_width="100dp"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
+
+    <ImageView
+        android:id="@+id/photoImg"
+        android:layout_width="250dp"
+        android:layout_height="250dp" />
 
 </LinearLayout>

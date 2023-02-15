@@ -1,10 +1,15 @@
 package com.example.assettextfile
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.content.res.AssetManager
+import android.graphics.Bitmap
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
+import androidx.activity.result.contract.ActivityResultContracts
+import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_main.*
 import org.json.JSONArray
 import org.json.JSONObject
@@ -15,6 +20,17 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var assetManager: AssetManager
     lateinit var inputStream: InputStream
+    lateinit var bitmap: Bitmap
+
+    private val activityResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        if (it.resultCode == RESULT_OK && it.data != null) {
+            val extras = it.data?.extras
+            bitmap = extras?.get("data") as? Bitmap ?: return@registerForActivityResult
+            Glide.with(this)
+                .load(bitmap)
+                .into(photoImg)
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,6 +40,11 @@ class MainActivity : AppCompatActivity() {
 
         btn.setOnClickListener {
             getData()
+        }
+
+        btnPhoto.setOnClickListener {
+            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+            activityResult.launch(intent)
         }
     }
 
