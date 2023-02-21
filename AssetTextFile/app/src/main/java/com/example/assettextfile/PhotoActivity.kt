@@ -24,13 +24,12 @@ import kotlinx.android.synthetic.main.activity_photo.*
 import java.io.File
 import java.io.FileOutputStream
 import java.io.OutputStream
+import java.util.*
 
 class PhotoActivity : AppCompatActivity() {
 
     val PERMISSIONS = arrayOf(
-        Manifest.permission.CAMERA,
-        Manifest.permission.WRITE_EXTERNAL_STORAGE,
-        Manifest.permission.READ_EXTERNAL_STORAGE
+        Manifest.permission.CAMERA
     )
     val PERMISSIONS_REQUEST = 100
 
@@ -202,5 +201,13 @@ class PhotoActivity : AppCompatActivity() {
                 finish()
             }
         }
+    }
+
+    //1월 1일 무슨 요일인지 구하기
+    fun firstDayOfYear() {
+        val todayCal = Calendar.getInstance()
+        todayCal.set(Calendar.MONTH, Calendar.JANUARY)
+        todayCal.set(Calendar.DAY_OF_MONTH, 1)
+        Log.d("1월 1일 확인","1월 1일 요일 : ${todayCal.get(Calendar.DAY_OF_WEEK)}")
     }
 }
