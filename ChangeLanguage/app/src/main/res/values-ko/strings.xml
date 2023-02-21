@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="select_language">언어 선택하기!</string>
+    <string name="nice_to_meet_you_welcome_to_the_test_service">반갑습니다! 테스트 서비스에 오신 것을 환영합니다!</string>
+</resources>

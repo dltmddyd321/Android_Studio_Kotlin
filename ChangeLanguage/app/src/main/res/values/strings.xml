@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name" translatable="false">ChangeLanguage</string>
+    <string name="select_language">Select Language!</string>
+    <string name="nice_to_meet_you_welcome_to_the_test_service">Nice to meet you! Welcome to the test service!!</string>
+</resources>
