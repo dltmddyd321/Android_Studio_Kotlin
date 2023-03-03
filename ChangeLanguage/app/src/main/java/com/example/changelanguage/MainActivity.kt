@@ -30,17 +30,19 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        TimeZone.setDefault(TimeZone.getTimeZone("Europe/Lisbon"))
+
         tvSelect = findViewById(R.id.selectText)
         tvOutput = findViewById(R.id.testText)
         rbEng = findViewById(R.id.eng)
         rbKor = findViewById(R.id.kor)
 
         rbEng.setOnClickListener {
-            setAppLocale(it)
+            changeLanguage(it)
         }
 
         rbKor.setOnClickListener {
-            setAppLocale(it)
+            changeLanguage(it)
         }
     }
 
