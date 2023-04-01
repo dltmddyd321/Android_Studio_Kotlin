@@ -1537,3 +1537,13 @@ fun maxTwo(numbers: IntArray): Int {
 
 //두 번째 문자열을 더해서 첫 번째 문자열의 인덱스를 구하면 된다. (WOW)
 fun pushString(A: String, B: String): Int = (B + B).indexOf(A)
+
+fun lineLength(lines: Array<IntArray>): Int  {
+    var answer: Int = 0
+
+    val map: MutableMap<String, Int> = HashMap()
+
+    for (line in lines) {
+
+    }
+}
