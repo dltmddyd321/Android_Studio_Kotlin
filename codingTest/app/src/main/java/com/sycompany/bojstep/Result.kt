@@ -15,7 +15,7 @@ import kotlin.math.roundToInt
 import kotlin.math.sqrt
 
 fun main() {
-    println(chickenCoupon(1081))
+    println(weirdArray(intArrayOf(1, 2, 3, 4, 5, 6), 4))
 }
 
 //3003번
@@ -1538,12 +1538,41 @@ fun maxTwo(numbers: IntArray): Int {
 //두 번째 문자열을 더해서 첫 번째 문자열의 인덱스를 구하면 된다. (WOW)
 fun pushString(A: String, B: String): Int = (B + B).indexOf(A)
 
-fun lineLength(lines: Array<IntArray>): Int  {
-    var answer: Int = 0
+//fun lineLength(lines: Array<IntArray>): Int  {
+//    var answer: Int = 0
+//
+//    val map: MutableMap<String, Int> = HashMap()
+//
+//    for (line in lines) {
+//
+//    }
+//}
 
-    val map: MutableMap<String, Int> = HashMap()
+fun weirdArray(numlist: IntArray, n: Int): IntArray {
+    val res = mutableListOf<Int>()
+    val arr = numlist.toMutableList()
 
-    for (line in lines) {
+    res.add(n)
 
+    while (true) {
+        if (arr.isEmpty()) break
+        val startPos = arr.indexOf(n)
+        if (arr.size >= 3) {
+            res.add(maxOf(arr[startPos - 1], arr[startPos + 1]))
+            arr.removeAt(startPos - 1)
+            arr.removeAt(startPos + 1)
+        } else {
+            arr.remove(n)
+            res.addAll(arr)
+        }
     }
+
+    return res.toIntArray()
+}
+
+fun weirdArrayResult(numlist: IntArray, n: Int): IntArray {
+    return numlist.sortedWith { a, b ->
+        //중간 값과의 차이 값을 통해 비교한다.
+        if (abs(a - n) == abs(b - n)) b.compareTo(a) else abs(a - n).compareTo(abs(b - n))
+    }.toIntArray()
 }
