@@ -1576,3 +1576,12 @@ fun weirdArrayResult(numlist: IntArray, n: Int): IntArray {
         if (abs(a - n) == abs(b - n)) b.compareTo(a) else abs(a - n).compareTo(abs(b - n))
     }.toIntArray()
 }
+
+fun hideNumberPlus(my_string: String): Int {
+    var res = 0
+    val list = my_string.split("[a-zA-z]+".toRegex()).toTypedArray()
+    for (i in list.indices) {
+        if (list[i].matches("[0-9]+".toRegex())) res += list[i].toInt()
+    }
+    return res
+}
