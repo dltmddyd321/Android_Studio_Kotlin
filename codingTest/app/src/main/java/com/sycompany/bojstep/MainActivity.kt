@@ -3,6 +3,7 @@ package com.sycompany.bojstep
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.IntentFilter
+import android.content.res.Configuration
 import android.content.res.Resources
 import android.os.Bundle
 import android.util.TypedValue
@@ -22,6 +23,11 @@ class MainActivity : AppCompatActivity() {
     private lateinit var textAge : TextView
     private lateinit var nextBtn : Button
     private lateinit var nextBtn2 : Button
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        initResultText()
+    }
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
