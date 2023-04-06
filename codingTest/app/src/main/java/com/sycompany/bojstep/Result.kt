@@ -1585,3 +1585,21 @@ fun hideNumberPlus(my_string: String): Int {
     }
     return res
 }
+
+fun factorialCheck(n: Int): Int {
+    var res = 0
+
+    //재귀 함수
+    fun factorial(n: Int): Int {
+        return if (n == 1) n
+        else n * factorial(n - 1)
+    }
+
+    for (i in 10 downTo 1) {
+        if (factorial(i) <= n) {
+            res = i
+            break
+        }
+    }
+    return res
+}
