@@ -1603,3 +1603,13 @@ fun factorialCheck(n: Int): Int {
     }
     return res
 }
+
+fun findK(array: IntArray, commands: Array<IntArray>): IntArray {
+    val res = IntArray(commands.size)
+    for (i in res.indices) {
+        var tempArr = array.slice(commands[i][0] - 1 until commands[i][1])
+        tempArr = tempArr.sorted()
+        res[i] = tempArr[commands[i][2] - 1]
+    }
+    return res
+}
