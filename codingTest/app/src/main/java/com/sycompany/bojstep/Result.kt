@@ -1613,3 +1613,10 @@ fun findK(array: IntArray, commands: Array<IntArray>): IntArray {
     }
     return res
 }
+
+fun freeStringSort(strings: Array<String>, n: Int): Array<String> {
+    return strings.sortedWith { a, b ->
+        if (a[n] == (b[n])) a.compareTo(b)
+        else a[n].compareTo(b[n])
+    }.toTypedArray()
+}
