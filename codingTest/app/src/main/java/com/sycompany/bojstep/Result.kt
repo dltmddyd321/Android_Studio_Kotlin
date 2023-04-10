@@ -2,6 +2,7 @@
 
 package com.sycompany.bojstep
 
+import jdk.internal.org.jline.utils.Colors.s
 import java.io.BufferedReader
 import java.io.BufferedWriter
 import java.io.InputStreamReader
@@ -13,6 +14,7 @@ import kotlin.collections.ArrayDeque
 import kotlin.math.abs
 import kotlin.math.roundToInt
 import kotlin.math.sqrt
+
 
 fun main() {
     println(weirdArray(intArrayOf(1, 2, 3, 4, 5, 6), 4))
@@ -1619,4 +1621,43 @@ fun freeStringSort(strings: Array<String>, n: Int): Array<String> {
         if (a[n] == (b[n])) a.compareTo(b)
         else a[n].compareTo(b[n])
     }.toTypedArray()
+}
+
+fun mostNearWord(s: String): IntArray {
+
+//    val answer = IntArray(s.length)
+//
+//    for (i in s.indices) {
+//        if (i != 0) {
+//            val idx: Int = s.substring(0, i)
+//                .lastIndexOf(s.charAt(i))
+//            if (idx != -1) {
+//                answer[i] = i - idx
+//            } else {
+//                answer[i] = idx
+//            }
+//        } else {
+//            answer[i] = -1
+//        }
+//    }
+
+//    return answer
+
+    val res = mutableListOf<Int>()
+    repeat(s.length) {
+        res.add(0)
+    }
+    //맨 처음 글자는 무조건 최초 글자이므로 -1
+    res[0] = -1
+    for (i in 1..s.length) {
+        //인덱스를 순회하며 i-1을 기준으로 값이 중복되는지 여부를 확인
+        val tmp = s.lastIndexOf(s.substring(i, i + 1), i - 1)
+        if (tmp != -1) {
+            //기존 위치의 인덱에서 존재하는 중복 인덱스 위치를 차감
+            res[i] = i - tmp
+        } else {
+            res[i] = tmp
+        }
+    }
+    return res.toIntArray()
 }
