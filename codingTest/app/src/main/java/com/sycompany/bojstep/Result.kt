@@ -2,7 +2,6 @@
 
 package com.sycompany.bojstep
 
-import jdk.internal.org.jline.utils.Colors.s
 import java.io.BufferedReader
 import java.io.BufferedWriter
 import java.io.InputStreamReader
@@ -1643,21 +1642,29 @@ fun mostNearWord(s: String): IntArray {
 
 //    return answer
 
-    val res = mutableListOf<Int>()
-    repeat(s.length) {
-        res.add(0)
-    }
-    //맨 처음 글자는 무조건 최초 글자이므로 -1
-    res[0] = -1
-    for (i in 1..s.length) {
-        //인덱스를 순회하며 i-1을 기준으로 값이 중복되는지 여부를 확인
-        val tmp = s.lastIndexOf(s.substring(i, i + 1), i - 1)
-        if (tmp != -1) {
-            //기존 위치의 인덱에서 존재하는 중복 인덱스 위치를 차감
-            res[i] = i - tmp
-        } else {
-            res[i] = tmp
-        }
-    }
-    return res.toIntArray()
+//    val res = mutableListOf<Int>()
+//    repeat(s.length) {
+//        res.add(0)
+//    }
+//    //맨 처음 글자는 무조건 최초 글자이므로 -1
+//    res[0] = -1
+//    for (i in 1..s.length) {
+//        //인덱스를 순회하며 i-1을 기준으로 값이 중복되는지 여부를 확인
+//        val tmp = s.lastIndexOf(s.substring(i, i + 1), i - 1)
+//        if (tmp != -1) {
+//            //기존 위치의 인덱에서 존재하는 중복 인덱스 위치를 차감
+//            res[i] = i - tmp
+//        } else {
+//            res[i] = tmp
+//        }
+//    }
+//    return res.toIntArray()
+
+    val charMap = mutableMapOf<Char, Int>()
+
+    return s.withIndex().map { (i, char) ->
+        val check = charMap[char]
+        charMap[char] = i
+        if (check == null) -1 else i - check
+    }.toIntArray()
 }
