@@ -1668,3 +1668,7 @@ fun mostNearWord(s: String): IntArray {
         if (check == null) -1 else i - check
     }.toIntArray()
 }
+
+//이진수 더하기
+fun parseIntTwo(bin1: String, bin2: String): String
+    = Integer.toBinaryString(Integer.parseInt(bin1, 2) + Integer.parseInt(bin2, 2))
