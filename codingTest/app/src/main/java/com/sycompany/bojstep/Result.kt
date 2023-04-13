@@ -1672,3 +1672,10 @@ fun mostNearWord(s: String): IntArray {
 //이진수 더하기
 fun parseIntTwo(bin1: String, bin2: String): String
     = Integer.toBinaryString(Integer.parseInt(bin1, 2) + Integer.parseInt(bin2, 2))
+
+fun rectangleSizeFromDots(dots: Array<IntArray>): Int {
+    val xDots = dots.map { it[0] }.toSortedSet()
+    val yDots = dots.map { it[1] }.toSortedSet()
+
+    return (xDots.last() - xDots.first()) * (yDots.last() - yDots.first())
+}
