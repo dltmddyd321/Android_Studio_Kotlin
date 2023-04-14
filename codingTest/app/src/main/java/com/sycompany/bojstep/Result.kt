@@ -1679,3 +1679,30 @@ fun rectangleSizeFromDots(dots: Array<IntArray>): Int {
 
     return (xDots.last() - xDots.first()) * (yDots.last() - yDots.first())
 }
+
+fun balanceWorld() = with(Scanner(System.`in`)) {
+    val stack = Stack<Char>()
+
+    while (true) {
+        val str = readln()
+
+        if (str == ".") return@with
+
+        str.forEach {ch ->
+            //스택에 있는 마지막 문자 가져오기
+            val lastElement = if (stack.isNotEmpty()) stack.peek() else null
+
+            if (ch == '[' || ch == ']' || ch == '(' || ch == ')') {
+                if (lastElement == '[') {
+                    if (ch == ']') stack.pop() //순서쌍이 맞으므로 스택에서 제거
+                    else stack.add(ch)
+                } else if (lastElement == '(') {
+                    if (ch == ')') stack.pop() //순서쌍이 맞으므로 스택에서 제거
+                    else stack.add(ch)
+                } else stack.add(ch) //다음 체크를 위해 스택에 추가
+            }
+        }
+        if (stack.isEmpty()) println("yes") else println("no")
+        stack.clear()
+    }
+}
