@@ -16,7 +16,10 @@ import kotlin.math.sqrt
 
 
 fun main() {
-    println(weirdArray(intArrayOf(1, 2, 3, 4, 5, 6), 4))
+    val arr = intArrayOf(1,3,2,4,2)
+    checkSolution(arr).forEach {
+        println(it)
+    }
 }
 
 //3003번
@@ -1670,8 +1673,8 @@ fun mostNearWord(s: String): IntArray {
 }
 
 //이진수 더하기
-fun parseIntTwo(bin1: String, bin2: String): String
-    = Integer.toBinaryString(Integer.parseInt(bin1, 2) + Integer.parseInt(bin2, 2))
+fun parseIntTwo(bin1: String, bin2: String): String =
+    Integer.toBinaryString(Integer.parseInt(bin1, 2) + Integer.parseInt(bin2, 2))
 
 fun rectangleSizeFromDots(dots: Array<IntArray>): Int {
     val xDots = dots.map { it[0] }.toSortedSet()
@@ -1688,7 +1691,7 @@ fun balanceWorld() = with(Scanner(System.`in`)) {
 
         if (str == ".") return@with
 
-        str.forEach {ch ->
+        str.forEach { ch ->
             //스택에 있는 마지막 문자 가져오기
             val lastElement = if (stack.isNotEmpty()) stack.peek() else null
 
@@ -1705,4 +1708,37 @@ fun balanceWorld() = with(Scanner(System.`in`)) {
         if (stack.isEmpty()) println("yes") else println("no")
         stack.clear()
     }
+}
+
+fun trialTest(answers: Array<Int>): IntArray {
+    val userAnswers = arrayOf(
+        intArrayOf(1, 2, 3, 4, 5),
+        intArrayOf(2, 1, 2, 3, 2, 4, 2, 5),
+        intArrayOf(3, 3, 1, 1, 2, 2, 4, 4, 5, 5)
+    )
+    val correctCnt = IntArray(3)
+    val res = mutableListOf<Int>()
+
+    userAnswers.forEachIndexed { i, arr ->
+        correctCnt[i] = answers.filterIndexed { j, answer -> answer == arr[j % arr.size] }.count()
+    }
+
+    correctCnt.forEachIndexed { index, i -> if (correctCnt.maxOrNull() == i) res.add(index + 1) }
+    return res.toIntArray()
+
+
+}
+
+fun checkSolution(answers: IntArray): IntArray {
+    val userAnswers = arrayOf(
+        intArrayOf(1,2,3,4,5), intArrayOf(2,1,2,3,2,4,2,5), intArrayOf(3,3,1,1,2,2,4,4,5,5))
+    val cnt = IntArray(3)
+    val answer = mutableListOf<Int>()
+
+    userAnswers.forEachIndexed { i, userAns ->
+        cnt[i] = answers.filterIndexed { j, ans -> ans == userAns[j % userAns.size] }.count()
+    }
+    cnt.forEachIndexed{ idx, i -> if(cnt.max() == i) answer.add(idx + 1) }
+
+    return answer.toIntArray()
 }
