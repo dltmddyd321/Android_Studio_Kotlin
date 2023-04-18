@@ -2,11 +2,14 @@
 
 package com.sycompany.bojstep
 
+import android.annotation.SuppressLint
 import java.io.BufferedReader
 import java.io.BufferedWriter
 import java.io.InputStreamReader
 import java.io.OutputStreamWriter
 import java.math.BigInteger
+import java.time.OffsetDateTime
+import java.time.ZoneId
 import java.util.*
 import java.util.regex.Pattern
 import kotlin.collections.ArrayDeque
@@ -17,7 +20,7 @@ import kotlin.math.sqrt
 
 fun main() {
     val arr = intArrayOf(1,3,2,4,2)
-    checkSolution(arr).forEach {
+    trialTest(arr).forEach {
         println(it)
     }
 }
@@ -1710,7 +1713,7 @@ fun balanceWorld() = with(Scanner(System.`in`)) {
     }
 }
 
-fun trialTest(answers: Array<Int>): IntArray {
+fun trialTest(answers: IntArray): IntArray {
     val userAnswers = arrayOf(
         intArrayOf(1, 2, 3, 4, 5),
         intArrayOf(2, 1, 2, 3, 2, 4, 2, 5),
@@ -1725,8 +1728,6 @@ fun trialTest(answers: Array<Int>): IntArray {
 
     correctCnt.forEachIndexed { index, i -> if (correctCnt.maxOrNull() == i) res.add(index + 1) }
     return res.toIntArray()
-
-
 }
 
 fun checkSolution(answers: IntArray): IntArray {
@@ -1741,4 +1742,9 @@ fun checkSolution(answers: IntArray): IntArray {
     cnt.forEachIndexed{ idx, i -> if(cnt.max() == i) answer.add(idx + 1) }
 
     return answer.toIntArray()
+}
+
+@SuppressLint("NewApi")
+fun getSixMonthAgo(): Long {
+    return OffsetDateTime.now(ZoneId.systemDefault()).minusMonths(6).toInstant().toEpochMilli()
 }
