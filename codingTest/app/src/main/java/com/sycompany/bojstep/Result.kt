@@ -16,12 +16,13 @@ import java.util.*
 import java.util.regex.Pattern
 import kotlin.collections.ArrayDeque
 import kotlin.math.abs
+import kotlin.math.max
 import kotlin.math.roundToInt
 import kotlin.math.sqrt
 
 
 fun main() {
-    val arr = intArrayOf(1,3,2,4,2)
+    val arr = intArrayOf(1, 3, 2, 4, 2)
     trialTest(arr).forEach {
         println(it)
     }
@@ -1734,14 +1735,17 @@ fun trialTest(answers: IntArray): IntArray {
 
 fun checkSolution(answers: IntArray): IntArray {
     val userAnswers = arrayOf(
-        intArrayOf(1,2,3,4,5), intArrayOf(2,1,2,3,2,4,2,5), intArrayOf(3,3,1,1,2,2,4,4,5,5))
+        intArrayOf(1, 2, 3, 4, 5),
+        intArrayOf(2, 1, 2, 3, 2, 4, 2, 5),
+        intArrayOf(3, 3, 1, 1, 2, 2, 4, 4, 5, 5)
+    )
     val cnt = IntArray(3)
     val answer = mutableListOf<Int>()
 
     userAnswers.forEachIndexed { i, userAns ->
         cnt[i] = answers.filterIndexed { j, ans -> ans == userAns[j % userAns.size] }.count()
     }
-    cnt.forEachIndexed{ idx, i -> if(cnt.max() == i) answer.add(idx + 1) }
+    cnt.forEachIndexed { idx, i -> if (cnt.max() == i) answer.add(idx + 1) }
 
     return answer.toIntArray()
 }
@@ -1759,11 +1763,13 @@ fun queueWithLibrary() {
     q.remove() // 삭제하면서 객체 반환 비어있는 상태이면 exception 발생
     q.poll() // 삭제하면서 객체 반환 비어있는 상태이면 false 반환
 }
+
 fun queueWithArrayList() {
     var q = arrayListOf<Int>()
     q.add(1) //뒤로 넣고
     q.removeFirst() //앞에서 뺀다
 }
+
 //stack 은 first in first out 이다.
 fun stackWithLibrary() {
     var s = Stack<Int>()
@@ -1776,7 +1782,7 @@ fun stackWithArrayList() {
     var s = arrayListOf<Int>()
     s.add(1) //뒤로 넣고
     s.removeLast() //뒤에서 뺀다
-    s.get(s.size-1) // peek
+    s.get(s.size - 1) // peek
 }
 
 //이진 트리 형태의 자료 구조로, 오름차순/내림차순으로 값을 저장한다. 값에서 peek 를 사용해 최대값/최소값을 얻을 수 있다.
@@ -1823,3 +1829,5 @@ fun basicSort() {
         }
     }
 }
+
+fun morePlus(a: Int, b: Int): Int = max((a.toString() + b.toString()).toInt(), (b.toString() + a.toString()).toInt())
