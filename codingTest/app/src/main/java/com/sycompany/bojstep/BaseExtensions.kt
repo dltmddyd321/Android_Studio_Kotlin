@@ -1,5 +1,7 @@
 package com.sycompany.bojstep
 
+import java.lang.Math.sqrt
+
 class BaseExtensions {
     fun test() {
         val array = arrayListOf<Int>()
@@ -145,4 +147,20 @@ class BaseExtensions {
             customerList.associateBy(Customer::id, Customer::name) // /Map<id, name> 의 형태를 반환
         val associateByResult3 = customerList.associate { it.id to it.name } // /Map<id, name> 의 형태를 반환
     }
+}
+
+fun isPrime(n: Int): Boolean {
+    if (n <= 1) return false
+    for (i in 2..kotlin.math.sqrt(n.toDouble()).toInt()) {
+        if (n % i == 0) return false
+    }
+    return true
+}
+//root 를 사용하지 않는 판별
+fun isPrimeWithoutSqrt(n: Int): Boolean {
+    var i = 2
+    while (i * i <= n) {
+        if (n % i++ == 0) return false
+    }
+    return true
 }
