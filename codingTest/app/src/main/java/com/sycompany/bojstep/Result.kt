@@ -22,10 +22,7 @@ import kotlin.math.sqrt
 
 
 fun main() {
-    val arr = intArrayOf(1, 3, 2, 4, 2)
-    trialTest(arr).forEach {
-        println(it)
-    }
+    ternaryFlip(45)
 }
 
 //3003번
@@ -1682,6 +1679,9 @@ fun mostNearWord(s: String): IntArray {
 fun parseIntTwo(bin1: String, bin2: String): String =
     Integer.toBinaryString(Integer.parseInt(bin1, 2) + Integer.parseInt(bin2, 2))
 
+//3진법 뒤집기
+fun ternaryFlip(n: Int): Int = n.toString(3).reversed().toInt(3)
+
 fun rectangleSizeFromDots(dots: Array<IntArray>): Int {
     val xDots = dots.map { it[0] }.toSortedSet()
     val yDots = dots.map { it[1] }.toSortedSet()
@@ -1830,4 +1830,5 @@ fun basicSort() {
     }
 }
 
-fun morePlus(a: Int, b: Int): Int = max((a.toString() + b.toString()).toInt(), (b.toString() + a.toString()).toInt())
+fun morePlus(a: Int, b: Int): Int =
+    max((a.toString() + b.toString()).toInt(), (b.toString() + a.toString()).toInt())
