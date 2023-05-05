@@ -1832,3 +1832,12 @@ fun basicSort() {
 
 fun morePlus(a: Int, b: Int): Int =
     max((a.toString() + b.toString()).toInt(), (b.toString() + a.toString()).toInt())
+
+fun runningRace(players: Array<String>, callings: Array<String>): Array<String> {
+    val playerCntMap: MutableMap<String, Int> = mutableMapOf()
+    players.forEachIndexed { index, player -> playerCntMap[player] = index - callings.count { it == player } }
+    val values = playerCntMap.values.sortedBy { it }
+
+    val res: MutableList<String> = players.toMutableList()
+
+}
