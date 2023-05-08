@@ -10,6 +10,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Send
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -98,6 +99,17 @@ fun ButtonExample(onClicked: () -> Unit) {
         )
         Spacer(modifier = Modifier.size(ButtonDefaults.IconSpacing))
         Text(text = "Send")
+    }
+    Button(
+        onClick = { /*TODO*/ },
+        modifier = Modifier.fillMaxSize()
+    ) {
+        Icon(
+            imageVector = Icons.Filled.Search,
+            contentDescription = null
+        )
+        Spacer(modifier = Modifier.size(ButtonDefaults.IconSpacing))
+        Text(text = "Search")
     }
 }
 
