@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.util.TypedValue
 import android.widget.Button
 import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -29,10 +30,18 @@ class MainActivity : AppCompatActivity() {
         initResultText()
     }
 
+    private val callback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            // 뒤로가기 클릭 시 실행시킬 코드 입력
+        }
+    }
+
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        this.onBackPressedDispatcher.addCallback(this, callback)
 
         settingBroadcastReceiver = LocaleChangedReceiver()
 
