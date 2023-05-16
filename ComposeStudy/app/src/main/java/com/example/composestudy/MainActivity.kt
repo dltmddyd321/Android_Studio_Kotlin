@@ -5,6 +5,8 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -102,7 +104,10 @@ fun ButtonExample(onClicked: () -> Unit) {
     }
     Button(
         onClick = { /*TODO*/ },
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+//            .fillMaxSize()
+            .height(200.dp)
+            .width(200.dp)
     ) {
         Icon(
             imageVector = Icons.Filled.Search,
@@ -110,6 +115,32 @@ fun ButtonExample(onClicked: () -> Unit) {
         )
         Spacer(modifier = Modifier.size(ButtonDefaults.IconSpacing))
         Text(text = "Search")
+    }
+
+    Button(
+        colors = ButtonDefaults.buttonColors(
+            backgroundColor = Color.Magenta,
+            contentColor = Color.Cyan
+        ),
+        onClick = { /*TODO*/ },
+        modifier = Modifier.padding(10.dp)
+    ) {
+        Icon(
+            imageVector = Icons.Filled.Search,
+            contentDescription = null,
+            modifier = Modifier.background(Color.Blue)
+        )
+        Spacer(
+            modifier = Modifier
+                .size(ButtonDefaults.IconSpacing)
+                .background(Color.Blue)
+        )
+        Text(text = "Search",
+            modifier = Modifier
+                .clickable { // 클릭 가능한 오브젝트 설정
+                }
+                .offset(y = 10.dp)
+                .background(Color.Blue))
     }
 }
 
