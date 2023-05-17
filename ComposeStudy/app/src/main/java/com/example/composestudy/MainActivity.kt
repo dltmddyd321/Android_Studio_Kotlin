@@ -76,6 +76,19 @@ fun Greeting(name: String) {
 }
 
 @Composable
+fun SurfaceExample(name: String) {
+    Surface(
+        color = MaterialTheme.colors.surface,
+        modifier = Modifier.padding(5.dp)
+    ) {
+        Text(
+            text = "Hello, $name!",
+            modifier = Modifier.padding(8.dp)
+        )
+    }
+}
+
+@Composable
 fun ButtonExample(onClicked: () -> Unit) {
     Button(
         onClick = { onClicked.invoke() },
