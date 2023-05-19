@@ -86,6 +86,21 @@ fun SurfaceExample(name: String) {
             modifier = Modifier.padding(8.dp)
         )
     }
+
+    Surface(
+        color = MaterialTheme.colors.surface,
+        modifier = Modifier.padding(5.dp),
+        elevation = 10.dp,
+        border = BorderStroke(
+            width = 2.dp,
+            color = Color.Magenta
+        )
+    ) {
+        Text(
+            text = "Hello, $name!",
+            modifier = Modifier.padding(8.dp)
+        )
+    }
 }
 
 @Composable
