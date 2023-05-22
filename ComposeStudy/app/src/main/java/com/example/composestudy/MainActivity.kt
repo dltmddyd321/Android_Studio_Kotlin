@@ -94,7 +94,8 @@ fun SurfaceExample(name: String) {
         border = BorderStroke(
             width = 2.dp,
             color = Color.Magenta
-        )
+        ),
+        shape = CircleShape,
     ) {
         Text(
             text = "Hello, $name!",
