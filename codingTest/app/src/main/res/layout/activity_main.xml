@@ -29,6 +29,7 @@
         app:layout_constraintStart_toStartOf="parent">
         <!-- 프로그레스바 -->
         <ProgressBar
+            android:id="@+id/testProgressBar"
             style="@style/Widget.AppCompat.ProgressBar.Horizontal"
             android:layout_width="match_parent"
             android:layout_height="12dp"
@@ -37,6 +38,16 @@
             android:progressDrawable="@drawable/progressbar_progressbar1" />
         <!--// 프로그레스바 -->
     </LinearLayout>
+
+    <SeekBar
+        android:id="@+id/seekBar"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:progress="0" />
 
     <TextView
         android:id="@+id/textAge"

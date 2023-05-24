@@ -8,6 +8,8 @@ import android.content.res.Resources
 import android.os.Bundle
 import android.util.TypedValue
 import android.widget.Button
+import android.widget.ProgressBar
+import android.widget.SeekBar
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResultLauncher
@@ -24,6 +26,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var textAge : TextView
     private lateinit var nextBtn : Button
     private lateinit var nextBtn2 : Button
+    private lateinit var progress : ProgressBar
+    private lateinit var seekBar: SeekBar
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
@@ -49,6 +53,8 @@ class MainActivity : AppCompatActivity() {
         textAge = findViewById(R.id.textAge)
         nextBtn = findViewById(R.id.nextBtn)
         nextBtn2 = findViewById(R.id.nextBtnTwo)
+        progress = findViewById(R.id.testProgressBar)
+        seekBar = findViewById(R.id.seekBar)
 
         initResultText()
 
@@ -66,6 +72,21 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this,ImageActivity::class.java)
             startActivity(intent)
         }
+
+        seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(p0: SeekBar?, p1: Int, p2: Boolean) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onStartTrackingTouch(p0: SeekBar?) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onStopTrackingTouch(p0: SeekBar?) {
+                TODO("Not yet implemented")
+            }
+
+        })
     }
 
     @SuppressLint("SetTextI18n")
