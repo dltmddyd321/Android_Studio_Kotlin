@@ -4,7 +4,8 @@ import kotlin.math.max
 
 fun main() {
     val b = arrayOf(1, 1, 1, 1, 0)
-    println(nearOneFind(b, 3))
+    val a = intArrayOf(12, 4, 15, 1, 14)
+    println(makeNumberOne(a))
 }
 
 fun morePlus(a: Int, b: Int): Int {
@@ -44,4 +45,23 @@ fun nearOneFind(arr: Array<Int>, idx: Int): Int {
         if (index > idx - 1 && i == 1) return index
     }
     return -1
+}
+
+fun makeNumberOne(num_list: IntArray): Int {
+    var answer = 0
+    for (num in num_list) {
+        var n = num
+        var cnt = 0
+        while (n != 1) {
+            if (n %2 == 0) {
+                n /= 2
+            } else {
+                n -= 1
+                n /= 2
+            }
+            cnt++
+        }
+        answer+= cnt
+    }
+    return answer
 }
