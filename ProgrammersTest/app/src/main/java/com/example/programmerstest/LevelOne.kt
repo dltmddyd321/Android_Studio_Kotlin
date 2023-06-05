@@ -4,8 +4,11 @@ import kotlin.math.max
 
 fun main() {
     val b = arrayOf(1, 1, 1, 1, 0)
-    val a = intArrayOf(12, 4, 15, 1, 14)
-    println(makeNumberOne(a))
+    val a = intArrayOf(1, 2, 1, 2, 1, 10, 2, 1)
+    secondsArea(a).forEach {
+        println(it)
+    }
+    println(secondsArea(a))
 }
 
 fun morePlus(a: Int, b: Int): Int {
@@ -64,4 +67,33 @@ fun makeNumberOne(num_list: IntArray): Int {
         answer+= cnt
     }
     return answer
+}
+
+fun secondsArea(arr: IntArray): IntArray {
+    val res = mutableListOf<Int>()
+    when (arr.count { it == 2 }) {
+        0 -> {
+            res.add(-1)
+        }
+        1 -> {
+            res.add(2)
+        }
+        else -> {
+            var cnt = 0
+            var stId = 0
+            var endId = 0
+            arr.forEachIndexed { index, i ->
+                if (i == 2) {
+                    cnt ++
+                    if (cnt == 1) {
+                        stId = index
+                    } else {
+                        endId = index
+                    }
+                }
+            }
+            return arr.copyOfRange(stId, endId + 1)
+        }
+    }
+    return res.toIntArray()
 }
