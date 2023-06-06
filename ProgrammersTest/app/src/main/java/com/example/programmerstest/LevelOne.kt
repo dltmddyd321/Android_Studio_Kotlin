@@ -5,10 +5,9 @@ import kotlin.math.max
 fun main() {
     val b = arrayOf(1, 1, 1, 1, 0)
     val a = intArrayOf(1, 2, 1, 2, 1, 10, 2, 1)
-    secondsArea(a).forEach {
+    countDown(10, 3).forEach {
         println(it)
     }
-    println(secondsArea(a))
 }
 
 fun morePlus(a: Int, b: Int): Int {
@@ -94,6 +93,14 @@ fun secondsArea(arr: IntArray): IntArray {
             }
             return arr.copyOfRange(stId, endId + 1)
         }
+    }
+    return res.toIntArray()
+}
+
+fun countDown(start: Int, end: Int): IntArray {
+    val res = mutableListOf<Int>()
+    for (i in start downTo end) {
+        res.add(i)
     }
     return res.toIntArray()
 }
