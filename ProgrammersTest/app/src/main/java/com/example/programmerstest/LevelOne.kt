@@ -104,3 +104,11 @@ fun countDown(start: Int, end: Int): IntArray {
     }
     return res.toIntArray()
 }
+
+fun deleteAd(strArr: Array<String>): MutableList<String> {
+    val res = mutableListOf<String>()
+    strArr.forEach {
+        if (!it.contains("ad")) res.add(it)
+    }
+    return res
+}
