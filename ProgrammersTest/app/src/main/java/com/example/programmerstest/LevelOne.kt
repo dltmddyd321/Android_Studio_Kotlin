@@ -112,3 +112,28 @@ fun deleteAd(strArr: Array<String>): MutableList<String> {
     }
     return res
 }
+
+fun leftRight(str_list: Array<String>): Array<String> {
+    var left = -1
+    var right = -1
+    str_list.forEachIndexed { index, s ->
+        if (s == "l") left = index
+        if (s == "r") right = index
+    }
+
+    @Suppress("KotlinConstantConditions")
+    if (left == -1 && right == -1) {
+        return emptyArray()
+    } else if (left != -1) {
+        return str_list.sliceArray(0 until left)
+    } else if (right != -1) {
+        return str_list.sliceArray(right + 1 .. str_list.lastIndex)
+    } else {
+        if (left < right) {
+            return str_list.sliceArray(0 until left)
+        } else if (right < left) {
+            return str_list.sliceArray(right + 1 .. str_list.lastIndex)
+        }
+    }
+    return emptyArray()
+}
