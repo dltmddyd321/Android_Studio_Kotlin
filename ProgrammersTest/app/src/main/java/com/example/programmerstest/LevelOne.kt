@@ -1,5 +1,7 @@
 package com.example.programmerstest
 
+import android.util.TypedValue
+import android.widget.TextView
 import kotlin.math.max
 
 fun main() {
@@ -111,6 +113,10 @@ fun deleteAd(strArr: Array<String>): MutableList<String> {
         if (!it.contains("ad")) res.add(it)
     }
     return res
+}
+
+fun setDefaultDpTextSize(defaultSize: Float, vararg items: TextView) {
+    items.forEach { it.setTextSize(TypedValue.COMPLEX_UNIT_DIP, defaultSize) }
 }
 
 fun leftRight(str_list: Array<String>): Array<String> {
