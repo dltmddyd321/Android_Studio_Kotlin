@@ -143,3 +143,16 @@ fun leftRight(str_list: Array<String>): Array<String> {
     }
     return emptyArray()
 }
+
+//배열에서 대소문자 변환
+fun changeCase(strArr: Array<String>): ArrayList<String> {
+    val res = arrayListOf<String>()
+    strArr.forEachIndexed { index, s ->
+        if (index % 2 == 0) {
+            res.add(s.uppercase())
+        } else {
+            res.add(s.lowercase())
+        }
+    }
+    return res
+}
