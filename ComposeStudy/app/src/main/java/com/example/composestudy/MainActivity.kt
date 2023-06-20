@@ -10,7 +10,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.BoxScopeInstance.align
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
@@ -195,6 +194,18 @@ fun BoxEx() {
                 .background(Color.Cyan)
                 .align(Alignment.CenterStart)
         )
+    }
+}
+
+@Composable
+fun RowEx() {
+    Row(
+        verticalAlignment = Alignment.Bottom,
+        modifier = Modifier.height(40.dp)
+    ) {
+        Text(text = "첫 번째", modifier = Modifier.align(Alignment.Top)) //이 부분만 상단 배치
+        Text(text = "두 번째")
+        Text(text = "세 번째")
     }
 }
 
