@@ -8,7 +8,6 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.layout.BoxScopeInstance.align
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -206,6 +205,22 @@ fun RowEx() {
         Text(text = "첫 번째", modifier = Modifier.align(Alignment.Top)) //이 부분만 상단 배치
         Text(text = "두 번째")
         Text(text = "세 번째")
+    }
+
+    Row(
+        horizontalArrangement = Arrangement.SpaceAround, //간격 공백
+        verticalAlignment = Alignment.Bottom,
+        modifier = Modifier
+            .height(20.dp)
+            .width(200.dp)
+    ) {
+        Text(
+            text = "첫 번째", modifier = Modifier
+                .align(Alignment.Top)
+                .weight(3f)
+        )
+        Text(text = "두 번째", modifier = Modifier.weight(2f))
+        Text(text = "세 번째", modifier = Modifier.weight(3f))
     }
 }
 
