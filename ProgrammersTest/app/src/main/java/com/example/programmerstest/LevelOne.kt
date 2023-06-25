@@ -2,14 +2,12 @@ package com.example.programmerstest
 
 import android.util.TypedValue
 import android.widget.TextView
+import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.math.max
 
 fun main() {
-    val b = arrayOf(1, 1, 1, 1, 0)
-    val a = intArrayOf(1, 2, 1, 2, 1, 10, 2, 1)
-    countDown(10, 3).forEach {
-        println(it)
-    }
+    turnStr(null)
 }
 
 fun morePlus(a: Int, b: Int): Int {
@@ -57,7 +55,7 @@ fun makeNumberOne(num_list: IntArray): Int {
         var n = num
         var cnt = 0
         while (n != 1) {
-            if (n %2 == 0) {
+            if (n % 2 == 0) {
                 n /= 2
             } else {
                 n -= 1
@@ -65,7 +63,7 @@ fun makeNumberOne(num_list: IntArray): Int {
             }
             cnt++
         }
-        answer+= cnt
+        answer += cnt
     }
     return answer
 }
@@ -85,7 +83,7 @@ fun secondsArea(arr: IntArray): IntArray {
             var endId = 0
             arr.forEachIndexed { index, i ->
                 if (i == 2) {
-                    cnt ++
+                    cnt++
                     if (cnt == 1) {
                         stId = index
                     } else {
@@ -133,12 +131,12 @@ fun leftRight(str_list: Array<String>): Array<String> {
     } else if (left != -1) {
         return str_list.sliceArray(0 until left)
     } else if (right != -1) {
-        return str_list.sliceArray(right + 1 .. str_list.lastIndex)
+        return str_list.sliceArray(right + 1..str_list.lastIndex)
     } else {
         if (left < right) {
             return str_list.sliceArray(0 until left)
         } else if (right < left) {
-            return str_list.sliceArray(right + 1 .. str_list.lastIndex)
+            return str_list.sliceArray(right + 1..str_list.lastIndex)
         }
     }
     return emptyArray()
@@ -155,4 +153,14 @@ fun changeCase(strArr: Array<String>): ArrayList<String> {
         }
     }
     return res
+}
+
+fun turnStr(args: Array<String>?) {
+    val sc = Scanner(System.`in`)
+    val a: String = sc.next()
+    val list = a.split("".toRegex()).dropLastWhile { it.isEmpty() }
+        .toTypedArray() // 한 문자 씩 잘라낸다.
+    for (i in list.indices) {
+        println(list[i])
+    }
 }
