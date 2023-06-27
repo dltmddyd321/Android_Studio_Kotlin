@@ -4,7 +4,7 @@ import androidx.navigation.NavController
 
 object Destinations {
     const val Home = "home"
-    const val Manifest = "manifest"
+    const val Manifest = "manifest/{roverName}"
 }
 
 //Nav 동작 클래스

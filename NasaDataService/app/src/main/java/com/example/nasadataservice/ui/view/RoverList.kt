@@ -2,6 +2,7 @@ package com.example.nasadataservice.ui.view
 
 import android.graphics.Color
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -26,11 +27,15 @@ import com.example.nasadataservice.ui.theme.BackgroundCustom
 @Composable
 @Preview
 fun RoverPreview() {
-    Rover("Perseverance", R.drawable.perseverance, "18 February 2021", "12.56 km")
+    Rover("Perseverance", R.drawable.perseverance, "18 February 2021", "12.56 km") {
+
+    }
 }
 
 @Composable
-fun RoverList() {
+fun RoverList(
+    onClick: (roverName: String) -> Unit
+) {
     Surface(color = BackgroundCustom, modifier = Modifier.fillMaxSize()) {
         LazyColumn {
             items(count = roverUiModelList.size, itemContent = { index ->
@@ -38,7 +43,8 @@ fun RoverList() {
                     name = roverUiModelList[index].name,
                     img = roverUiModelList[index].image,
                     landingDate = roverUiModelList[index].landingDate,
-                    distance = roverUiModelList[index].distance
+                    distance = roverUiModelList[index].distance,
+                    onClick = onClick
                 )
             })
         }
@@ -46,8 +52,17 @@ fun RoverList() {
 }
 
 @Composable
-fun Rover(name: String, img: Int, landingDate: String, distance: String) {
-    Card(modifier = Modifier.padding(16.dp), backgroundColor = MaterialTheme.colors.primaryVariant) {
+fun Rover(
+    name: String,
+    img: Int,
+    landingDate: String,
+    distance: String,
+    onClick: (roverName: String) -> Unit
+) {
+    Card(
+        modifier = Modifier.padding(16.dp).clickable { onClick.invoke(name) },
+        backgroundColor = MaterialTheme.colors.primaryVariant
+    ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Text(
                 modifier = Modifier.fillMaxWidth(),

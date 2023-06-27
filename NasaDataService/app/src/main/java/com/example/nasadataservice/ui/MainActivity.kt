@@ -1,4 +1,4 @@
-package com.example.nasadataservice
+package com.example.nasadataservice.ui
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -18,9 +18,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            NasaDataServiceTheme {
-                RoverList()
-            }
+            NavCompose()
         }
     }
 }
