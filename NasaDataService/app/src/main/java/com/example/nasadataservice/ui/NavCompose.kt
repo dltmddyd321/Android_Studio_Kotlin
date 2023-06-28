@@ -19,19 +19,16 @@ fun NavCompose() {
         Action(navController)
     }
 
-    var selectedRoverName: String? = null
-
     //Nav 화면 구성
     NasaDataServiceTheme {
         NavHost(navController = navController, startDestination = Home) {
             composable(Home) {
                 RoverList { roverName ->
-                    selectedRoverName = roverName
                     actions.manifest(roverName)
                 }
             }
             composable(Manifest) {
-                ManifestScreen(selectedRoverName)
+                ManifestScreen(roverName = it.arguments?.getString("roverName"))
             }
         }
     }
