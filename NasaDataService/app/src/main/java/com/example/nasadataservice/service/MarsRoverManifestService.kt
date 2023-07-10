@@ -10,12 +10,13 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 
 interface MarsRoverManifestService {
-
-    @GET("mars-photos/api/v1/manifest/{rover_name}?api_key=DEMO_KEY")
+//photos?sol=1000&api_key=DEMO_KEY
+    @GET("mars-photos/api/v1/rovers/{rover_name}/?sol=10&api_key=$DEMO_KEY")
     suspend fun getMarsRoverManifest(@Path("rover_name") roverName: String): RoverManifestRemoteModel
 
     companion object {
         private const val BASE_URL = "https://api.nasa.gov/"
+        private const val DEMO_KEY = "52mHwkAI7LHWh8ExbPZa0MErsTOez9OThVZdlRBH"
 
         fun create(): MarsRoverManifestService {
             val logger = HttpLoggingInterceptor()
