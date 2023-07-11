@@ -171,6 +171,7 @@ fun personalInformationCollectionValidityPeriod(
     privacies: Array<String>
 ): IntArray {
     val calArr = mutableListOf<String>()
+    val result = arrayListOf<Int>()
 
     privacies.forEach { privacy ->
         val date = privacy.split(" ").first()
@@ -181,8 +182,23 @@ fun personalInformationCollectionValidityPeriod(
             val termSize = termArr[1]
 
             if (name == termName) {
-                
+                val dateArr = date.split(".")
+                var year = dateArr.first().toInt()
+                var month = dateArr[1].toInt()
+                val day = dateArr[2].toInt()
+
+                month += termSize.toInt()
+                year += month / 12
+                month %= 12
+                val calDateString = "$year.$month.$day $termName"
+                calArr.add(calDateString)
             }
         }
     }
+
+    calArr.forEach {
+
+    }
+
+    return result.toIntArray()
 }
