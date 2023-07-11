@@ -164,3 +164,25 @@ fun turnStr(args: Array<String>?) {
         println(list[i])
     }
 }
+
+fun personalInformationCollectionValidityPeriod(
+    today: String,
+    terms: Array<String>,
+    privacies: Array<String>
+): IntArray {
+    val calArr = mutableListOf<String>()
+
+    privacies.forEach { privacy ->
+        val date = privacy.split(" ").first()
+        val name = privacy.split(" ")[1]
+        terms.forEach { term ->
+            val termArr = term.split(" ")
+            val termName = termArr.first()
+            val termSize = termArr[1]
+
+            if (name == termName) {
+                
+            }
+        }
+    }
+}
