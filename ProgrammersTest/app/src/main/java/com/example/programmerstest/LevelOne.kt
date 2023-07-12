@@ -196,8 +196,23 @@ fun personalInformationCollectionValidityPeriod(
         }
     }
 
-    calArr.forEach {
+    val todayArr = today.split(".")
+    val todayYear = todayArr[0].toInt()
+    val todayMonth = todayArr[1].toInt()
+    val todayDate = todayArr[2].toInt()
 
+    calArr.forEachIndexed { index, s ->
+        val year = s.split(" ")[0].split(".")[0].toInt()
+        val month = s.split(" ")[0].split(".")[1].toInt()
+        val date = s.split(" ")[0].split(".")[2].toInt()
+
+        if (year < todayYear) {
+            result.add(index + 1)
+        } else if (year == todayYear && month < todayMonth) {
+            result.add(index + 1)
+        } else if (year == todayYear && month == todayMonth && date < todayDate) {
+            result.add(index + 1)
+        }
     }
 
     return result.toIntArray()
