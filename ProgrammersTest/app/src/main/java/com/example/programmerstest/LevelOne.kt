@@ -7,7 +7,7 @@ import kotlin.collections.ArrayList
 import kotlin.math.max
 
 fun main() {
-    turnStr(null)
+    println(checkPrefix("banana", "ban"))
 }
 
 fun morePlus(a: Int, b: Int): Int {
@@ -216,4 +216,14 @@ fun personalInformationCollectionValidityPeriod(
     }
 
     return result.toIntArray()
+}
+
+fun checkPrefix(my_string: String, is_prefix: String): Int {
+    val prefixList = mutableListOf<String>()
+    var stackStr = ""
+    my_string.forEach {
+        stackStr += it.toString()
+        prefixList.add(stackStr)
+    }
+    return if (is_prefix in prefixList) 1 else 0
 }
