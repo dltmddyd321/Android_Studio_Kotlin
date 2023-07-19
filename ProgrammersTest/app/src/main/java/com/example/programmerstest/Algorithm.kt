@@ -16,4 +16,24 @@ class Algorithm {
             }
         }
     }
+
+    fun selectionSort(): ArrayList<Int> { //O(n제곱)
+        var min: Int
+
+        fun changePos(numList: ArrayList<Int>, min: Int, i: Int) {
+            val temp: Int = numList[min]
+            numList[min] = numList[i]
+            numList[i] = temp
+        }
+
+        for (i in arrNum.indices) {
+            min = i
+            for (j in i + 1 until arrNum.size) {
+                if (arrNum[j] < arrNum[min]) min = j
+            }
+            changePos(arrNum, min, i)
+        }
+
+        return arrNum
+    }
 }
