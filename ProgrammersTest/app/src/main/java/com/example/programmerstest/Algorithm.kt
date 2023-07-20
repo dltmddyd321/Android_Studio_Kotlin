@@ -36,4 +36,21 @@ class Algorithm {
 
         return arrNum
     }
+
+    fun insertSort() {
+        var last: Int
+        var temp: Int
+
+        //정렬 검사가 필요한 1번 인덱스부터 시작
+        for (i in 1 until arrNum.size) {
+            temp = arrNum[i]
+            last = i
+
+            while ((last > 0) && (arrNum[last - 1] > temp)) {
+                arrNum[last] = arrNum[last - 1]
+                last--
+            }
+            arrNum[last] = temp
+        }
+    }
 }
