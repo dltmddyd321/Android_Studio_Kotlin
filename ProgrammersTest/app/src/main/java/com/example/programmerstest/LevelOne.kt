@@ -227,3 +227,18 @@ fun checkPrefix(my_string: String, is_prefix: String): Int {
     }
     return if (is_prefix in prefixList) 1 else 0
 }
+
+fun carveList(arr: IntArray, query: IntArray): IntArray {
+    var answer: IntArray = arr
+
+    for (i in query.indices) {
+        val firstIdx = 0
+        val lastIdx = answer.size - 1
+        answer = if (i % 2 == 0) {
+            answer.slice(firstIdx..query[i]).toIntArray()
+        } else {
+            answer.slice(query[i]..lastIdx).toIntArray()
+        }
+    }
+    return answer
+}
