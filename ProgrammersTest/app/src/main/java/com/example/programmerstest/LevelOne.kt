@@ -242,3 +242,24 @@ fun carveList(arr: IntArray, query: IntArray): IntArray {
     }
     return answer
 }
+
+fun multiplyString(my_string: String, k: Int): String {
+    var answer = ""
+    repeat(k) {
+        answer += my_string
+    }
+    return answer
+}
+
+fun connectNumber(num_list: IntArray): Int {
+    var evenStr = ""
+    var oddStr = ""
+    num_list.forEach {
+        if (it % 2 == 0) {
+            evenStr += it.toString()
+        } else {
+            oddStr += it.toString()
+        }
+    }
+    return evenStr.toInt() + oddStr.toInt()
+}
