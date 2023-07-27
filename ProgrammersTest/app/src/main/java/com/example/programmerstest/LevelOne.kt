@@ -2,12 +2,13 @@ package com.example.programmerstest
 
 import android.util.TypedValue
 import android.widget.TextView
+import java.lang.String.join
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.math.max
 
 fun main() {
-    println(checkPrefix("banana", "ban"))
+    println(listToString(arrayOf("a", "b", "c")))
 }
 
 fun morePlus(a: Int, b: Int): Int {
@@ -263,3 +264,14 @@ fun connectNumber(num_list: IntArray): Int {
     }
     return evenStr.toInt() + oddStr.toInt()
 }
+
+fun mixedString(str1: String, str2: String): String {
+    var res = ""
+    repeat(str1.length) {
+        res += str1[it]
+        res += str2[it]
+    }
+    return res
+}
+
+fun listToString(arr: Array<String>): String = join("", arr.toList())
