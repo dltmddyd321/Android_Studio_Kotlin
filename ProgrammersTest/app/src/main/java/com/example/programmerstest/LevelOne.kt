@@ -275,3 +275,19 @@ fun mixedString(str1: String, str2: String): String {
 }
 
 fun listToString(arr: Array<String>): String = join("", arr.toList())
+
+fun processedCode(code: String): String {
+    var mode = 0
+    var ret = ""
+    code.forEachIndexed { index, c ->
+        if (c.toString() == "1") {
+            mode = if (mode == 0) 1 else 0
+        }
+        if (mode == 0) {
+            if (index % 2 == 0) ret += c.toString()
+        } else {
+            if (index % 2 != 0) ret += c.toString()
+        }
+    }
+    return ret
+}
