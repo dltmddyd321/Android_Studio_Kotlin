@@ -291,3 +291,17 @@ fun processedCode(code: String): String {
     }
     return ret
 }
+
+fun newId(new_id: String): String {
+    return new_id.lowercase()
+        .filter { it.isLowerCase() || it.isDigit() || it == '-' || it == '_' || it == '.' }
+        .replace("[.]*[.]".toRegex(), ".")
+        .removePrefix(".").removeSuffix(".")
+        .let { it.ifEmpty { "a" } }
+        .let { if (it.length >= 16) it.substring(0, 16).removeSuffix(".") else it }
+        .let { if (it.length <= 2) {
+            val sb = java.lang.StringBuilder(it)
+            while (sb.length != 3) sb.append(it.last())
+            sb.toString()
+        } else it }
+}
