@@ -305,3 +305,13 @@ fun newId(new_id: String): String {
             sb.toString()
         } else it }
 }
+
+fun chunkedArray(num_list: IntArray, n: Int): Array<IntArray> {
+    val list = num_list.toMutableList()
+    val res = list.chunked(n)
+    val result = mutableListOf<IntArray>()
+    res.forEach {
+        result.add(it.toIntArray())
+    }
+    return result.toTypedArray()
+}
