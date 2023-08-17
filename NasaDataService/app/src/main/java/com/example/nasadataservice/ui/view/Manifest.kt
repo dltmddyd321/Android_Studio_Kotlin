@@ -19,12 +19,18 @@ import com.example.nasadataservice.domain.model.RoverManifestUiModel
 
 @Composable
 fun ManifestList(
-    roverManifestUiModelList: List<RoverManifestUiModel>
+    roverManifestUiModelList: List<RoverManifestUiModel>,
+    roverName: String,
+    onClick: (roverName: String, sol: String) -> Unit
 ) {
     Surface(color = MaterialTheme.colors.background, modifier = Modifier.fillMaxSize()) {
         LazyColumn {
             items(roverManifestUiModelList.size, itemContent = {
-                Manifest(roverManifestUiModel = roverManifestUiModelList[it])
+                Manifest(
+                    roverManifestUiModel = roverManifestUiModelList[it],
+                    roverName,
+                    onClick
+                )
             })
         }
     }
@@ -32,13 +38,15 @@ fun ManifestList(
 
 @Composable
 fun Manifest(
-    roverManifestUiModel: RoverManifestUiModel
+    roverManifestUiModel: RoverManifestUiModel,
+    roverName: String,
+    onClick: (roverName: String, sol: String) -> Unit
 ) {
     Card(modifier = Modifier
         .padding(16.dp)
         .fillMaxWidth()
         .clickable {
-
+            onClick(roverName, roverManifestUiModel.sol)
         }) {
         Column(modifier = Modifier.padding(16.dp)) {
             Text(text = stringResource(id = R.string.sol, roverManifestUiModel.sol))
