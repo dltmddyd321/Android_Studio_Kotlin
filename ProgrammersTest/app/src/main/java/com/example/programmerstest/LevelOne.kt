@@ -8,7 +8,7 @@ import kotlin.collections.ArrayList
 import kotlin.math.max
 
 fun main() {
-    println(listToString(arrayOf("a", "b", "c")))
+    println(overWrite("He11oWor1d", "lloWorl", 2))
 }
 
 fun morePlus(a: Int, b: Int): Int {
@@ -327,4 +327,8 @@ fun solution(denum1: Int, num1: Int, denum2: Int, num2: Int): IntArray {
         }
     }
     return intArrayOf(denum3 / min, num3 / min)
+}
+
+fun overWrite(my_string: String, overwrite_string: String, s: Int): String {
+    return my_string.substring(0, s) + overwrite_string + my_string.substring(overwrite_string.length + s)
 }
