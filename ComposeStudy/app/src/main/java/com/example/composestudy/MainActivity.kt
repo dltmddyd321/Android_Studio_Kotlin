@@ -196,6 +196,7 @@ fun BoxEx() {
     }
 }
 
+//가로
 @Composable
 fun RowEx() {
     Row(
@@ -224,10 +225,33 @@ fun RowEx() {
     }
 }
 
+//세로
+@Composable
+fun ColumnEx() {
+//    Column(
+//        horizontalAlignment = Alignment.CenterHorizontally,
+//        modifier = Modifier.size(100.dp)
+//    ) {
+//        Text(text = "첫 번째")
+//        Text(text = "두 번째")
+//        Text(text = "세 번째")
+//    }
+
+    Column(
+        horizontalAlignment = Alignment.End,
+        verticalArrangement = Arrangement.Center,
+        modifier = Modifier.size(100.dp)
+    ) {
+        Text(text = "첫 번째", modifier = Modifier.align(Alignment.CenterHorizontally))
+        Text(text = "두 번째")
+        Text(text = "세 번째", modifier = Modifier.align(Alignment.Start))
+    }
+}
+
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
     ComposeStudyTheme {
-        Greeting("Android")
+        ColumnEx()
     }
 }
