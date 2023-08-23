@@ -27,6 +27,8 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
+import coil.compose.rememberImagePainter
 import com.example.composestudy.ui.theme.ComposeStudyTheme
 
 class MainActivity : ComponentActivity() {
@@ -35,9 +37,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             ComposeStudyTheme {
                 // A surface container using the 'background' color from the theme
-                ButtonExample {
-                    Toast.makeText(this, "Send Clicked!", Toast.LENGTH_SHORT).show()
-                }
+                ImageEx()
             }
         }
     }
@@ -259,6 +259,10 @@ fun ImageEx() {
             contentDescription = "테스트 이미지"
         )
         Image(imageVector = Icons.Filled.Settings, contentDescription = "설정")
+        AsyncImage(
+            model = "https://i1.ruliweb.com/img/22/12/11/184ff52f60b567d03.jpg",
+            contentDescription = "고토 히토리"
+        )
     }
 }
 
