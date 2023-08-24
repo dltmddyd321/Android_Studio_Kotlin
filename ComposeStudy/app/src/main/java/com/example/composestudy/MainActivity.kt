@@ -15,7 +15,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Send
 import androidx.compose.material.icons.filled.Settings
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -81,12 +81,10 @@ fun Greeting(name: String) {
 @Composable
 fun SurfaceExample(name: String) {
     Surface(
-        color = MaterialTheme.colors.surface,
-        modifier = Modifier.padding(5.dp)
+        color = MaterialTheme.colors.surface, modifier = Modifier.padding(5.dp)
     ) {
         Text(
-            text = "Hello, $name!",
-            modifier = Modifier.padding(8.dp)
+            text = "Hello, $name!", modifier = Modifier.padding(8.dp)
         )
     }
 
@@ -95,14 +93,12 @@ fun SurfaceExample(name: String) {
         modifier = Modifier.padding(5.dp),
         elevation = 10.dp,
         border = BorderStroke(
-            width = 2.dp,
-            color = Color.Magenta
+            width = 2.dp, color = Color.Magenta
         ),
         shape = CircleShape,
     ) {
         Text(
-            text = "Hello, $name!",
-            modifier = Modifier.padding(8.dp)
+            text = "Hello, $name!", modifier = Modifier.padding(8.dp)
         )
     }
 }
@@ -110,12 +106,10 @@ fun SurfaceExample(name: String) {
 @Composable
 fun ButtonExample(onClicked: () -> Unit) {
     Button(
-        onClick = { onClicked.invoke() },
-        enabled = false
+        onClick = { onClicked.invoke() }, enabled = false
     ) {
         Icon(
-            imageVector = Icons.Filled.Send,
-            contentDescription = null
+            imageVector = Icons.Filled.Send, contentDescription = null
         )
         Spacer(modifier = Modifier.size(ButtonDefaults.IconSpacing))
         Text(text = "Send")
@@ -128,22 +122,19 @@ fun ButtonExample(onClicked: () -> Unit) {
         contentPadding = PaddingValues(20.dp) //내부 내용 가장자리
     ) {
         Icon(
-            imageVector = Icons.Filled.Send,
-            contentDescription = null
+            imageVector = Icons.Filled.Send, contentDescription = null
         )
         Spacer(modifier = Modifier.size(ButtonDefaults.IconSpacing))
         Text(text = "Send")
     }
     Button(
-        onClick = { /*TODO*/ },
-        modifier = Modifier
+        onClick = { /*TODO*/ }, modifier = Modifier
 //            .fillMaxSize()
             .height(200.dp)
             .width(200.dp)
     ) {
         Icon(
-            imageVector = Icons.Filled.Search,
-            contentDescription = null
+            imageVector = Icons.Filled.Search, contentDescription = null
         )
         Spacer(modifier = Modifier.size(ButtonDefaults.IconSpacing))
         Text(text = "Search")
@@ -151,11 +142,8 @@ fun ButtonExample(onClicked: () -> Unit) {
 
     Button(
         colors = ButtonDefaults.buttonColors(
-            backgroundColor = Color.Magenta,
-            contentColor = Color.Cyan
-        ),
-        onClick = { /*TODO*/ },
-        modifier = Modifier.padding(10.dp)
+            backgroundColor = Color.Magenta, contentColor = Color.Cyan
+        ), onClick = { /*TODO*/ }, modifier = Modifier.padding(10.dp)
     ) {
         Icon(
             imageVector = Icons.Filled.Search,
@@ -167,12 +155,11 @@ fun ButtonExample(onClicked: () -> Unit) {
                 .size(ButtonDefaults.IconSpacing)
                 .background(Color.Blue)
         )
-        Text(text = "Search",
-            modifier = Modifier
-                .clickable { // 클릭 가능한 오브젝트 설정
-                }
-                .offset(y = 10.dp)
-                .background(Color.Blue))
+        Text(text = "Search", modifier = Modifier
+            .clickable { // 클릭 가능한 오브젝트 설정
+            }
+            .offset(y = 10.dp)
+            .background(Color.Blue))
     }
 }
 
@@ -203,8 +190,7 @@ fun BoxEx() {
 @Composable
 fun RowEx() {
     Row(
-        verticalAlignment = Alignment.Bottom,
-        modifier = Modifier.height(40.dp)
+        verticalAlignment = Alignment.Bottom, modifier = Modifier.height(40.dp)
     ) {
         Text(text = "첫 번째", modifier = Modifier.align(Alignment.Top)) //이 부분만 상단 배치
         Text(text = "두 번째")
@@ -213,8 +199,7 @@ fun RowEx() {
 
     Row(
         horizontalArrangement = Arrangement.SpaceAround, //간격 공백
-        verticalAlignment = Alignment.Bottom,
-        modifier = Modifier
+        verticalAlignment = Alignment.Bottom, modifier = Modifier
             .height(20.dp)
             .width(200.dp)
     ) {
@@ -263,6 +248,21 @@ fun ImageEx() {
             model = "https://i1.ruliweb.com/img/22/12/11/184ff52f60b567d03.jpg",
             contentDescription = "고토 히토리"
         )
+    }
+}
+
+@Composable
+fun TextFieldEx() {
+    var name by remember { mutableStateOf("Tom") }
+
+    Column(modifier = Modifier.padding(16.dp)) {
+        OutlinedTextField(value = name, label = { Text(text = "이름") }, onValueChange = {
+            name = it
+        })
+
+        Spacer(modifier = Modifier.size(8.dp))
+
+        Text(text = "Hello, $name!")
     }
 }
 
