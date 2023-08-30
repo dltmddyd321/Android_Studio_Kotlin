@@ -305,10 +305,22 @@ fun TopAppBarEx(name: String) {
     }
 }
 
+@Composable
+fun CheckBoxEx() {
+    Row(verticalAlignment = Alignment.CenterVertically) {
+        val (getter, setter) = remember { mutableStateOf(false) }
+        Checkbox(checked = getter, onCheckedChange = setter)
+
+        Text(text = "프로그래머입니다.", modifier = Modifier.clickable {
+            setter(!getter)
+        })
+    }
+}
+
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
     ComposeStudyTheme {
-        TopAppBarEx("World")
+        CheckBoxEx()
     }
 }
