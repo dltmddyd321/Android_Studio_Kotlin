@@ -39,6 +39,33 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+
+    companion object {
+        val cardData = CardData(
+            "https://i1.ruliweb.com/img/22/12/11/184ff52f60b567d03.jpg",
+            "고토 히토리",
+            "Anime",
+            "봇치 더 락"
+        )
+    }
+}
+
+@Composable
+fun CardEx(cardData: CardData) {
+    val placeHolderColor = Color(0x33000000)
+
+    Card(
+        elevation = 8.dp,
+        modifier = Modifier.padding(4.dp)
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.padding(8.dp)
+        ) {
+            AsyncImage(model = cardData.imageUri, contentDescription = cardData.imageDescription)
+            Spacer(modifier = Modifier.size(8.dp))
+        }
+    }
 }
 
 @Composable
@@ -316,6 +343,17 @@ fun CheckBoxEx() {
         })
     }
 }
+
+@Composable
+fun PhotoCard() {
+}
+
+data class CardData(
+    val imageUri: String,
+    val imageDescription: String,
+    val author: String,
+    val description: String
+)
 
 @Preview(showBackground = true)
 @Composable
