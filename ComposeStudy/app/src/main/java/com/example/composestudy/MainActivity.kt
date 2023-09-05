@@ -16,7 +16,10 @@ import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.ColorPainter
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -62,8 +65,20 @@ fun CardEx(cardData: CardData) {
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.padding(8.dp)
         ) {
-            AsyncImage(model = cardData.imageUri, contentDescription = cardData.imageDescription)
+            AsyncImage(
+                model = cardData.imageUri,
+                contentScale = ContentScale.Crop,
+                contentDescription = cardData.imageDescription,
+                placeholder = ColorPainter(placeHolderColor),
+                modifier = Modifier
+                    .size(32.dp)
+                    .clip(CircleShape)
+            )
             Spacer(modifier = Modifier.size(8.dp))
+            Column {
+                Text(text = cardData.author)
+                Text(text = cardData.description)
+            }
         }
     }
 }
