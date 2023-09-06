@@ -9,6 +9,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.BoxScopeInstance.align
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -54,8 +55,27 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
+fun CheckBoxWithSlot(
+    checked: MutableState<Boolean>,
+    content: @Composable RowScope.() -> Unit
+) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier.clickable { checked.value = !checked.value }) {
+        Checkbox(checked = checked.value, onCheckedChange = { checked.value = it })
+        content()
+    }
+}
+
+@Composable
 fun CardEx(cardData: CardData) {
     val placeHolderColor = Color(0x33000000)
+    val check = remember { mutableStateOf(false) }
+
+
+    CheckBoxWithSlot(check) {
+        Text(text = "텍스트 1번", modifier = Modifier.align(Alignment.CenterVertically))
+    }
 
     Card(
         elevation = 8.dp,
