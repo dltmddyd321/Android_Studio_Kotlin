@@ -1,7 +1,6 @@
 package com.example.composestudy
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.BorderStroke
@@ -9,7 +8,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.layout.BoxScopeInstance.align
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -30,7 +28,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
-import coil.compose.rememberImagePainter
 import com.example.composestudy.ui.theme.ComposeStudyTheme
 
 class MainActivity : ComponentActivity() {
@@ -56,13 +53,14 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun CheckBoxWithSlot(
-    checked: MutableState<Boolean>,
+    checked: Boolean,
+    onCheckedChanged: () -> Unit,
     content: @Composable RowScope.() -> Unit
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.clickable { checked.value = !checked.value }) {
-        Checkbox(checked = checked.value, onCheckedChange = { checked.value = it })
+        modifier = Modifier.clickable { onCheckedChanged.invoke() }) {
+        Checkbox(checked = checked, onCheckedChange = { onCheckedChanged.invoke() })
         content()
     }
 }
@@ -73,7 +71,9 @@ fun CardEx(cardData: CardData) {
     val check = remember { mutableStateOf(false) }
 
 
-    CheckBoxWithSlot(check) {
+    CheckBoxWithSlot(check.value, onCheckedChanged = {
+        check.value = !check.value
+    }) {
         Text(text = "텍스트 1번", modifier = Modifier.align(Alignment.CenterVertically))
     }
 
