@@ -1,5 +1,6 @@
 package com.example.composestudy
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -43,22 +44,16 @@ class MainActivity : ComponentActivity() {
 
     companion object {
         val cardData = CardData(
-            "https://i1.ruliweb.com/img/22/12/11/184ff52f60b567d03.jpg",
-            "고토 히토리",
-            "Anime",
-            "봇치 더 락"
+            "https://i1.ruliweb.com/img/22/12/11/184ff52f60b567d03.jpg", "고토 히토리", "Anime", "봇치 더 락"
         )
     }
 }
 
 @Composable
 fun CheckBoxWithSlot(
-    checked: Boolean,
-    onCheckedChanged: () -> Unit,
-    content: @Composable RowScope.() -> Unit
+    checked: Boolean, onCheckedChanged: () -> Unit, content: @Composable RowScope.() -> Unit
 ) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
+    Row(verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier.clickable { onCheckedChanged.invoke() }) {
         Checkbox(checked = checked, onCheckedChange = { onCheckedChanged.invoke() })
         content()
@@ -78,12 +73,10 @@ fun CardEx(cardData: CardData) {
     }
 
     Card(
-        elevation = 8.dp,
-        modifier = Modifier.padding(4.dp)
+        elevation = 8.dp, modifier = Modifier.padding(4.dp)
     ) {
         Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.padding(8.dp)
+            verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(8.dp)
         ) {
             AsyncImage(
                 model = cardData.imageUri,
@@ -329,23 +322,21 @@ fun TextFieldEx() {
 @Composable
 fun TopAppBarEx(name: String) {
     Column {
-        TopAppBar(
-            title = { Text(text = "TopAppBar") },
-            navigationIcon = {
-                IconButton(onClick = { }) {
-                    Icon(imageVector = Icons.Filled.ArrowBack, contentDescription = "")
-                }
-            }, actions = {
-                IconButton(onClick = { }) {
-                    Icon(imageVector = Icons.Filled.Search, contentDescription = "검색")
-                }
-                IconButton(onClick = { }) {
-                    Icon(imageVector = Icons.Filled.Settings, contentDescription = "설정")
-                }
-                IconButton(onClick = { }) {
-                    Icon(imageVector = Icons.Filled.AccountBox, contentDescription = "계정")
-                }
-            })
+        TopAppBar(title = { Text(text = "TopAppBar") }, navigationIcon = {
+            IconButton(onClick = { }) {
+                Icon(imageVector = Icons.Filled.ArrowBack, contentDescription = "")
+            }
+        }, actions = {
+            IconButton(onClick = { }) {
+                Icon(imageVector = Icons.Filled.Search, contentDescription = "검색")
+            }
+            IconButton(onClick = { }) {
+                Icon(imageVector = Icons.Filled.Settings, contentDescription = "설정")
+            }
+            IconButton(onClick = { }) {
+                Icon(imageVector = Icons.Filled.AccountBox, contentDescription = "계정")
+            }
+        })
 
         TopAppBar {
             IconButton(onClick = {}) {
@@ -380,20 +371,53 @@ fun CheckBoxEx() {
 }
 
 @Composable
-fun PhotoCard() {
+fun CheckBoxWithContent(
+    checked: Boolean, toggleState: () -> Unit, content: @Composable RowScope.() -> Unit
+) {
+    Row(verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier.clickable { toggleState.invoke() }) {
+        Checkbox(checked = checked, onCheckedChange = { toggleState.invoke() })
+        content()
+    }
+}
+
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
+@Composable
+fun ScaffoldEx() {
+    var checked by remember { mutableStateOf(false) }
+
+    Scaffold(topBar = {
+        TopAppBar(navigationIcon = {
+            IconButton(onClick = { /*TODO*/ }) {
+                Image(imageVector = Icons.Filled.ArrowBack, contentDescription = "뒤로 가기")
+            }
+        }, title = {
+            Text(text = "Scaffold App")
+        })
+    }, floatingActionButton = {
+        FloatingActionButton(onClick = { /*TODO*/ }) {
+            
+        }
+    }) { //내부 영역
+        Surface(modifier = Modifier.padding(8.dp)) {
+            CheckBoxWithContent(
+                checked = checked,
+                toggleState = { checked = !checked })
+            {
+                Text(text = "컴포즈 기초 공부")
+            }
+        }
+    }
 }
 
 data class CardData(
-    val imageUri: String,
-    val imageDescription: String,
-    val author: String,
-    val description: String
+    val imageUri: String, val imageDescription: String, val author: String, val description: String
 )
 
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
     ComposeStudyTheme {
-        CheckBoxEx()
+        ScaffoldEx()
     }
 }
