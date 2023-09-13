@@ -396,7 +396,7 @@ fun ScaffoldEx() {
         })
     }, floatingActionButton = {
         FloatingActionButton(onClick = { /*TODO*/ }) {
-            
+
         }
     }) { //내부 영역
         Surface(modifier = Modifier.padding(8.dp)) {
@@ -410,14 +410,35 @@ fun ScaffoldEx() {
     }
 }
 
+@Composable
+fun Item(itemData: ItemData) {
+    Card(elevation = 8.dp, modifier = Modifier.padding(16.dp)) {
+        Column() {
+
+        }
+    }
+}
+
 data class CardData(
     val imageUri: String, val imageDescription: String, val author: String, val description: String
+)
+
+data class ItemData(
+    val imageId: Int,
+    val title: String,
+    val description: String
 )
 
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
     ComposeStudyTheme {
-        ScaffoldEx()
+        Item(
+            ItemData(
+                imageId = R.drawable.ic_launcher_foreground,
+                title = "안드로이드",
+                description = "카탈로그 테스트"
+            )
+        )
     }
 }
