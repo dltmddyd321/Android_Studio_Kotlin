@@ -413,8 +413,13 @@ fun ScaffoldEx() {
 @Composable
 fun Item(itemData: ItemData) {
     Card(elevation = 8.dp, modifier = Modifier.padding(16.dp)) {
-        Column() {
-
+        Column(modifier = Modifier.padding(8.dp)) {
+            Image(
+                painter = painterResource(id = itemData.imageId),
+                contentDescription = itemData.title
+            )
+            Spacer(modifier = Modifier.size(8.dp))
+            Text(text = itemData.title, style = MaterialTheme.typography.h4)
         }
     }
 }
