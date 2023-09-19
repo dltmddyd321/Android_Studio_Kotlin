@@ -51,13 +51,6 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
-
-    private fun checkRepeat(rrule: RecurrenceRule) {
-        val currentTime = System.currentTimeMillis()
-        val dateTime = DateTime(currentTime)
-
-        rrule.iterator(dateTime)
-    }
 }
 
 @Composable

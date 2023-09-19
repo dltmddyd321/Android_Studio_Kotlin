@@ -2,13 +2,18 @@ package com.example.programmerstest
 
 import android.util.TypedValue
 import android.widget.TextView
+import org.dmfs.rfc5545.DateTime
+import org.dmfs.rfc5545.recur.RecurrenceRule
 import java.lang.String.join
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.math.max
 
 fun main() {
-    println(overWrite("He11oWor1d", "lloWorl", 2))
+    val rrule = RecurrenceRule("FREQ=WEEKLY;INTERVAL=1;BYDAY=MO")
+    val dateTime = DateTime(TimeZone.getTimeZone("Asia/Seoul"), 1693753200000)
+    val iterator = rrule.iterator(dateTime)
+    println("인스턴스 확인 : ${iterator.nextMillis()}")
 }
 
 fun morePlus(a: Int, b: Int): Int {
@@ -299,11 +304,13 @@ fun newId(new_id: String): String {
         .removePrefix(".").removeSuffix(".")
         .let { it.ifEmpty { "a" } }
         .let { if (it.length >= 16) it.substring(0, 16).removeSuffix(".") else it }
-        .let { if (it.length <= 2) {
-            val sb = java.lang.StringBuilder(it)
-            while (sb.length != 3) sb.append(it.last())
-            sb.toString()
-        } else it }
+        .let {
+            if (it.length <= 2) {
+                val sb = java.lang.StringBuilder(it)
+                while (sb.length != 3) sb.append(it.last())
+                sb.toString()
+            } else it
+        }
 }
 
 fun chunkedArray(num_list: IntArray, n: Int): Array<IntArray> {
@@ -330,5 +337,8 @@ fun solution(denum1: Int, num1: Int, denum2: Int, num2: Int): IntArray {
 }
 
 fun overWrite(my_string: String, overwrite_string: String, s: Int): String {
-    return my_string.substring(0, s) + overwrite_string + my_string.substring(overwrite_string.length + s)
+    return my_string.substring(
+        0,
+        s
+    ) + overwrite_string + my_string.substring(overwrite_string.length + s)
 }
