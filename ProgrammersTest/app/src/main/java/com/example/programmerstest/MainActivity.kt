@@ -27,6 +27,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowInsetsControllerCompat
 import com.example.programmerstest.ui.theme.ProgrammersTestTheme
+import org.dmfs.rfc5545.DateTime
+import org.dmfs.rfc5545.recur.RecurrenceRule
+import java.util.*
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,6 +50,13 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+    }
+
+    private fun checkRepeat(rrule: RecurrenceRule) {
+        val currentTime = System.currentTimeMillis()
+        val dateTime = DateTime(currentTime)
+
+        rrule.iterator(dateTime)
     }
 }
 
