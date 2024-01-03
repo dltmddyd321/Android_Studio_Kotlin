@@ -2,24 +2,393 @@ package com.example.programmerstest
 
 import android.util.TypedValue
 import android.widget.TextView
-import org.dmfs.rfc5545.DateTime
-import org.dmfs.rfc5545.recur.RecurrenceRule
 import java.lang.String.join
 import java.util.*
-import kotlin.collections.ArrayList
 import kotlin.math.max
 
+
 fun main() {
-    val rrule = RecurrenceRule("FREQ=WEEKLY;INTERVAL=1;BYDAY=MO")
-    val dateTime = DateTime(TimeZone.getTimeZone("Asia/Seoul"), 1693753200000)
-    val iterator = rrule.iterator(dateTime)
-    println("인스턴스 확인 : ${iterator.nextMillis()}")
+    val arr = intArrayOf(10,100, 20, 150, 1, 100, 200)
+    solution(3, arr).forEach {
+        println(it)
+    }
+}
+
+fun solution(k: Int, score: IntArray): IntArray {
+    val res = mutableListOf<Int>()
+    val classList = mutableListOf<Int>()
+    repeat(k) {
+        classList.add(score[it])
+        classList.sort()
+        res.add(classList.first())
+    }
+    score.forEachIndexed { index, i ->
+        if (index > k - 1)  {
+            if (i >= classList.last()) {
+                classList.removeFirst()
+                classList.add(i)
+                classList.sort()
+                res.add(classList.first())
+            } else {
+                res.add(classList.first())
+            }
+        }
+    }
+    return res.toIntArray()
+}
+
+fun solution(n: Int, lost: IntArray, reserve: IntArray): Int {
+    var answer = n
+    // set을 사용하여 여벌옷이 있는 사람을 제외하고 추가
+    val lostSet = lost.sorted().toSet() - reserve.toSet()
+    // set을 사용하여 잃어버린 사람을 제외하고 추가
+    val reserveSet = (reserve.toSet() - lost.toSet()) as MutableSet
+
+    for(l in lostSet){
+        when{
+            // 이전 사람이 여벌옷이 있는 경우
+            l - 1 in reserveSet -> reserveSet.remove(l - 1)
+            // 앞 사람이 여벌옷이 있는 경우
+            l + 1 in reserveSet -> reserveSet.remove(l + 1)
+            // 체육복을 구하지 못한경우 answer 감소
+            else -> answer--
+        }
+    }
+
+    return answer
+}
+
+fun foodSol(food: IntArray): String {
+//    var size = 1
+//    for ((index, i) in food.withIndex()) {
+//        if (index == 0) continue
+//        size += if (i % 2 == 0) {
+//            i
+//        } else {
+//            i - 1
+//        }
+//    }
+//    val result = arrayOfNulls<Int>(size).toMutableList()
+//    result.add(size / 2, 0)
+    val foodCnt = food.slice(1 until food.size).map { it / 2 }
+    val individualFood = mutableListOf<Int>()
+    for (i in foodCnt.indices) {
+        for (j in 0 until foodCnt[i]) {
+            if (foodCnt[i] != 0) {
+                individualFood.add(i + 1)
+            }
+        }
+    }
+    return individualFood.joinToString("") + "0" + individualFood.reversed().joinToString("")
+}
+
+fun solution(X: String, Y: String): String {
+
+    fun checkNoCommonElements(array1: IntArray, array2: IntArray): Boolean {
+        val combinedArray = array1 + array2
+        val uniqueElementsCount = combinedArray.toSet().size
+        val totalLength = array1.size + array2.size
+
+        return uniqueElementsCount == totalLength
+    }
+
+    fun findCommonPairs(array1: IntArray, array2: IntArray): MutableList<Int> {
+        val commonPairs = mutableListOf<Int>()
+
+        if (checkNoCommonElements(array1, array2)) return emptyList<Int>().toMutableList()
+
+        for (element in array1.toSet()) {
+            val countInArray1 = array1.count { it == element }
+            val countInArray2 = array2.count { it == element }
+
+            val commonCount = minOf(countInArray1, countInArray2)
+
+            repeat(commonCount) {
+                commonPairs.add(element)
+            }
+        }
+
+        return commonPairs
+    }
+
+    val xArr = X.map { it.toString().toInt() }.toIntArray()
+    val yArr = Y.map { it.toString().toInt() }.toIntArray()
+    val checkedList = findCommonPairs(xArr, yArr)
+    val temp = mutableListOf<Int>()
+
+
+    if (checkedList.all { it == 0 }) temp.add(0)
+    else if (checkedList.isEmpty()) temp.add(-1)
+    else temp.addAll(checkedList)
+
+    temp.sortDescending()
+    return temp.joinToString("")
 }
 
 fun morePlus(a: Int, b: Int): Int {
     val first = (a.toString() + b.toString()).toInt()
     val second = (b.toString() + a.toString()).toInt()
     return max(first, second)
+}
+
+fun solution(players: Array<String>, callings: Array<String>): Array<String> {
+    val rankMap: HashMap<String, Int> = hashMapOf()
+
+    //원래 플레이어들의 위치 값을 정리한다.
+    for (i in players.indices) {
+        rankMap[players[i]] = i
+    }
+
+    for (i in callings) {
+        //계산 중인 배열에서 기존 위치 값 가져온다.
+        val callRank = rankMap[i]
+
+        //기존 위치 값 - 1 플레이어 찾는다.
+        val front = players[callRank!! - 1]
+
+        //두 개를 변경한다.
+        players[callRank - 1] = i
+        players[callRank] = front
+
+        //이후 반복에서 사용할 rankMap에서도 변경한다.
+        rankMap[i] = callRank - 1
+        rankMap[front] = callRank
+    }
+    return players
+}
+
+fun findKin(seoul: Array<String>): String {
+    var res = ""
+    seoul.forEachIndexed { index, s ->
+        if (s == "Kim") {
+            res = "김서방은 ${index}에 있다"
+            return@forEachIndexed
+        }
+    }
+    return res
+}
+
+fun checkString(s: String): Boolean = (s.length == 4 || s.length == 6) && s.toIntOrNull() != null
+
+fun waterMelon(n: Int): String {
+    var res = ""
+    repeat(n) {
+        res += if (it % 2 == 0) {
+            "수"
+        } else {
+            "박"
+        }
+    }
+    return res
+}
+
+fun solution(s: String): Int {
+    return s.toInt()
+}
+
+
+internal object Solution {
+    @JvmStatic
+    fun main(args: Array<String>) {
+        val sc = Scanner(System.`in`)
+        val a = sc.nextInt()
+        val b = sc.nextInt()
+        val star = "*"
+        for (i in 0 until b) {
+            for (j in 0 until a) {
+                print(star)
+            }
+            println()
+        }
+    }
+}
+
+fun solution(x: Int, n: Int): LongArray {
+    val res = mutableListOf<Long>()
+    var temp = 0
+    repeat(n) {
+        temp += x
+        res.add(temp.toLong())
+    }
+    return res.toLongArray()
+}
+
+fun weirdString(s: String): String {
+    val splitString = s.split(' ')
+    var answer = arrayOf<String>()
+
+    splitString.forEach { s ->
+        var string = ""
+        s.forEachIndexed { index, c ->
+            string += when (index % 2) {
+                0 -> c.uppercaseChar()
+                else -> c.lowercaseChar()
+            }
+        }
+        answer += string
+    }
+
+    //배열 요소를 공백으로 구분하여 String으로 합친다.
+    return answer.joinToString(' '.toString())
+}
+
+fun avr(arr: IntArray): Double = arr.average()
+
+fun price(price: Int, money: Int, count: Int): Long {
+    var temp = 0
+    repeat(count) {
+        temp += price + price * it
+    }
+    return if (temp <= money) return 0 else (temp - money).toLong()
+}
+
+fun solution(absolutes: IntArray, signs: BooleanArray): Int {
+    val temp = mutableListOf<Int>()
+    signs.forEachIndexed { index, value ->
+        if (!value) temp.add(-absolutes[index])
+        else temp.add(absolutes[index])
+    }
+    return temp.sum()
+}
+
+fun minSquare(sizes: Array<IntArray>): Int {
+    val areas = mutableListOf<Int>()
+    val widths = mutableListOf<Int>()
+    val heights = mutableListOf<Int>()
+
+    sizes.forEach {
+        areas.add(it[0] * it[1])
+        widths.add(it[0])
+        heights.add(it[1])
+    }
+    val maxWidth = widths.maxOf { it }
+    val maxAreas = areas.maxOf { it }
+    heights.sortDescending()
+    var res = 0
+
+    heights.forEach {
+        val temp = maxWidth * it
+        if (temp > maxAreas) res = temp
+        else return@forEach
+    }
+    return res
+
+}
+
+fun solution(cards1: Array<String>, cards2: Array<String>, goal: Array<String>): String {
+    val ones = cards1.toMutableList()
+    val seconds = cards2.toMutableList()
+    val temp = mutableListOf<String>()
+    for (w in goal) {
+        if (ones.isNotEmpty() && w == ones.firstOrNull()) {
+            ones.removeFirst()
+            temp.add(w)
+            continue
+        }
+        if (seconds.isNotEmpty() && w == seconds.firstOrNull()) {
+            seconds.removeFirst()
+            temp.add(w)
+            continue
+        }
+        return "No"
+    }
+    return if (temp.joinToString() == goal.joinToString()) "Yes" else "No"
+}
+
+fun solution(num: Int): Int {
+    var num = num
+    var answer = 0
+    while (num != 1 && answer != 500) {
+        if (num % 2 == 0) {
+            num /= 2
+        } else if (num % 2 == 1) {
+            num = num * 3 + 1
+        }
+        answer++
+    }
+    if (answer == 500) {
+        answer = -1
+    }
+    return answer
+}
+
+fun tests(x: Int): Boolean {
+    var sum = 0
+    var a = x
+
+    while (a >= 1) {
+        sum += a % 10
+        a /= 10
+    }
+    return x % sum == 0
+}
+
+fun solution(k: Int, m: Int, score: IntArray): Int {
+    score.sortDescending()
+    val list = score.toMutableList().chunked(m)
+    val size = mutableListOf<Int>()
+    list.forEach { size.add(it.size) }
+    val minValues = mutableListOf<Int>()
+    list.forEach { minValues.add(it.min()) }
+
+    val map = mutableMapOf<List<Int>, Int>()
+    var tempSize = 0
+    list.forEach {
+        if (tempSize != it.size) {
+            map[it] = it.size
+            tempSize = it.size
+        }
+    }
+
+    repeat(list.size) {
+
+    }
+    var answer: Int = 0
+    return answer
+}
+
+fun solution(s: String, skip: String, index: Int): String {
+    val texts = ('a'..'z').filter { it !in skip } //제외 대상 문자열 정리
+    return s.map { texts[(texts.indexOf(it) + index) % texts.size] }.joinToString()
+}
+
+fun solution(arr1: Array<IntArray>, arr2: Array<IntArray>): Array<IntArray>? {
+    val answer = Array(arr1.size) { IntArray(arr1[0].size) }
+    for (i in arr1.indices) {
+        for (j in arr1[i].indices) {
+            answer[i][j] = arr1[i][j] + arr2[i][j]
+        }
+    }
+    return answer
+}
+
+fun solution(answers: IntArray): IntArray {
+    val userAnswers = arrayOf(
+        intArrayOf(1, 2, 3, 4, 5),
+        intArrayOf(2, 1, 2, 3, 2, 4, 2, 5),
+        intArrayOf(3, 3, 1, 1, 2, 2, 4, 4, 5, 5)
+    )
+    val correctCnt = intArrayOf(0, 0, 0)
+    val res = mutableListOf<Int>()
+
+    for ((index, value) in answers.withIndex()) {
+        if (value == userAnswers[0][index % userAnswers[0].size]) {
+            correctCnt[0] += 1
+        }
+        if (value == userAnswers[1][index % userAnswers[1].size]) {
+            correctCnt[1] += 1
+        }
+        if (value == userAnswers[2][index % userAnswers[2].size]) {
+            correctCnt[2] += 1
+        }
+    }
+
+    for ((idx, score) in correctCnt.withIndex()) {
+        if (score == correctCnt.maxOrNull()) {
+            res.add(idx + 1)
+        }
+    }
+    return res.toIntArray()
 }
 
 fun behindN(my_string: String, n: Int): String {
