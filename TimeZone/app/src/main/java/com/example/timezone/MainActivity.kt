@@ -41,4 +41,14 @@ class MainActivity : AppCompatActivity() {
 
 
     }
+
+    private fun timeLookUp() { //implementation 'commons-net:commons-net:3.6'
+        val timeServerUrl = "time-a.nist.gov"
+        val timeClient = NTPUDPClient()
+        val inetAddress = InetAddress.getByName(timeServerUrl)
+        val timeInfo: TimeInfo = timeClient.getTime(inetAddress)
+        val returnTime: Long = timeInfo.message.receiveTimeStamp.time
+        val ntpTime = Date(returnTime)
+        val deviceTime = Date(System.currentTimeMillis
+    }
 }
