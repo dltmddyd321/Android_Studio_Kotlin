@@ -14,27 +14,66 @@ fun main() {
     }
 }
 
-fun solution(k: Int, score: IntArray): IntArray {
+fun solution(number: Int, limit: Int, power: Int): Int {
+
+    val temp = mutableListOf<Int>()
     val res = mutableListOf<Int>()
-    val classList = mutableListOf<Int>()
-    repeat(k) {
-        classList.add(score[it])
-        classList.sort()
-        res.add(classList.first())
-    }
-    score.forEachIndexed { index, i ->
-        if (index > k - 1)  {
-            if (i >= classList.last()) {
-                classList.removeFirst()
-                classList.add(i)
-                classList.sort()
-                res.add(classList.first())
-            } else {
-                res.add(classList.first())
+
+    fun countDivisors(number: Int): Int {
+        var count = 0
+
+        for (i in 1..number) {
+            if (number % i == 0) {
+                count++
             }
         }
+
+        return count
     }
-    return res.toIntArray()
+
+    fun sumOfDivisors(number: Int): Int {
+        var sum = 0
+
+        for (i in 1..number) {
+            if (number % i == 0) {
+                sum += i
+            }
+        }
+
+        return sum
+    }
+
+    repeat(number) { temp.add(countDivisors(it + 1)) }
+
+    temp.forEachIndexed { index, i ->
+        if (i > limit) res.add(index + 1)
+    }
+
+    var result = 0
+    res.forEach {
+        result += sumOfDivisors(it)
+    }
+
+    return if (res.isEmpty()) {
+        temp.sum()
+    } else result
+}
+
+fun solution(k: Int, score: IntArray): IntArray {
+    val answer = IntArray(score.size)
+    val kList = IntArray(k)
+    for (i in score.indices) {
+        if (i < k) {
+            kList[i] = score[i]
+            kList.sortDescending()
+            answer[i] = kList[i]
+        } else {
+            if (kList[k - 1] < score[i]) kList[k - 1] = score[i]
+            kList.sortDescending()
+            answer[i] = kList[k - 1]
+        }
+    }
+    return answer
 }
 
 fun solution(n: Int, lost: IntArray, reserve: IntArray): Int {
