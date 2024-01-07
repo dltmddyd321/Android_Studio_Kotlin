@@ -4,15 +4,31 @@ import android.util.TypedValue
 import android.widget.TextView
 import java.lang.String.join
 import java.util.*
+import java.util.concurrent.CopyOnWriteArrayList
 import kotlin.math.max
+import kotlin.math.sqrt
 
 
 fun main() {
-    val arr = intArrayOf(10,100, 20, 150, 1, 100, 200)
+    val arr = intArrayOf(10, 100, 20, 150, 1, 100, 200)
     solution(3, arr).forEach {
         println(it)
     }
 }
+
+fun solutionSecond(number: Int, limit: Int, power: Int): Int = (1..number).map { i ->
+    val x = (1..sqrt(i.toFloat()).toInt()).filter { i % it == 0 }
+    (x + x.map { i / it }).toSet().count()
+}.map {
+    if (it > limit) power else it
+}.sumOf { it }
+
+fun solutionThird(number: Int, limit: Int, power: Int) = (1..number)
+    .map {
+        (1..it).count { each -> it % each == 0 } //약수의 개수를 구한다.
+    }.sumOf {
+        if (it > limit) power else it
+    }
 
 fun solution(number: Int, limit: Int, power: Int): Int {
 
@@ -83,8 +99,8 @@ fun solution(n: Int, lost: IntArray, reserve: IntArray): Int {
     // set을 사용하여 잃어버린 사람을 제외하고 추가
     val reserveSet = (reserve.toSet() - lost.toSet()) as MutableSet
 
-    for(l in lostSet){
-        when{
+    for (l in lostSet) {
+        when {
             // 이전 사람이 여벌옷이 있는 경우
             l - 1 in reserveSet -> reserveSet.remove(l - 1)
             // 앞 사람이 여벌옷이 있는 경우
