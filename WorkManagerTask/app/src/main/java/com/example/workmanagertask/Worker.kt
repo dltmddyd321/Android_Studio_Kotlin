@@ -53,3 +53,44 @@ class Worker(context: Context, workerParameters: WorkerParameters) :
 
     }
 }
+
+object SyncListManger {
+
+    var onEndLastTask: (() -> Unit?)? = null
+    private var syncTasks = Collections.synchronizedList<SyncObject>(mutableListOf())
+
+    fun addTask(key: String, syncTask: PagingSyncTask) {
+        synchronized(syncTasks) {
+            if (syncTasks.size >= 3) {
+                syncTasks.last().task.cancel()
+                syncTasks.removeLast()
+            }
+            syncTasks.add(SyncObject(key, syncTask))
+        }
+    }
+
+    fun cancelAllTasks() {
+        synchronized(syncTasks) {
+            syncTasks.forEach { it.task.cancel() }
+            syncTasks.clear()
+        }
+    }
+
+    fun removeTask(key: String) {
+        synchronized(syncTasks) {
+            syncTasks.removeIf { it.key == key }
+            if (syncTasks.isNotEmpty()) return
+            mainAsync {
+                onEndLastTask?.invoke()
+                onEndLastTask = null
+            }
+        }
+    }
+
+    fun isSyncing() = syncTasks.isNotEmpty()
+
+    data class SyncObject(
+        val key: String,
+        val task: PagingSyncTask
+    )
+}
