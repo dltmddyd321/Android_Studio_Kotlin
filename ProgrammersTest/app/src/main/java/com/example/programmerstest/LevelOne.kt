@@ -4,16 +4,94 @@ import android.util.TypedValue
 import android.widget.TextView
 import java.lang.String.join
 import java.util.*
-import java.util.concurrent.CopyOnWriteArrayList
 import kotlin.math.max
 import kotlin.math.sqrt
 
 
 fun main() {
-    val arr = intArrayOf(10, 100, 20, 150, 1, 100, 200)
-    solution(3, arr).forEach {
-        println(it)
+    solution(arrayOf("ayaye", "uuu", "yeye", "yemawoo", "ayaayaa"))
+}
+
+fun solution2(s: String): String {
+    return if (s.length % 2 == 0) {
+        //절반 나눈 값 -1 ~ 절반 나눈 값 +1
+        s.substring(s.length / 2 - 1, s.length / 2 + 1)
+    } else {
+        //절반 인덱스 ~ 절반 + 1 인덱스 추출
+        s.substring(s.length / 2, s.length / 2 + 1)
     }
+}
+
+fun solutionStr(s: String): Int {
+//    var checkingString = s
+//    val charHashMap = hashMapOf<Char, Int>()
+//    fun checkSameCountMap(): Boolean {
+//        val uniqueValues = HashSet<Int>()
+//        for (value in charHashMap.values) {
+//            if (!uniqueValues.add(value)) {
+//                return true
+//            }
+//        }
+//        return false
+//    }
+//    var cut = 0
+//    var answer = 0
+//
+//    fun calString() {
+//        checkingString.forEachIndexed { index, c ->
+//            val legacy = charHashMap[c] ?: 0
+//            charHashMap[c] = legacy + 1
+//            if (checkSameCountMap()) {
+//                cut = index
+//                answer ++
+//                return@forEachIndexed
+//            }
+//        }
+//        checkingString = checkingString.removeRange(0, cut)
+//    }
+//
+//    while (checkingString.length > 1) {
+//        calString()
+//    }
+//    return answer - 1
+
+    var answer = 0
+    var char = ' '
+    var cnt = 0
+    for (c in s) {
+        when (char) {
+            ' ', c -> {
+                cnt++
+                char = c
+            }
+            else -> {
+                cnt--
+            }
+        }
+        if (cnt == 0) {
+            answer++
+            char = ' '
+        }
+    }
+    if (cnt > 0) answer++
+    return answer
+}
+
+fun solution(babbling: Array<String>): Int {
+    val availableWords = arrayOf("aya", "ye", "woo", "ma")
+
+    fun isEnableSentence(sentence: String): Boolean {
+        val input = sentence
+        for (word in availableWords) {
+            input.replace(word, "")
+        }
+        return input.isEmpty()
+    }
+    var answer = 0
+    babbling.forEach {
+        if (isEnableSentence(it)) answer ++
+    }
+    return answer
 }
 
 fun solutionSecond(nums: IntArray): Int {
@@ -36,7 +114,7 @@ fun solutionSecond(nums: IntArray): Int {
     for (i in 0 until nums.size - 2) {
         for (j in i + 1 until nums.size - 1) {
             for (k in j + 1 until nums.size) {
-                if (isPrime(nums[i] + nums[j] + nums[k])) answer ++
+                if (isPrime(nums[i] + nums[j] + nums[k])) answer++
             }
         }
     }
