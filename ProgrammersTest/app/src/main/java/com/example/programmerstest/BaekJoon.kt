@@ -67,9 +67,28 @@ fun main4() = with(Scanner(System.`in`)) {
     print("$maxNum\n${maxRow + 1} ${maxCol + 1}")
 }
 
-fun main() = with(Scanner(System.`in`)) {
+fun main5() = with(Scanner(System.`in`)) {
     val string = next()
     var res = 0
     if (string.equals(string.reversed())) res = 1
     println(res)
+}
+
+fun main() = with(Scanner(System.`in`)) {
+    val resArr = mutableListOf<Int>()
+    val size = nextInt()
+    val line = nextInt()
+
+    repeat(size) { resArr.add(0) }
+
+    repeat(line) {
+        val start = nextInt()
+        val end = nextInt()
+        val num = nextInt()
+        for (i in start - 1 until end) {
+            resArr[i] = num
+        }
+    }
+
+    println(resArr.joinToString(" "))
 }
