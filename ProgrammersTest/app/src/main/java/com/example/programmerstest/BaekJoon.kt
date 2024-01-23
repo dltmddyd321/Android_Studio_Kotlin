@@ -46,7 +46,7 @@ fun main3(args: Array<String>) = with(Scanner(System.`in`)) {
     }
 }
 
-fun main() = with(Scanner(System.`in`)) {
+fun main4() = with(Scanner(System.`in`)) {
     val grid = Array(9) { IntArray(9) }
     var maxNum = 0
     var maxRow = 0
@@ -65,4 +65,11 @@ fun main() = with(Scanner(System.`in`)) {
     }
 
     print("$maxNum\n${maxRow + 1} ${maxCol + 1}")
+}
+
+fun main() = with(Scanner(System.`in`)) {
+    val string = next()
+    var res = 0
+    if (string.equals(string.reversed())) res = 1
+    println(res)
 }
