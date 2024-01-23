@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Mvi-Compose-Basic</string>
+    <string name="title_activity_splash">SplashActivity</string>
 </resources>
