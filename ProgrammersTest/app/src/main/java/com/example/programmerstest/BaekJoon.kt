@@ -31,7 +31,7 @@ fun main3(args: Array<String>) = with(Scanner(System.`in`)) {
     var index = 0
     repeat(81) {
         allList[index].add(it)
-        if (it + 1 % 9 == 0) index ++
+        if (it + 1 % 9 == 0) index++
     }
 
     val max = allList.flatten().max()
@@ -74,7 +74,7 @@ fun main5() = with(Scanner(System.`in`)) {
     println(res)
 }
 
-fun main() = with(Scanner(System.`in`)) {
+fun main6() = with(Scanner(System.`in`)) {
     val resArr = mutableListOf<Int>()
     val size = nextInt()
     val line = nextInt()
@@ -91,4 +91,28 @@ fun main() = with(Scanner(System.`in`)) {
     }
 
     println(resArr.joinToString(" "))
+}
+
+fun main7() = with(Scanner(System.`in`)) {
+    val score = IntArray(5) { nextInt() }.apply { this.sortedDescending() }
+    val avg = score.average()
+    println(avg)
+    println(score[2])
+}
+
+fun main() = with(Scanner(System.`in`)) {
+    data class Point(
+        val x: Int,
+        val y: Int
+    )
+
+    val arr = mutableListOf<Point>()
+    val size = nextInt()
+    repeat(size) {
+        arr.add(Point(nextInt(), nextInt()))
+    }
+    val sortedArr = arr.sortedWith(compareBy(Point::x, Point::y))
+    sortedArr.forEach { point ->
+        println("${point.x} ${point.y}")
+    }
 }
