@@ -10,11 +10,15 @@ import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.example.mvi_compose_basic.data.ExampleEvent
 import com.example.mvi_compose_basic.data.ExampleState
 import com.example.mvi_compose_basic.ui.theme.MviComposeBasicTheme
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
@@ -29,11 +33,45 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
+                    SwitchWithIconExample()
 //                    val state by viewModel.state.collectAsState()
 //                    EditPlusButtonScreen(state = state, sendEvent = viewModel::handleEvent)
-                    SnackBarExample("스낵바 테스트")
+//                    SnackBarExample("스낵바 테스트")
                 }
             }
+        }
+    }
+}
+
+@Composable
+fun SwitchWithIconExample() {
+    var checked by remember {
+        mutableStateOf(false)
+    }
+
+    Switch(
+        checked = checked, onCheckedChange = {
+            checked = it
+        }, colors = SwitchDefaults.colors(
+            checkedThumbColor = MaterialTheme.colors.primary,
+            checkedTrackColor = MaterialTheme.colors.primaryVariant,
+            uncheckedThumbColor = MaterialTheme.colors.secondary,
+            uncheckedTrackColor = MaterialTheme.colors.secondaryVariant,
+        ), modifier = Modifier.scale(1.5f), //Switch의 사이즈는 scale로 조정해야한다.
+    )
+}
+
+@Composable
+fun SwipeButtonExample() {
+    val scope = rememberCoroutineScope()
+    val (isComplete, setIsComplete) = remember {
+        mutableStateOf(false)
+    }
+
+    SwipeButton(text = "SAVE", isComplete = isComplete) {
+        scope.launch {
+            delay(2000)
+            setIsComplete(true)
         }
     }
 }
