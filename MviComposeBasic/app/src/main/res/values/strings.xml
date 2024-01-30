@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">Mvi-Compose-Basic</string>
     <string name="title_activity_splash">SplashActivity</string>
+    <string name="title_activity_drawer">DrawerActivity</string>
+    <string name="first_screen">First Screen</string>
+    <string name="second_screen">Second Screen</string>
+    <string name="third_screen">Third Screen</string>
+    <string name="title_activity_calendar">CalendarActivity</string>
 </resources>

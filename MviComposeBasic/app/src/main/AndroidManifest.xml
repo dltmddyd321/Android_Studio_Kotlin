@@ -12,6 +12,16 @@
         android:theme="@style/Theme.MviComposeBasic"
         tools:targetApi="31">
         <activity
+            android:name=".CalendarActivity"
+            android:exported="false"
+            android:label="@string/title_activity_calendar"
+            android:theme="@style/Theme.MviComposeBasic" />
+        <activity
+            android:name=".DrawerActivity"
+            android:exported="false"
+            android:label="@string/title_activity_drawer"
+            android:theme="@style/Theme.MviComposeBasic" />
+        <activity
             android:name=".SplashActivity"
             android:exported="true"
             android:theme="@style/Theme.MviComposeBasic">
