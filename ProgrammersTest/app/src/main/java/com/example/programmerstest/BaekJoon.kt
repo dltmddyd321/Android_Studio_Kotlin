@@ -74,6 +74,11 @@ fun main5() = with(Scanner(System.`in`)) {
     println(res)
 }
 
+fun main() {
+    val input = readLine()!!.split(" ")
+    println(input[0].toLong() + input[1].toLong() + input[2].toLong())
+}
+
 fun main6() = with(Scanner(System.`in`)) {
     val resArr = mutableListOf<Int>()
     val size = nextInt()
@@ -100,7 +105,7 @@ fun main7() = with(Scanner(System.`in`)) {
     println(score[2])
 }
 
-fun main() = with(Scanner(System.`in`)) {
+fun main8() = with(Scanner(System.`in`)) {
     data class Point(
         val x: Int,
         val y: Int
@@ -116,3 +121,75 @@ fun main() = with(Scanner(System.`in`)) {
         println("${point.x} ${point.y}")
     }
 }
+
+fun main31() = with(Scanner(System.`in`)) {
+    val stringBuilder = StringBuilder()
+
+    val n = nextInt()
+    val list = ArrayList<Int>()
+
+    for (i in 0 until n) {
+        list.add(nextInt())
+    }
+
+    list.sort()
+
+    for (i in list) {
+        stringBuilder.append(i).append("\n")
+    }
+
+    println(stringBuilder)
+}
+
+fun main34() = with(Scanner(System.`in`)) {
+
+    fun parseGradeToScore(grade: String): Double {
+        return when (grade) {
+            "A+" -> {
+                4.5
+            }
+            "A0" -> {
+                4.0
+            }
+            "B+" -> {
+                3.5
+            }
+            "B0" -> {
+                3.0
+            }
+            "C+" -> {
+                2.5
+            }
+            "C0" -> {
+                2.0
+            }
+            "D+" -> {
+                1.5
+            }
+            "D0" -> {
+                1.0
+            }
+            "F" -> {
+                0.0
+            }
+            else -> {
+                -1.0
+            }
+        }
+    }
+
+    var sum = 0.0
+    var sumScore = 0.0
+    for (i in 0..19) {
+        val subject = next()
+        val score = nextDouble()
+        val grade = next()
+        val parsedGrade = parseGradeToScore(grade)
+        if (parsedGrade != -1.0) {
+            sum += parsedGrade * score
+            sumScore += score
+        }
+    }
+    println(sum / sumScore)
+}
+
