@@ -1,6 +1,7 @@
 package com.example.mvi_compose_basic.activity
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -16,6 +17,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
+import com.example.mvi_compose_basic.ExampleViewModel
+import com.example.mvi_compose_basic.R
+import com.example.mvi_compose_basic.SwipeButton
 import com.example.mvi_compose_basic.component.DrawerBody
 import com.example.mvi_compose_basic.component.NavHost
 import com.example.mvi_compose_basic.component.TopBar
@@ -39,11 +43,8 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    DrawerNavigationScreen()
-//                    SwitchWithIconExample()
-//                    val state by viewModel.state.collectAsState()
-//                    EditPlusButtonScreen(state = state, sendEvent = viewModel::handleEvent)
-//                    SnackBarExample("스낵바 테스트")
+                    startActivity(Intent(this, CalendarActivity::class.java))
+//                    DrawerNavigationScreen()
                 }
             }
         }
@@ -101,20 +102,6 @@ fun SwitchWithIconExample() {
     )
 }
 
-@Composable
-fun SwipeButtonExample() {
-    val scope = rememberCoroutineScope()
-    val (isComplete, setIsComplete) = remember {
-        mutableStateOf(false)
-    }
-
-    SwipeButton(text = "SAVE", isComplete = isComplete) {
-        scope.launch {
-            delay(2000)
-            setIsComplete(true)
-        }
-    }
-}
 
 @Composable
 fun Greeting(name: String) {

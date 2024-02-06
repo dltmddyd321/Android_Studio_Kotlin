@@ -20,6 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.lifecycleScope
 import com.airbnb.lottie.compose.*
+import com.example.mvi_compose_basic.R
 import com.example.mvi_compose_basic.ui.theme.MviComposeBasicTheme
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay

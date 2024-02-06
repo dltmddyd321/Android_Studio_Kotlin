@@ -74,9 +74,59 @@ fun main5() = with(Scanner(System.`in`)) {
     println(res)
 }
 
-fun main() {
+fun main211() {
     val input = readLine()!!.split(" ")
     println(input[0].toLong() + input[1].toLong() + input[2].toLong())
+}
+
+fun main() = with(Scanner(System.`in`)) {
+    val dial = arrayOf("ABC", "DEF", "GHI", "JKL", "MNO", "PQRS", "TUV", "WXYZ")
+    val word = next().toString()
+    var res = 0
+
+    for (i in word.indices) {
+        for (j in dial) {
+            if (j.contains(word[i])) res += dial.indexOf(j) + 3
+        }
+    }
+    println(res)
+}
+
+fun main323() = with(Scanner(System.`in`)) {
+    val N = nextInt()
+    val M = nextInt()
+    val buckets = IntArray(N) { it + 1 } //1부터 N까지 담기
+
+    for (time in 0 until M) {
+        val i = nextInt()
+        val j = nextInt()
+
+        val temp = buckets[i - 1]
+        buckets[i - 1] = buckets[j - 1]
+        buckets[j - 1] = temp
+    }
+
+    buckets.forEach { print("$it ") }
+}
+
+fun main22() = with(Scanner(System.`in`)) {
+    var res = ""
+    val word = Array(5) { CharArray(15) { ' ' } }
+    var maxSize = 0
+
+    for (i in 0 until 5) {
+        val input = next()
+        maxSize = maxSize.coerceAtLeast(input.length)
+        word[i] = input.toCharArray()
+    }
+
+    for (i in 0 until maxSize) {
+        for (j in 0 until 5) {
+            if (word[j].getOrNull(i) == null) continue
+            res += word[j][i]
+        }
+    }
+    println(res)
 }
 
 fun main6() = with(Scanner(System.`in`)) {

@@ -62,66 +62,8 @@ fun SwitchWithIconExample() {
 }
 
 @Composable
-fun SwipeButtonExample() {
-    val scope = rememberCoroutineScope()
-    val (isComplete, setIsComplete) = remember {
-        mutableStateOf(false)
-    }
-
-    SwipeButton(text = "SAVE", isComplete = isComplete) {
-        scope.launch {
-            delay(2000)
-            setIsComplete(true)
-        }
-    }
-}
-
-@Composable
 fun Greeting(name: String) {
     Text(text = "Hello $name!")
-}
-
-@Composable
-fun SnackBarExample(string: String) {
-    val snackBarHostState = remember { SnackbarHostState() }
-    val scope = rememberCoroutineScope()
-
-    Scaffold(
-        snackbarHost = { SnackbarHost(snackBarHostState) },
-        floatingActionButton = {
-
-            ExtendedFloatingActionButton(
-                onClick = {
-                    // 스낵바 실행 부분
-                    scope.launch {
-                        val result = snackBarHostState.showSnackbar( // 스낵바 결과 받기 가능
-                            message = string,
-                            actionLabel = "close",
-                            duration = SnackbarDuration.Short
-                        )
-
-                        when (result) {
-                            SnackbarResult.Dismissed -> {
-                                // 스낵바 닫기
-                            }
-                            SnackbarResult.ActionPerformed -> {
-                                // 동작 수행
-                            }
-                        }
-                    }
-                }, text = { Text("Show snackbar") }
-            )
-        },
-        content = { innerPadding ->
-            Text(
-                text = "SnackBar 예제",
-                modifier = Modifier
-                    .padding(innerPadding)
-                    .fillMaxSize()
-                    .wrapContentSize()
-            )
-        }
-    )
 }
 
 @Composable
