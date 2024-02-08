@@ -94,3 +94,19 @@ object SyncListManger {
         val task: PagingSyncTask
     )
 }
+
+fun isEnableGooglePlayService(context: Context): Boolean {
+    val packageManager = context.packageManager
+    val isInstallPlayStore = try {
+        val packageName = "com.android.vending"
+        val info = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            packageManager.getPackageInfo(packageName, PackageManager.PackageInfoFlags.of(PackageManager.GET_ACTIVITIES.toLong()))
+        } else {
+            @Suppress("DEPRECATION") packageManager.getPackageInfo(packageName, PackageManager.GET_ACTIVITIES)
+        }
+        info != null
+    } catch (e: PackageManager.NameNotFoundException) {
+        false // Google Play Store is not installed
+    }
+    return BillingProcessor.isIabServiceAvailable(context) && isInstallPlayStore
+}
