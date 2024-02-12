@@ -46,6 +46,24 @@ fun main3(args: Array<String>) = with(Scanner(System.`in`)) {
     }
 }
 
+fun main() {
+    with(System.`in`.bufferedReader()) {
+        with(System.out.bufferedWriter()) {
+            val N = readLine().toInt()
+            val arr = readLine().split(" ").map(String::toInt)
+            val sortedArr = arr.distinct().sorted()
+
+            //이미 오름차순 정렬이 적용된 배열에 이분 탐색을 활용한다.
+            for (i in 0 until N) {
+                write(sortedArr.binarySearch(arr[i]).toString() + " ")
+            }
+            close()
+        }
+        close()
+    }
+}
+
+
 fun main4() = with(Scanner(System.`in`)) {
     val grid = Array(9) { IntArray(9) }
     var maxNum = 0
@@ -228,7 +246,7 @@ fun main6() = with(Scanner(System.`in`)) {
     println(resArr.joinToString(" "))
 }
 
-fun main() = with(Scanner(System.`in`)) {
+fun main434() = with(Scanner(System.`in`)) {
 //    val having = mutableListOf<Int>()
 //    val size = nextInt()
 //    repeat(size) {
