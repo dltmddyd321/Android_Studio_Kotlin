@@ -2,6 +2,8 @@ package com.example.programmerstest
 
 import java.util.*
 import kotlin.collections.ArrayList
+import java.io.BufferedReader
+import java.io.InputStreamReader
 
 fun main1(args: Array<String>) = with(Scanner(System.`in`)) {
     val a = nextInt()
@@ -46,7 +48,7 @@ fun main3(args: Array<String>) = with(Scanner(System.`in`)) {
     }
 }
 
-fun main() {
+fun main4312() {
     with(System.`in`.bufferedReader()) {
         with(System.out.bufferedWriter()) {
             val N = readLine().toInt()
@@ -63,6 +65,114 @@ fun main() {
     }
 }
 
+fun mainStack() = with(BufferedReader(InputStreamReader(System.`in`))){
+    val n = readLine().toInt()
+
+    for(i in 0 until n) {
+        val str = readLine()
+        solve(str)
+    }
+}
+
+fun solve(str: String){
+    val stack = Stack<Char>()
+
+    for(i in str){
+        // 여는 괄호면 추가
+        if(i == '('){
+            stack.add(i)
+        }
+        // 닫는 괄호일 때
+        else if(i == ')'){
+            // 비어 있을 때
+            if(stack.isEmpty()){
+                println("NO")
+                return
+            }
+            // 짝이 맞지 않을 때
+            if(stack.pop() == ')'){
+                println("NO")
+                return
+            }
+        }
+    }
+
+    // 연산 종료 시 스택이 비어있어야 YES
+    if(stack.isEmpty()){
+        println("YES")
+    }
+    else{
+        println("NO")
+    }
+}
+
+fun main() = with(Scanner(System.`in`)) {
+    val stack = Stack<Char>()
+
+    repeat(nextInt()) {
+        val input = next().toCharArray().toList()
+        stack.addAll(input)
+
+        val right = mutableListOf<Char>()
+        val left = mutableListOf<Char>()
+
+        while (stack.isNotEmpty()) {
+            val pop = stack.pop() ?: break
+            if (pop == '(') left.add(pop)
+            else right.add(pop)
+        }
+
+        if (right.size == left.size) {
+            println("YES")
+        } else {
+            println("NO")
+        }
+    }
+}
+
+fun main040() = with(Scanner(System.`in`)) {
+    val stack = Stack<Int>()
+
+    fun check(key: Int, value: Int? = null) {
+        when (key) {
+            1 -> {
+                stack.push(value)
+            }
+            2 -> {
+                val res = try {
+                    stack.pop() ?: -1
+                } catch (e: EmptyStackException) {
+                    -1
+                }
+                println(res)
+            }
+            3 -> {
+                println(stack.size)
+            }
+            4 -> {
+                println(if (stack.isEmpty()) 1 else 0)
+            }
+            5 -> {
+                val res = try {
+                    stack.peek() ?: -1
+                } catch (e: EmptyStackException) {
+                    -1
+                }
+                println(res)
+            }
+        }
+    }
+
+    repeat(nextInt()) {
+        val input = nextInt()
+        if (input != 1) {
+            check(input)
+        } else {
+            val second = nextInt()
+            check(input, second)
+        }
+    }
+}
 
 fun main4() = with(Scanner(System.`in`)) {
     val grid = Array(9) { IntArray(9) }
