@@ -17,12 +17,28 @@ fun main1(args: Array<String>) = with(Scanner(System.`in`)) {
     if (a > 0 && b < 0) println(4)
 }
 
-fun main() {
+fun main3213() {
     val input = readLine()!!.split(" ").map{it.toInt()}
     val array1 = readLine()!!.split(" ").map{it.toInt()}
     val array2 = readLine()!!.split(" ").map{it.toInt()}
 
     println(getSymmetricDifference(array1, array2))
+}
+
+fun main() = with(Scanner(System.`in`)) {
+    var input = nextInt()
+    var cnt = 0
+    while (true) {
+        if (input % 5 == 0) { //5로 나누는게 일단 가장 적은 cnt를 반환할 것이다.
+            println(cnt + input / 5)
+            return@with
+        } else if (input < 0){
+            println("-1")
+            return@with
+        }
+        cnt ++
+        input -= 3
+    }
 }
 
 fun getSymmetricDifference(array1: List<Int>, array2: List<Int>): Int {
