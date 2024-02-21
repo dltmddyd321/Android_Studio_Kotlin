@@ -7,4 +7,5 @@
     <string name="third_screen">Third Screen</string>
     <string name="title_activity_calendar">CalendarActivity</string>
     <string name="title_activity_compose_message">ComposeMessageActivity</string>
+    <string name="title_activity_pager">PagerActivity</string>
 </resources>

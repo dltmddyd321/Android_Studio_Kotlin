@@ -14,9 +14,9 @@
         android:theme="@style/Theme.MviComposeBasic"
         tools:targetApi="31">
         <activity
-            android:name=".activity.ComposeMessageActivity"
+            android:name=".activity.PagerActivity"
             android:exported="true"
-            android:label="@string/title_activity_compose_message"
+            android:label="@string/title_activity_pager"
             android:theme="@style/Theme.MviComposeBasic">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,6 +24,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".activity.ComposeMessageActivity"
+            android:exported="true"
+            android:label="@string/title_activity_compose_message"
+            android:theme="@style/Theme.MviComposeBasic" />
         <activity
             android:name=".activity.CalendarActivity"
             android:exported="true"
