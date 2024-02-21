@@ -16,10 +16,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import com.example.mvi_compose_basic.activity.ui.theme.MviComposeBasicTheme
-import com.google.accompanist.pager.ExperimentalPagerApi
-import com.google.accompanist.pager.HorizontalPager
-import com.google.accompanist.pager.pagerTabIndicatorOffset
-import com.google.accompanist.pager.rememberPagerState
+import com.google.accompanist.pager.*
 import kotlinx.coroutines.launch
 
 @ExperimentalPagerApi
@@ -67,6 +64,10 @@ fun TabPagerView() {
                     })
             }
         }
+
+//        VerticalPager(count = ) {
+//
+//        }
 
         HorizontalPager(count = pages.size, state = pagerState) { page ->
             Text(
