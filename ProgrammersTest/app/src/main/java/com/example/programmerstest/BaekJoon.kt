@@ -1,11 +1,10 @@
 package com.example.programmerstest
 
-import java.util.*
-import kotlin.collections.ArrayList
 import java.io.BufferedReader
 import java.io.BufferedWriter
 import java.io.InputStreamReader
 import java.io.OutputStreamWriter
+import java.util.*
 
 fun main1(args: Array<String>) = with(Scanner(System.`in`)) {
     val a = nextInt()
@@ -17,15 +16,203 @@ fun main1(args: Array<String>) = with(Scanner(System.`in`)) {
     if (a > 0 && b < 0) println(4)
 }
 
+fun main() {
+    val br = BufferedReader(InputStreamReader(System.`in`))
+    val queue: Deque<Int> = LinkedList()
+    val sb = java.lang.StringBuilder()
+    val N = br.readLine().toInt()
+    var k = 0
+    var l = 0
+    for (i in 0 until N) {
+        val t = br.readLine()
+        if (t.startsWith("1") || t.startsWith("2")) {
+            val tArr = t.split(" ".toRegex()).dropLastWhile { it.isEmpty() }
+                .toTypedArray()
+            k = tArr[0].toInt()
+            l = tArr[1].toInt()
+        } else {
+            k = t.toInt()
+        }
+        when (k) {
+            1 -> queue.addFirst(l)
+            2 -> queue.add(l)
+            3 -> if (queue.isEmpty()) {
+                sb.append("-1").append("\n")
+            } else {
+                queue.pollFirst()?.let { sb.append(it).append("\n") }
+            }
+            4 -> if (queue.isEmpty()) {
+                sb.append("-1").append("\n")
+            } else {
+                queue.pollLast()?.let { sb.append(it).append("\n") }
+            }
+            5 -> sb.append(queue.size).append("\n")
+            6 -> if (queue.isEmpty()) {
+                sb.append("1").append("\n")
+            } else {
+                sb.append("0").append("\n")
+            }
+            7 -> if (queue.isEmpty()) {
+                sb.append("-1").append("\n")
+            } else {
+                queue.peekFirst()?.let { sb.append(it).append("\n") }
+            }
+            8 -> if (queue.isEmpty()) {
+                sb.append("-1").append("\n")
+            } else {
+                queue.peekLast()?.let { sb.append(it).append("\n") }
+            }
+        }
+    }
+    println(sb)
+}
+
+fun mainfgd() {
+    val br = System.`in`.bufferedReader()
+    val bw = System.out.bufferedWriter()
+
+    val num = br.readLine().toInt()
+    val stack = Stack<Int>()
+
+    var checkCnt = 1
+    br.readLine().split(" ").map { it.toInt() }.forEach {
+        if (it == checkCnt) checkCnt++
+        else {
+            while (stack.isNotEmpty()) {
+                if (stack.peek() == checkCnt) {
+                    stack.pop()
+                    checkCnt++
+                } else break //값이 다르면 break하고 push한다.
+            }
+            stack.push(it)
+        }
+    }
+
+    //for문 다 돌았는데도 대기줄이 남았다?
+    while (stack.isNotEmpty()) {
+        if (stack.pop() == checkCnt) checkCnt++
+        else break
+    }
+
+    bw.write(if (stack.isEmpty()) "Nice" else "Sad")
+    bw.flush()
+    bw.close()
+    br.close()
+}
+
+fun mainddd() {
+    val br = BufferedReader(InputStreamReader(System.`in`))
+    val n = br.readLine().toInt()
+    val queue = LinkedList<Int>()
+    val sb = StringBuffer()
+
+    for (m in 0 until n) {
+        val st = StringTokenizer(br.readLine(), " ")
+        when (st.nextToken()) {
+            "push" -> {
+                queue.add(st.nextToken().toInt())
+            }
+            "pop" -> {
+                if (queue.size > 0) sb.append("${queue.pollFirst()}\n")
+                else sb.append("-1\n")
+            }
+            "size" -> {
+                sb.append("${queue.size}\n")
+            }
+            "empty" -> {
+                if (queue.size == 0) sb.append("1\n")
+                else sb.append("0\n")
+            }
+            "front" -> {
+                if (queue.size > 0) sb.append("${queue.first}\n")
+                else sb.append("-1\n")
+            }
+            "back" -> {
+                if (queue.size > 0) sb.append("${queue.last}\n")
+                else sb.append("-1\n")
+            }
+        }
+    }
+    print(sb.toString())
+}
+
+fun mainddddd() {
+    val br = BufferedReader(InputStreamReader(System.`in`))
+    val sb = java.lang.StringBuilder()
+    val stack = Stack<Int>() //스택 생성
+
+    var st: StringTokenizer
+    val N = br.readLine().toInt()
+    for (i in 0 until N) {
+        st = StringTokenizer(br.readLine())
+        val command = st.nextToken()
+        if (command == "1") stack.push(st.nextToken().toInt()) else if (command == "2") {
+            if (!stack.isEmpty()) {
+                sb.append(stack.lastElement()).append("\n")
+                stack.pop()
+            } else sb.append(-1).append("\n")
+        } else if (command == "3") sb.append(stack.size).append("\n")
+        else if (command == "4")
+            if (stack.isEmpty()) sb.append(1).append("\n")
+            else sb.append(0).append("\n")
+        else if (command == "5")
+            if (stack.isEmpty()) sb.append(-1).append("\n")
+            else sb.append(stack.lastElement()).append("\n")
+    }
+    br.close()
+    println(sb)
+}
+
+fun main546rt() = with(Scanner(System.`in`)) {
+    val n = nextInt()
+    val queue: Queue<Int> = LinkedList()
+
+    repeat(n) {
+        queue.add(it + 1)
+    }
+    while (queue.size != 1) {
+        queue.poll()
+        queue.add(queue.poll())
+    }
+    println(queue.first())
+}
+
+fun main111111() = with(BufferedReader(InputStreamReader(System.`in`))) {
+    val bw = BufferedWriter(OutputStreamWriter(System.out))
+
+    val n = readLine().toInt()
+
+    val inputN = readLine().split(" ").map { it.toInt() }
+
+    val m = readLine().toInt()
+
+    val inputM = readLine().split(" ").map { it.toInt() }
+
+    val hashMap = HashMap<Int, Int>() //카운트를 담는 Map
+
+    repeat(n) {
+        //첫번째 입력인 n 만큼 반복하여 만약 배열의 숫자가 여러개라면 1씩 누적시키는 코드입니다.
+        //getOrDefault로 처음 hashMap에 들어갈 때, 0으로 들어가도록 해줬습니다.
+        hashMap[inputN[it]] = hashMap.getOrDefault(inputN[it], 0) + 1
+    }
+
+    repeat(m) {
+        bw.write("${hashMap[inputM[it]] ?: 0} ")
+    }
+
+    bw.flush()
+    bw.close()
+}
+
 fun main3213() {
-    val input = readLine()!!.split(" ").map{it.toInt()}
-    val array1 = readLine()!!.split(" ").map{it.toInt()}
-    val array2 = readLine()!!.split(" ").map{it.toInt()}
+    val input = readLine()!!.split(" ").map { it.toInt() }
+    val array1 = readLine()!!.split(" ").map { it.toInt() }
+    val array2 = readLine()!!.split(" ").map { it.toInt() }
 
     println(getSymmetricDifference(array1, array2))
 }
 
-fun main() = with(Scanner(System.`in`)) {
+fun main4ㄷ3ㅈ() = with(Scanner(System.`in`)) {
     val input = next()
     fun getSubstrings(s: String): List<String> {
         val substrings = mutableListOf<String>()
@@ -47,11 +234,11 @@ fun mainGreedy() = with(Scanner(System.`in`)) {
         if (input % 5 == 0) { //5로 나누는게 일단 가장 적은 cnt를 반환할 것이다.
             println(cnt + input / 5)
             return@with
-        } else if (input < 0){
+        } else if (input < 0) {
             println("-1")
             return@with
         }
-        cnt ++
+        cnt++
         input -= 3
     }
 }
@@ -103,12 +290,12 @@ data class Count(
     val y: Int
 )
 
-fun mainTest(){
+fun mainTest() {
     val num = readLine()!!.toInt()
-    val arr = ArrayList<Pair<Int,Int>>()
-    for(i in 0 until num){
-        val line = readLine()!!.split(" ").map{it.toInt()}
-        arr.add(Pair(line[0],line[1]))
+    val arr = ArrayList<Pair<Int, Int>>()
+    for (i in 0 until num) {
+        val line = readLine()!!.split(" ").map { it.toInt() }
+        arr.add(Pair(line[0], line[1]))
     }
     arr.sortWith { d1, d2 ->
         if (d1.second == d2.second) {
@@ -118,7 +305,7 @@ fun mainTest(){
         }
     }
 
-    for(i in 0 until num){
+    for (i in 0 until num) {
         println("${arr[i].first} ${arr[i].second}")
     }
 }
