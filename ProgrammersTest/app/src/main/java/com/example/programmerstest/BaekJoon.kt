@@ -16,7 +16,39 @@ fun main1(args: Array<String>) = with(Scanner(System.`in`)) {
     if (a > 0 && b < 0) println(4)
 }
 
-fun main() {
+fun main() = with(Scanner(System.`in`)) {
+    val init = next().split(" ").map { it.toInt() }
+    val size = init[0]
+    val cnt = init[1]
+
+    val mutableList = mutableListOf<Int>()
+    repeat(size) { mutableList.add(it + 1) }
+
+    fun reverseSubList(list: MutableList<Int>, startIdx: Int, endIdx: Int) {
+        if (startIdx < 0 || endIdx >= list.size || startIdx >= endIdx) {
+            throw IllegalArgumentException("Invalid indices")
+        }
+
+        var left = startIdx
+        var right = endIdx
+
+        while (left < right) {
+            val temp = list[left]
+            list[left] = list[right]
+            list[right] = temp
+            left++
+            right--
+        }
+    }
+
+    repeat(cnt) {
+        val input = next().split(" ").map { it.toInt() }
+        reverseSubList(mutableList, input[0], input[1])
+    }
+    println(mutableList.joinToString(" "))
+}
+
+fun mainkdkd() {
     val br = BufferedReader(InputStreamReader(System.`in`))
     val queue: Deque<Int> = LinkedList()
     val sb = java.lang.StringBuilder()
