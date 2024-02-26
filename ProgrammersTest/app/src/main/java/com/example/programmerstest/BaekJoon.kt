@@ -5,6 +5,7 @@ import java.io.BufferedWriter
 import java.io.InputStreamReader
 import java.io.OutputStreamWriter
 import java.util.*
+import kotlin.math.absoluteValue
 
 fun main1(args: Array<String>) = with(Scanner(System.`in`)) {
     val a = nextInt()
@@ -17,35 +18,82 @@ fun main1(args: Array<String>) = with(Scanner(System.`in`)) {
 }
 
 fun main() = with(Scanner(System.`in`)) {
-    val init = next().split(" ").map { it.toInt() }
-    val size = init[0]
-    val cnt = init[1]
+    val (N, K) = readLine()!!.split(" ").map { it.toInt() }
+    val queue: Queue<Int> = LinkedList()
 
-    val mutableList = mutableListOf<Int>()
-    repeat(size) { mutableList.add(it + 1) }
+    repeat(N) { queue.add(it + 1) }
+    while (queue.any { it != -1 }) {
+        var cnt = 1
+        val check = queue.poll() ?: return@with
+        if (cnt == 3) {
+            if (check != -1) {
+                cnt ++
+                queue.add(-1)
+            } else {
 
-    fun reverseSubList(list: MutableList<Int>, startIdx: Int, endIdx: Int) {
-        if (startIdx < 0 || endIdx >= list.size || startIdx >= endIdx) {
-            throw IllegalArgumentException("Invalid indices")
+            }
         }
+    }
+}
 
-        var left = startIdx
-        var right = endIdx
+fun mainjhg() {
+    val reader = BufferedReader(InputStreamReader(System.`in`))
+    val writer = BufferedWriter(OutputStreamWriter(System.`out`))
 
-        while (left < right) {
-            val temp = list[left]
-            list[left] = list[right]
-            list[right] = temp
-            left++
-            right--
+    val n = reader.readLine().toInt()
+    val papers = reader.readLine().split(" ")
+    val balloons = ArrayDeque((1..n).map {
+        Balloon(it, papers[it - 1].toInt())
+    })
+
+    val stringBuilder = StringBuilder()
+    while (true) {
+        val balloon = balloons.removeFirst()
+        stringBuilder.append("${balloon.number} ")
+
+        if (balloons.isEmpty()) break
+
+        if (balloon.paper > 0) { //양수면 마지막 요소를 맨 앞으로
+            for (i in 1 until balloon.paper) {
+                balloons.addLast(balloons.removeFirst())
+            }
+        } else { //math.absoluteValue -> 절대값
+            for (i in 1..balloon.paper.absoluteValue) {
+                balloons.addFirst(balloons.removeLast())
+            }
         }
     }
 
-    repeat(cnt) {
-        val input = next().split(" ").map { it.toInt() }
-        reverseSubList(mutableList, input[0], input[1])
+    writer.write(stringBuilder.toString())
+    writer.flush()
+    writer.close()
+    reader.close()
+}
+
+data class Balloon(val number: Int, val paper: Int)
+
+fun maindsads() = with(Scanner(System.`in`)) {
+    val br = BufferedReader(InputStreamReader(System.`in`))
+    val mu = mutableListOf<Int>()
+
+    val (N, M) = br.readLine().split(" ").map { it.toInt() }
+
+    repeat(N) {
+        mu.add(it + 1)
     }
-    println(mutableList.joinToString(" "))
+
+    repeat(M) {
+        val (i, j) = br.readLine().split(" ").map { it.toInt() }
+        val sliceReverse =
+            mu.slice(i - 1 until j).reversed()  //생성된 list를 i-1 부터 j-1까지 slice 한 후 reverse
+        for ((index, k) in (i - 1 until j).withIndex()) {
+            mu[k] = sliceReverse[index]  //slice 후 reverse 한 값을 넣어준다.
+        }
+    }
+
+    for (k in 0 until N) {
+        print(mu[k].toString() + " ")   //결과 출력
+    }
 }
 
 fun mainkdkd() {
