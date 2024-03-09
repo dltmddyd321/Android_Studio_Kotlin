@@ -22,7 +22,60 @@ fun main323() = with(System.`in`.bufferedReader()) {
     }
 }
 
-fun main() = with(BufferedReader(InputStreamReader(System.`in`))) {
+fun main() {
+    val list: LinkedList<Int> = LinkedList()
+
+    val n = readln().toInt()
+
+    repeat(n) {
+        when (val line = readln()) {
+            "pop_front" -> if (list.size == 0) println(-1) else println(list.removeFirst())
+
+            "pop_back" -> if (list.size == 0) println(-1) else println(list.removeLast())
+
+            "size" -> println(list.size)
+
+            "empty" -> println(if (list.size == 0) 1 else 0)
+
+            "front" -> if (list.size == 0) println(-1) else println(list.first)
+
+            "back" -> if (list.size == 0) println(-1) else println(list.last)
+
+            else -> {
+                if (line.startsWith("push_front")) {
+                    list.addFirst(line.split(" ")[1].toInt())
+                } else {
+                    list.addLast(line.split(" ")[1].toInt())
+                }
+            }
+        }
+    }
+}
+
+fun main67() {
+    val stringBuilder = StringBuilder()
+
+    val (number, sequenceNumber) = readln().split(" ").map { it.toInt() }
+    val numberQueue = LinkedList(Array(number) { it + 1 }.toList())
+
+    var index: Int = -1
+    while (numberQueue.isNotEmpty()) {
+        index = (index + sequenceNumber) % numberQueue.size
+        stringBuilder.append(numberQueue.removeAt(index--)).append(", ")
+    }
+
+    with(stringBuilder) {
+        // 맨 끝의 콤마, 공백을 삭제함
+        this.deleteCharAt(this.length - 1)
+        this.deleteCharAt(this.length - 1)
+        this.insert(0, '<')
+        this.insert(this.length, '>')
+    }
+
+    println(stringBuilder.toString())
+}
+
+fun main445() = with(BufferedReader(InputStreamReader(System.`in`))) {
     val leftStack = readLine().map { it.toString() }.toMutableList()
     val rightStack = mutableListOf<String>() // 리스트로 스택 구현
     val n = readLine().toInt()
