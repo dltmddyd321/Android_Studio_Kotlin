@@ -2,11 +2,8 @@ package com.example.myapplication
 
 import java.io.BufferedReader
 import java.io.InputStreamReader
-import java.util.LinkedList
-import java.util.Queue
-import java.util.Scanner
-import java.util.Stack
-import java.util.StringTokenizer
+import java.util.*
+import kotlin.collections.ArrayList
 
 fun main121() = with(Scanner(System.`in`)) {
     val (n, k) = readln().split(" ").map { it.toInt() }
@@ -22,7 +19,56 @@ fun main323() = with(System.`in`.bufferedReader()) {
     }
 }
 
-fun main() {
+fun main() = with(Scanner(System.`in`)) {
+    val list = ArrayList<Int>()
+    val n = readln().toInt()
+    repeat(n) {
+        list.add(nextInt())
+    }
+    val stringBuilder = StringBuilder()
+    for (i in 0 until list.size) {
+        val sliced = list.slice(i + 1..<list.size)
+        val okeunsu = sliced.find { it > list[i] } ?: -1
+        stringBuilder.append("$okeunsu ")
+    }
+    println(stringBuilder.toString())
+}
+
+
+
+fun main4343() = with(BufferedReader(InputStreamReader(System.`in`))) {
+    val n = readLine().toInt()
+    val st = StringTokenizer(readLine())
+    val list = arrayListOf<Int>()
+    val stack = Stack<Int>()
+    val sb = StringBuilder()
+
+    for (i in 0 until n) {
+        val next = st.nextToken().toInt()
+        list.add(next)
+    }
+
+    for (i in 0 until list.size) {
+        // 스택이 비어있지않고, 오큰수를 찾았을 때 pop 하여 index 값을 오큰수로 변경
+        while (stack.isNotEmpty() && list[stack.peek()] < list[i]) {
+            list[stack.pop()] = list[i] //바라보고 있는 값이 곧 오큰수로 지정되도록 한다.
+        }
+        stack.push(i) // 인덱스값 push
+    }
+
+    // 스택에 남아있는 인덱스는 오큰수를 찾지 못한 것
+    while (stack.isNotEmpty()) {
+        list[stack.pop()] = -1
+    }
+
+    for (i in 0 until list.size) {
+        sb.append("${list[i]} ")
+    }
+
+    println(sb)
+}
+
+fun main5443() {
     val list: LinkedList<Int> = LinkedList()
 
     val n = readln().toInt()
