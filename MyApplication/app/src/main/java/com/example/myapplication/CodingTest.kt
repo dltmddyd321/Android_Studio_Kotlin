@@ -19,22 +19,23 @@ fun main323() = with(System.`in`.bufferedReader()) {
     }
 }
 
-fun main() = with(Scanner(System.`in`)) {
-    val list = ArrayList<Int>()
-    val n = readln().toInt()
-    repeat(n) {
-        list.add(nextInt())
+fun main() {
+    val br = BufferedReader(InputStreamReader(System.`in`))
+    val st1 = br.readLine()
+    val st2 = br.readLine()
+    val arr = Array('z' - 'a' + 1) { 0 }
+    var result = 0
+    for (s in st1) {
+        arr[(s - 'a')] += 1
     }
-    val stringBuilder = StringBuilder()
-    for (i in 0 until list.size) {
-        val sliced = list.slice(i + 1..<list.size)
-        val okeunsu = sliced.find { it > list[i] } ?: -1
-        stringBuilder.append("$okeunsu ")
+    for (s in st2) {
+        arr[(s - 'a')] -= 1
     }
-    println(stringBuilder.toString())
+    for (i in arr) {
+        result += if (i < 0) (-1) * i else i
+    }
+    print(result)
 }
-
-
 
 fun main4343() = with(BufferedReader(InputStreamReader(System.`in`))) {
     val n = readLine().toInt()
