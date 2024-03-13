@@ -2,8 +2,12 @@ package com.example.myapplication
 
 import java.io.BufferedReader
 import java.io.InputStreamReader
-import java.util.*
-import kotlin.collections.ArrayList
+import java.util.LinkedList
+import java.util.Queue
+import java.util.Scanner
+import java.util.Stack
+import java.util.StringTokenizer
+
 
 fun main121() = with(Scanner(System.`in`)) {
     val (n, k) = readln().split(" ").map { it.toInt() }
@@ -19,22 +23,26 @@ fun main323() = with(System.`in`.bufferedReader()) {
     }
 }
 
-fun main() {
-    val br = BufferedReader(InputStreamReader(System.`in`))
-    val st1 = br.readLine()
-    val st2 = br.readLine()
-    val arr = Array('z' - 'a' + 1) { 0 }
-    var result = 0
-    for (s in st1) {
-        arr[(s - 'a')] += 1
+fun main() = with(Scanner(System.`in`)) {
+    val n = readln().toInt()
+    val list = mutableListOf<Int>()
+    repeat(n) { list.add(nextInt()) }
+    val countMap = list.groupingBy { it }.eachCount()
+    val res = mutableListOf<Int>()
+
+    for (i in 0 until list.size) {
+        if (i == list.size - 1) {
+            res.add(-1)
+            break
+        }
+        for (j in i + 1 until list.size) {
+            if (countMap[list[j]]!! > countMap[list[i]]!!) {
+                res.add(list[j])
+                continue
+            }
+            res.add(-1)
+        }
     }
-    for (s in st2) {
-        arr[(s - 'a')] -= 1
-    }
-    for (i in arr) {
-        result += if (i < 0) (-1) * i else i
-    }
-    print(result)
 }
 
 fun main4343() = with(BufferedReader(InputStreamReader(System.`in`))) {
