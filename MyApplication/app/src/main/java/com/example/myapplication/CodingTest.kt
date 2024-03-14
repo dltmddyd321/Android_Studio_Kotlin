@@ -23,28 +23,25 @@ fun main323() = with(System.`in`.bufferedReader()) {
     }
 }
 
-fun main() {
-    val scan = Scanner(System.`in`)
-    val month = scan.nextInt()
-    val day = scan.nextInt()
-    var sum = 0
-    val months = intArrayOf(0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31)
-    for (i in 1..12) {
-        if (i == month) {
+fun main() = with(Scanner(System.`in`)) {
+    val n = readln().toInt()
+    val list = mutableListOf<Int>()
+    repeat(n) { list.add(nextInt()) }
+    val countMap = list.groupingBy { it }.eachCount()
+    val res = mutableListOf<Int>()
+
+    for (i in 0 until list.size) {
+        if (i == list.size - 1) {
+            res.add(-1)
             break
         }
-        sum += months[i]
-    }
-    sum += day
-    val left = sum % 7
-    when (left) {
-        0 -> println("SUN")
-        1 -> println("MON")
-        2 -> println("TUE")
-        3 -> println("WED")
-        4 -> println("THU")
-        5 -> println("FRI")
-        6 -> println("SAT")
+        for (j in i + 1 until list.size) {
+            if (countMap[list[j]]!! > countMap[list[i]]!!) {
+                res.add(list[j])
+                continue
+            }
+            res.add(-1)
+        }
     }
 }
 
