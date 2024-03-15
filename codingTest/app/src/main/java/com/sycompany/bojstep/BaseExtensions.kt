@@ -253,3 +253,17 @@ fun dfsWithRepeat(graph: Array<MutableList<Int>>, n: Int, v: Int): String {
     }
     return result
 }
+
+
+fun convertPixelsToDp(px:  Float): Float {
+    AppCore.context.resources.displayMetrics.scaledDensity = 4f
+    return px / (AppCore.context.resources
+        .displayMetrics.densityDpi.toFloat() / DisplayMetrics.DENSITY_DEFAULT)
+}
+
+inline val Int.toDp: Int
+    get() = TypedValue.applyDimension(
+        TypedValue.COMPLEX_UNIT_DIP,
+        this.toFloat(),
+        Resources.getSystem().displayMetrics
+    ).toInt()
