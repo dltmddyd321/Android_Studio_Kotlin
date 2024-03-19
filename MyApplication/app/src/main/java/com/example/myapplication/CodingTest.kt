@@ -23,7 +23,12 @@ fun main323() = with(System.`in`.bufferedReader()) {
     }
 }
 
-fun main() = with(Scanner(System.`in`)) {
+fun main() {
+    println('a'.code > 'b'.code)
+    println("${'a'.code} ${'b'.code}")
+}
+
+fun main232() = with(Scanner(System.`in`)) {
     val n = readln().toInt()
     val pArr = readln().split("\\*".toRegex()).dropLastWhile { it.isEmpty() }
         .toTypedArray()
