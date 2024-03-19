@@ -25,23 +25,72 @@ fun main323() = with(System.`in`.bufferedReader()) {
 
 fun main() = with(Scanner(System.`in`)) {
     val n = readln().toInt()
-    val list = mutableListOf<Int>()
-    repeat(n) { list.add(nextInt()) }
-    val countMap = list.groupingBy { it }.eachCount()
-    val res = mutableListOf<Int>()
-
-    for (i in 0 until list.size) {
-        if (i == list.size - 1) {
-            res.add(-1)
-            break
-        }
-        for (j in i + 1 until list.size) {
-            if (countMap[list[j]]!! > countMap[list[i]]!!) {
-                res.add(list[j])
-                continue
+    val pArr = readln().split("\\*".toRegex()).dropLastWhile { it.isEmpty() }
+        .toTypedArray()
+    val left = pArr[0]
+    val right = pArr[1]
+    val res = mutableListOf<String>()
+    repeat(n) {
+        val input = readln()
+        if (input.length < left.length + right.length) {
+            res.add("NE")
+        } else {
+            val front = input.substring(left.indices)
+            val back = input.substring(input.length - right.length, input.length)
+            if (front == left && back == right) {
+                res.add("DA")
+            } else {
+                res.add("NE")
             }
-            res.add(-1)
         }
+    }
+    res.forEach {
+        println(it)
+    }
+}
+
+fun main54() {
+    val word = readln()
+    val map = mutableMapOf<Char, Int>()
+
+    word.forEach {
+        val character = it.lowercaseChar()
+
+        if (map.containsKey(character)) {
+            map[character] = map[character]!!.plus(1)
+        } else {
+            map[character] = 1
+        }
+    }
+
+    val max = map.maxBy { it.value }
+    if (map.filter { it.value == max.value }.count() > 1) {
+        print("?")
+    } else {
+        print(max.key.uppercaseChar())
+    }
+}
+
+fun main4444() = with(Scanner(System.`in`)) {
+    val n = readln()
+    var res = 0
+    readln().map { it.toString().toInt() }.toIntArray().forEach {
+        res += it
+    }
+    println(res)
+}
+
+fun main111111() = with(Scanner(System.`in`)) {
+    val list = mutableListOf<String>()
+    val n = readln().toInt()
+    repeat(n) { list.add(readln()) }
+    list.forEach { str ->
+        val frequencies =
+            str.replace(" ","").map { value -> value.toString() }.groupingBy { char -> char }.eachCount()
+        val maxFrequency = frequencies.maxBy { it.value }.value
+        val mostFrequentElements = frequencies.filter { it.value == maxFrequency }.keys
+        val result = if (mostFrequentElements.size > 1) "?" else mostFrequentElements.first()
+        println(result)
     }
 }
 
