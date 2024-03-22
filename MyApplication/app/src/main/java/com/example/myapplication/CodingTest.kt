@@ -7,6 +7,7 @@ import java.util.Queue
 import java.util.Scanner
 import java.util.Stack
 import java.util.StringTokenizer
+import kotlin.math.sqrt
 
 
 fun main121() = with(Scanner(System.`in`)) {
@@ -23,9 +24,157 @@ fun main323() = with(System.`in`.bufferedReader()) {
     }
 }
 
+//모든 자연수는 소수들의 곱으로 표현이 된다. 제일 작은 소수 2부터 시작한다.
+// 2부터 N-1까지의 수 중에서 2의 배수를 모두 체로 거르고 남은 숫자들 중에서 
+// 3의 배수로 거르고를 반복해서 제곱근N 까지 나눠서 걸러지지 않고 남은 수들이 모두 소수가 된다.
+//주어진 자연수 N이 소수이기 위한 필요충분 조건은 N이 N의 제곱근보다 크지 않은 어떤 소수로도 나눠지지 않는다.
+// 수가 수를 나누면 몫이 발생하게 되는데 몫과 나누는 수, 둘 중 하나는 반드시 N의 제곱근 이하이기 때문이다.
 fun main() {
-    println('a'.code > 'b'.code)
-    println("${'a'.code} ${'b'.code}")
+    // 2진수 문자열을 정수로 변환
+    val decimal = readln().toInt(radix = 2)
+    // 정수를 8진수 문자열로 변환
+    println(decimal.toString(radix = 8))
+}
+
+fun maine421() {
+    val NM = readln().split(" ")
+    val N = NM[0].toInt()
+    val M = NM[1].toInt()
+
+    //초기 배열
+    val check = BooleanArray(M + 1){true}
+
+    for (n in N..M) {
+        val sqrt = sqrt(n.toDouble()).toInt()
+        // 2부터 N의 제곱근까지의 수까지 나눠서 나누지면 반복문 종료
+        for (i in 2..sqrt){
+            if (n % i == 0) {
+                check[n] = false
+                break
+            }
+        }
+    }
+
+    for (i in N..M){
+        if (i == 1) continue
+        if (check[i]) println(i)
+    }
+}
+
+fun main4342() = with(Scanner(System.`in`)) {
+    val input = readln()
+    var res = ""
+    val errorPattern = "__.+".toRegex()
+    if ((input.contains('_') && input.any { it.isUpperCase() })
+        || (!input.contains('_') && input.all { it.isLowerCase() })
+        || input.first() == '_' || input.first().isUpperCase()
+        || errorPattern.containsMatchIn(input) || input.last() == '_'
+        || input.length > 100 || input.last().isUpperCase()
+    ) {
+        println("Error!")
+    }
+    if (input.contains('_')) {
+        var needToUpper = false
+        input.forEach {
+            if (needToUpper) {
+                res += it.uppercase()
+                needToUpper = false
+            } else if (it == '_') {
+                needToUpper = true
+            } else {
+                res += it
+            }
+        }
+    } else if (input.find { it.isUpperCase() } != null) {
+        input.forEach {
+            if (it.isUpperCase()) {
+                res += "_${it.lowercase()}"
+            } else {
+                res += it
+            }
+        }
+    }
+    println(res)
+}
+
+
+fun main65() {
+    val br = BufferedReader(InputStreamReader(System.`in`))
+
+    fun GCD(a: Long, b: Long): Long {
+        if (a % b == 0L) return b
+        return GCD(b, a % b)
+    }
+
+    fun LCM(N: Long, M: Long, gcd: Long): Long = (N * M) / gcd
+
+    val st = StringTokenizer(br.readLine())
+    val N = st.nextToken().toLong()
+    val M = st.nextToken().toLong()
+
+    val gcd = GCD(N, M)
+    val lcm = LCM(N, M, gcd)
+    println(gcd)
+    println(lcm)
+}
+
+
+
+fun main09() {
+    fun isCpp(str: String): Boolean = str.contains("_")
+    var first = true
+    val input = readlnOrNull() ?: ""
+    var ans = ""
+
+    // 첫 번째 글자가 _나 대문자로 시작하는 경우 또는 마지막 글자가 _로 끝나는 경우
+    if (input.isEmpty() || !input[0].isLowerCase() || input.last() == '_') {
+        println("Error!")
+        return
+    }
+
+    if (isCpp(input)) {
+        val tokens = input.split('_')
+        for (word in tokens) {
+            if (word.isEmpty()) {
+                println("Error!")
+                return
+            }
+            var w = word
+            if (w[0].isLowerCase()) {
+                if (!first) {
+                    w =
+                        w.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() }
+                } else {
+                    first = false
+                }
+                ans += w
+            } else {
+                println("Error!")
+                return
+            }
+            for (i in 1 until w.length) {
+                if (w[i].isUpperCase()) {
+                    println("Error!")
+                    return
+                }
+            }
+        }
+    } else {
+        var buf = ""
+        for (e in input) {
+            if (e.isUpperCase()) {
+                ans += buf
+                ans += '_'
+                buf = ""
+                buf += e.lowercase()
+            } else {
+                buf += e
+            }
+        }
+        ans += buf
+    }
+
+    println(ans)
 }
 
 fun main232() = with(Scanner(System.`in`)) {
@@ -91,7 +240,8 @@ fun main111111() = with(Scanner(System.`in`)) {
     repeat(n) { list.add(readln()) }
     list.forEach { str ->
         val frequencies =
-            str.replace(" ","").map { value -> value.toString() }.groupingBy { char -> char }.eachCount()
+            str.replace(" ", "").map { value -> value.toString() }.groupingBy { char -> char }
+                .eachCount()
         val maxFrequency = frequencies.maxBy { it.value }.value
         val mostFrequentElements = frequencies.filter { it.value == maxFrequency }.keys
         val result = if (mostFrequentElements.size > 1) "?" else mostFrequentElements.first()
