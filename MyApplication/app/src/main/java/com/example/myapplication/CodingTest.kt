@@ -29,12 +29,76 @@ fun main323() = with(System.`in`.bufferedReader()) {
 // 3의 배수로 거르고를 반복해서 제곱근N 까지 나눠서 걸러지지 않고 남은 수들이 모두 소수가 된다.
 //주어진 자연수 N이 소수이기 위한 필요충분 조건은 N이 N의 제곱근보다 크지 않은 어떤 소수로도 나눠지지 않는다.
 // 수가 수를 나누면 몫이 발생하게 되는데 몫과 나누는 수, 둘 중 하나는 반드시 N의 제곱근 이하이기 때문이다.
-fun main() {
-    // 2진수 문자열을 정수로 변환
-    val decimal = readln().toInt(radix = 2)
-    // 정수를 8진수 문자열로 변환
-    println(decimal.toString(radix = 8))
+fun main7865() {
+    val br = BufferedReader(InputStreamReader(System.`in`))
+    val n = br.readLine().toInt()
+    for (i in 0 until n) {
+        val str = br.readLine()
+        val strArr = str.split(" ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+        print("Case #" + (i + 1) + ": ")
+        for (j in strArr.indices.reversed()) {
+            print(strArr[j] + " ")
+        }
+        println()
+    }
 }
+
+fun checkStack() = with(System.`in`.bufferedReader()) {
+    val sb = StringBuilder()
+    val stack = Stack<Int>()
+    val arr = IntArray(readLine().toInt()) { readLine().toInt() }
+    var tmp = 1
+
+    for (num in arr) {
+        while (tmp < num) {
+            stack.push(tmp++)
+            sb.append("+\n")
+        }
+        if (stack.peek() == num) {
+            stack.pop()
+            sb.append("-\n")
+        } else {
+            println("NO")
+            return@with
+        }
+    }
+    println(sb)
+}
+
+fun main() = with(System.out.bufferedWriter()) {
+    val br = System.`in`.bufferedReader()
+    val set = DoubleArray(200)
+    fun cal(l: Double, r: Double, ch: Char): Double = when (ch) {
+        '*' -> l * r
+
+        '-' -> l - r
+
+        '+' -> l + r
+
+        else -> l / r
+    }
+
+    val n = br.readLine().toInt()
+    val input = br.readLine()
+    val stk = Stack<Double>()
+    for (i in 0 until n) {
+        ('A' + i).code
+        set[('A' + i).code] = br.readLine().toDouble()
+    }
+
+    for (ch in input) {
+        if (ch.isLetter()) {
+            stk.push(set[ch.code])
+        } else {
+            val r = stk.pop()
+            val l = stk.pop()
+            stk.push(cal(l, r, ch))
+        }
+    }
+    write(String.format("%.2f", stk.pop()))
+    close()
+}
+
 
 fun maine421() {
     val NM = readln().split(" ")
@@ -42,12 +106,12 @@ fun maine421() {
     val M = NM[1].toInt()
 
     //초기 배열
-    val check = BooleanArray(M + 1){true}
+    val check = BooleanArray(M + 1) { true }
 
     for (n in N..M) {
         val sqrt = sqrt(n.toDouble()).toInt()
         // 2부터 N의 제곱근까지의 수까지 나눠서 나누지면 반복문 종료
-        for (i in 2..sqrt){
+        for (i in 2..sqrt) {
             if (n % i == 0) {
                 check[n] = false
                 break
@@ -55,7 +119,7 @@ fun maine421() {
         }
     }
 
-    for (i in N..M){
+    for (i in N..M) {
         if (i == 1) continue
         if (check[i]) println(i)
     }
@@ -119,12 +183,11 @@ fun main65() {
 }
 
 
-
 fun main09() {
-    fun isCpp(str: String): Boolean = str.contains("_")
+    fun hasUnderBar(str: String): Boolean = str.contains("_")
     var first = true
-    val input = readlnOrNull() ?: ""
-    var ans = ""
+    val input = readln()
+    var res = ""
 
     // 첫 번째 글자가 _나 대문자로 시작하는 경우 또는 마지막 글자가 _로 끝나는 경우
     if (input.isEmpty() || !input[0].isLowerCase() || input.last() == '_') {
@@ -132,7 +195,7 @@ fun main09() {
         return
     }
 
-    if (isCpp(input)) {
+    if (hasUnderBar(input)) {
         val tokens = input.split('_')
         for (word in tokens) {
             if (word.isEmpty()) {
@@ -147,11 +210,13 @@ fun main09() {
                 } else {
                     first = false
                 }
-                ans += w
+                res += w
             } else {
+                //_ 앞에 대문자로 시작한다??
                 println("Error!")
                 return
             }
+            //중간에 대문자가 존재하는지 검사
             for (i in 1 until w.length) {
                 if (w[i].isUpperCase()) {
                     println("Error!")
@@ -160,21 +225,20 @@ fun main09() {
             }
         }
     } else {
-        var buf = ""
+        var tmp = ""
         for (e in input) {
             if (e.isUpperCase()) {
-                ans += buf
-                ans += '_'
-                buf = ""
-                buf += e.lowercase()
+                res += tmp
+                res += '_'
+                tmp = ""
+                tmp += e.lowercase()
             } else {
-                buf += e
+                tmp += e
             }
         }
-        ans += buf
+        res += tmp
     }
-
-    println(ans)
+    println(res)
 }
 
 fun main232() = with(Scanner(System.`in`)) {
