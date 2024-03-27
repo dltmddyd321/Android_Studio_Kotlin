@@ -65,6 +65,140 @@ fun checkStack() = with(System.`in`.bufferedReader()) {
     println(sb)
 }
 
+private val queue: Queue<Int> = LinkedList()
+
+fun enqueue(element: Int) {
+    queue.offer(element)
+}
+
+fun dequeue() {
+    queue.poll()
+}
+
+fun peek(): Int? {
+    return queue.peek()
+}
+
+fun isEmpty(): Boolean {
+    return queue.isEmpty()
+}
+
+
+class Stack<T> {
+    private val arr = mutableListOf<T>()
+
+    fun enqueue(element: T) {
+        arr.add(element)
+    }
+
+    fun popClassic(): T? {
+        if (isEmpty()) {
+            return null
+        }
+        return arr.removeAt(arr.size - 1)
+    }
+
+    fun peekClassic(): T? {
+        if (isEmpty()) {
+            return null
+        }
+        return arr.last()
+    }
+
+    fun isEmptyClassic(): Boolean {
+        return arr.isEmpty()
+    }
+
+    val stack = Stack<Int>()
+
+    fun enqueue(value: Int) {
+        stack.push(value)
+    }
+
+    fun dequeue(): Int? {
+        return stack.pop()
+    }
+
+    fun peek(): Int? {
+        return stack.peek()
+    }
+
+    fun isEmpty(): Boolean {
+        return stack.isEmpty()
+    }
+}
+
+class Node<T>(val value: T, var next: Node<T>? = null)
+
+class LinkedList<T> {
+    private var head: Node<T>? = null
+
+    fun append(value: T) {
+        if (head != null) {
+            var current = head
+            while (current?.next != null) {
+                current = current.next
+            }
+            current?.next = Node(value)
+        } else {
+            head = Node(value)
+        }
+    }
+
+    fun prepend(value: T) {
+        val newNode = Node(value, head)
+        head = newNode
+    }
+
+    fun delete(value: T) {
+        if (head == null) return
+
+        if (head?.value == value) {
+            head = head?.next
+            return
+        }
+
+        var current = head
+        while (current?.next != null) {
+            if (current.next?.value == value) {
+                current.next = current.next?.next
+                return
+            }
+            current = current.next
+        }
+    }
+
+    fun deleteFirst() {
+        if (head != null) {
+            head = head?.next
+        }
+    }
+
+    fun deleteLast() {
+        if (head == null) return
+
+        if (head?.next == null) {
+            head = null
+            return
+        }
+
+        var current = head
+        while (current?.next?.next != null) {
+            current = current.next
+        }
+        current?.next = null
+    }
+
+    fun display() {
+        var currentNode = head
+        while (currentNode != null) {
+            print("${currentNode.value} -> ")
+            currentNode = currentNode.next
+        }
+        println("None")
+    }
+}
+
 fun main() = with(System.out.bufferedWriter()) {
     val br = System.`in`.bufferedReader()
     val set = DoubleArray(200)
