@@ -43,6 +43,96 @@ fun main7865() {
     }
 }
 
+fun main() = with(BufferedReader(InputStreamReader(System.`in`))) {
+    val leftStack = readLine().map { it.toString() }.toMutableList()
+    val rightStack = mutableListOf<String>() // 리스트로 스택 구현
+    val n = readLine().toInt()
+
+    repeat(n) {
+        when (val cmd = readLine()) {
+            "L" -> {
+                if (leftStack.isNotEmpty()) {
+                    //커서를 기준으로 스택을 분리한다.
+                    rightStack.add(leftStack.removeAt(leftStack.lastIndex))
+                }
+            }
+            "D" -> {
+                if (rightStack.isNotEmpty()) {
+                    leftStack.add(rightStack.removeAt(rightStack.lastIndex))
+                }
+            }
+            "B" -> {
+                if (leftStack.isNotEmpty()) {
+                    leftStack.removeAt(leftStack.lastIndex)
+                }
+            }
+            else -> leftStack.add(cmd[2].toString())
+        }
+    }
+    val answer = StringBuilder()
+    leftStack.forEach { answer.append(it) }
+    for (i in rightStack.lastIndex downTo 0) { // 오른쪽 스택은 top부터 문자를 읽어야 한다
+        answer.append(rightStack[i])
+    }
+    print(answer)
+}
+
+fun main78() = with(Scanner(System.`in`)) {
+    val n = readln().toInt()
+    val stack = Stack<Char>()
+    repeat(n) {
+        readln().reversed().forEach { stack.add(it) }
+        val res = mutableListOf<Char>()
+        var cur = 0
+        while (stack.isNotEmpty()) {
+            val tmp = stack.pop()
+            if (tmp == '<') {
+                if (cur > 0) cur--
+            } else if (tmp == '>') {
+                cur++
+            } else if (tmp == '-') {
+                res.removeLast()
+                cur--
+            } else { //일반 문자
+                res.add(cur + 1, tmp)
+                cur++
+            }
+        }
+        println(res.joinToString())
+    }
+}
+
+fun main15() = with(System.`in`.bufferedReader()) {
+    val case = readLine().toInt()
+    val answer = StringBuilder()
+
+    for (i in 1..case) {
+        val input = readLine()
+        val pw = LinkedList<Char>()
+        var cursor = 0
+
+        for (c in input) {
+            when (c) {
+                '<' -> cursor = if (cursor > 0) cursor - 1 else 0
+                '>' -> cursor = if (cursor < pw.size) cursor + 1 else pw.size
+                '-' -> {
+                    if (pw.isNotEmpty() && cursor > 0)
+                        pw.removeAt(--cursor)
+                }
+
+                else -> {
+                    pw.add(cursor++, c)
+                }
+            }
+        }
+        for (c in pw) {
+            answer.append(c)
+        }
+        answer.append("\n")
+    }
+    print(answer.toString())
+}
+
 fun checkStack() = with(System.`in`.bufferedReader()) {
     val sb = StringBuilder()
     val stack = Stack<Int>()
@@ -199,7 +289,7 @@ class LinkedList<T> {
     }
 }
 
-fun main() = with(System.out.bufferedWriter()) {
+fun main563() = with(System.out.bufferedWriter()) {
     val br = System.`in`.bufferedReader()
     val set = DoubleArray(200)
     fun cal(l: Double, r: Double, ch: Char): Double = when (ch) {
