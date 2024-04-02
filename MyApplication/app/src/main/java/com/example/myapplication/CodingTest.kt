@@ -2,17 +2,121 @@ package com.example.myapplication
 
 import java.io.BufferedReader
 import java.io.InputStreamReader
+import java.util.Arrays
 import java.util.LinkedList
 import java.util.Queue
 import java.util.Scanner
 import java.util.Stack
 import java.util.StringTokenizer
+import java.util.TreeMap
+import java.util.regex.Matcher
+import java.util.regex.Pattern
 import kotlin.math.sqrt
 
+/*
+TreeMap
+우선 트라이를 쓰든 해쉬만 쓰든 정렬은 해야 한다.
+따라서 HashMap이 아닌 TreeMap을 써주자.
+트리맵은 자동 정렬되니 이후 트리맵을 순회하면서 출력하면 끝
+ */
+val br = System.`in`.bufferedReader()
+fun main() = with(System.out.bufferedWriter()) {
+    val map = TreeMap<String, Double>()
+    var size = 0
+    while (true) {
+        val input = br.readLine() ?: break
+        map[input] = map.getOrDefault(input, 0.0) + 1
+        size++
+    }
+    map.forEach {
+        write("${it.key} ${String.format("%.4f", it.value / size * 100)}\n")
+    }
+    close()
+}
 
-fun main121() = with(Scanner(System.`in`)) {
-    val (n, k) = readln().split(" ").map { it.toInt() }
-    println(n * k - 1)
+fun main90() {
+    val br = BufferedReader(InputStreamReader(System.`in`))
+    val (n, m) = br.readLine()!!.split(" ").map { it.toInt() }
+    val choice = br.readLine()!!.split(" ").map { it.toInt() }.toIntArray()
+    val q = LinkedList<Int>()
+    for (i in 1..n) q.add(i)
+    var res = 0
+    var count = 0
+    while (count != m) {
+        if (q.first == choice[count]) {
+            q.poll()
+        } else {
+            for (i in 1 until q.size) {
+                if (q[q.size - i] == choice[count]) {
+                    while (q[0] != choice[count]) {
+                        q.add(0, q.last)
+                        q.removeLast()
+                        res++
+                    }
+                    q.poll()
+                    break
+                } else if (q[i] == choice[count]) {
+                    while (q[0] != choice[count]) {
+                        q.add(q.first)
+                        q.removeFirst()
+                        res++
+                    }
+                    q.poll()
+                    break
+                }
+            }
+        }
+        count++
+    }
+    println(res)
+}
+
+//에라토스테네스의 체
+fun main233() = with(Scanner(System.`in`)) {
+
+    val n = nextInt()
+    val k = nextInt()
+    var cnt = 0
+
+    val list = mutableListOf<Boolean>()
+    repeat(n + 1) { list.add(false) }
+
+    for (i in 2..n) {
+        for (j in i..n step i) {
+            if (!list[j]) {
+                cnt++
+                list[j] = true
+            }
+            if (cnt == k) {
+                println(j)
+                return@with
+            }
+        }
+    }
+}
+
+fun main09856() {
+    val br = BufferedReader(InputStreamReader(System.`in`))
+    val sb = java.lang.StringBuilder()
+    val result = ArrayList<String>()
+    val pattern: Pattern = Pattern.compile("\\d+")
+    val M = br.readLine().toInt()
+    for (i in 0 until M) {
+        val input = br.readLine()
+        val matcher: Matcher = pattern.matcher(input)
+        while (matcher.find()) {
+            val num = matcher.group().replace("^0+".toRegex(), "")
+            result.add(num.ifEmpty { "0" })
+        }
+    }
+    result.sortWith { o1: String, o2: String ->
+        if (o1.length == o2.length) o1.compareTo(
+            o2
+        ) else o1.length - o2.length
+    }
+    for (s in result) sb.append(s).append('\n')
+    println(sb)
+    br.close()
 }
 
 fun main323() = with(System.`in`.bufferedReader()) {
@@ -43,7 +147,7 @@ fun main7865() {
     }
 }
 
-fun main() = with(BufferedReader(InputStreamReader(System.`in`))) {
+fun main8675() = with(BufferedReader(InputStreamReader(System.`in`))) {
     val leftStack = readLine().map { it.toString() }.toMutableList()
     val rightStack = mutableListOf<String>() // 리스트로 스택 구현
     val n = readLine().toInt()
@@ -56,16 +160,19 @@ fun main() = with(BufferedReader(InputStreamReader(System.`in`))) {
                     rightStack.add(leftStack.removeAt(leftStack.lastIndex))
                 }
             }
+
             "D" -> {
                 if (rightStack.isNotEmpty()) {
                     leftStack.add(rightStack.removeAt(rightStack.lastIndex))
                 }
             }
+
             "B" -> {
                 if (leftStack.isNotEmpty()) {
                     leftStack.removeAt(leftStack.lastIndex)
                 }
             }
+
             else -> leftStack.add(cmd[2].toString())
         }
     }
@@ -75,6 +182,65 @@ fun main() = with(BufferedReader(InputStreamReader(System.`in`))) {
         answer.append(rightStack[i])
     }
     print(answer)
+}
+
+fun main534() = with(Scanner(System.`in`)) {
+    val list = mutableListOf<Int>()
+    var maxLine = 0
+    var max = 0
+
+    for (i in 0 until 9) {
+        val input = nextInt()
+        list.add(input)
+
+        if (max < list[i]) {
+            max = list[i]
+            maxLine = i
+        }
+    }
+    println("$max\n${maxLine + 1}")
+}
+
+fun main432() {
+    val br = BufferedReader(InputStreamReader(System.`in`))
+    val nm = Arrays.stream(br.readLine().split(" ".toRegex()).dropLastWhile { it.isEmpty() }
+        .toTypedArray()).mapToInt { s: String -> s.toInt() }.toArray()
+    val n = nm[0]
+    val k = nm[1]
+
+    val wheel = CharArray(n) // 바퀴
+
+    Arrays.fill(wheel, '?')
+    var arrow = 0 // 화살표
+
+    val discover = BooleanArray('Z'.code - 'A'.code + 1)
+    var possible = true
+
+    for (i in 0 until k) {
+        val st = StringTokenizer(br.readLine())
+        val rot = st.nextToken().toInt()
+        val alpha = st.nextToken()[0]
+        arrow = (arrow + rot) % n
+        if (wheel[arrow] != '?' && wheel[arrow] != alpha) {
+            possible = false
+            break
+        }
+        wheel[arrow] = alpha
+        discover[alpha.code - 'A'.code] = true
+    }
+
+    if (possible) {
+        val answer = StringBuilder()
+        var t: Int
+        for (i in 0 until n) {
+            t = arrow - i
+            if (t < 0) t += n
+            answer.append(wheel[t])
+        }
+        print(answer)
+    } else {
+        print('!')
+    }
 }
 
 fun main78() = with(Scanner(System.`in`)) {
@@ -116,8 +282,7 @@ fun main15() = with(System.`in`.bufferedReader()) {
                 '<' -> cursor = if (cursor > 0) cursor - 1 else 0
                 '>' -> cursor = if (cursor < pw.size) cursor + 1 else pw.size
                 '-' -> {
-                    if (pw.isNotEmpty() && cursor > 0)
-                        pw.removeAt(--cursor)
+                    if (pw.isNotEmpty() && cursor > 0) pw.removeAt(--cursor)
                 }
 
                 else -> {
@@ -353,11 +518,9 @@ fun main4342() = with(Scanner(System.`in`)) {
     val input = readln()
     var res = ""
     val errorPattern = "__.+".toRegex()
-    if ((input.contains('_') && input.any { it.isUpperCase() })
-        || (!input.contains('_') && input.all { it.isLowerCase() })
-        || input.first() == '_' || input.first().isUpperCase()
-        || errorPattern.containsMatchIn(input) || input.last() == '_'
-        || input.length > 100 || input.last().isUpperCase()
+    if ((input.contains('_') && input.any { it.isUpperCase() }) || (!input.contains('_') && input.all { it.isLowerCase() }) || input.first() == '_' || input.first()
+            .isUpperCase() || errorPattern.containsMatchIn(input) || input.last() == '_' || input.length > 100 || input.last()
+            .isUpperCase()
     ) {
         println("Error!")
     }
@@ -467,8 +630,7 @@ fun main09() {
 
 fun main232() = with(Scanner(System.`in`)) {
     val n = readln().toInt()
-    val pArr = readln().split("\\*".toRegex()).dropLastWhile { it.isEmpty() }
-        .toTypedArray()
+    val pArr = readln().split("\\*".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
     val left = pArr[0]
     val right = pArr[1]
     val res = mutableListOf<String>()
@@ -488,28 +650,6 @@ fun main232() = with(Scanner(System.`in`)) {
     }
     res.forEach {
         println(it)
-    }
-}
-
-fun main54() {
-    val word = readln()
-    val map = mutableMapOf<Char, Int>()
-
-    word.forEach {
-        val character = it.lowercaseChar()
-
-        if (map.containsKey(character)) {
-            map[character] = map[character]!!.plus(1)
-        } else {
-            map[character] = 1
-        }
-    }
-
-    val max = map.maxBy { it.value }
-    if (map.filter { it.value == max.value }.count() > 1) {
-        print("?")
-    } else {
-        print(max.key.uppercaseChar())
     }
 }
 
