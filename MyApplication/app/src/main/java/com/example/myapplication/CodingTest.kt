@@ -1,8 +1,8 @@
 package com.example.myapplication
 
-import java.io.BufferedReader
-import java.io.InputStreamReader
+import java.io.*
 import java.util.Arrays
+import java.util.Deque
 import java.util.LinkedList
 import java.util.Queue
 import java.util.Scanner
@@ -11,7 +11,7 @@ import java.util.StringTokenizer
 import java.util.TreeMap
 import java.util.regex.Matcher
 import java.util.regex.Pattern
-import kotlin.math.sqrt
+import kotlin.math.*
 
 /*
 TreeMap
@@ -20,7 +20,7 @@ TreeMap
 트리맵은 자동 정렬되니 이후 트리맵을 순회하면서 출력하면 끝
  */
 val br = System.`in`.bufferedReader()
-fun main() = with(System.out.bufferedWriter()) {
+fun mainTree() = with(System.out.bufferedWriter()) {
     val map = TreeMap<String, Double>()
     var size = 0
     while (true) {
@@ -32,6 +32,82 @@ fun main() = with(System.out.bufferedWriter()) {
         write("${it.key} ${String.format("%.4f", it.value / size * 100)}\n")
     }
     close()
+}
+
+fun main() {
+    val br = BufferedReader(InputStreamReader(System.`in`))
+    val bw = BufferedWriter(OutputStreamWriter(System.out))
+    val N = br.readLine().toInt()
+    val arr = IntArray(N)
+    val sorted_arr = IntArray(N)
+    val deque: Deque<Int> = LinkedList()
+    val st = StringTokenizer(br.readLine())
+    for (i in 0 until N) {
+        arr[i] = st.nextToken().toInt()
+        sorted_arr[i] = arr[i]
+    }
+    val K = br.readLine().toInt()
+    var sort_max = 0 // 어디까지 정렬할 건지
+    for (i in 0 until K) {
+        val str = br.readLine()
+        val A = str.split(" ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()[0].toInt()
+        val B = str.split(" ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()[1].toInt()
+        sort_max =
+            max(sort_max.toDouble(), max(A.toDouble(), B.toDouble())).toInt()
+        while (!deque.isEmpty() && abs(deque.last.toDouble()) <= A) {
+            deque.pollLast()
+        }
+        deque.addLast(A)
+        while (!deque.isEmpty() && abs(deque.last.toDouble()) <= B) {
+            deque.pollLast()
+        }
+        deque.addLast(-B)
+    }
+    deque.addLast(0) // 마지막 연산 위해
+    Arrays.sort(arr, 0, sort_max) // arr 정렬하기
+    var final_idx = sort_max - 1
+    var ascend_idx = sort_max - 1
+    var descend_idx = 0
+    var cur = deque.pollFirst()
+    while (!deque.isEmpty()) {
+        val next = deque.pollFirst()
+        val diff = (abs(cur.toDouble()) - abs(next.toDouble())).toInt()
+        if (cur > 0) {  // 오름차순
+            for (i in 0 until diff) {
+                sorted_arr[final_idx--] = arr[ascend_idx--]
+            }
+        } else {    // 내림차순
+            for (i in 0 until diff) {
+                sorted_arr[final_idx--] = arr[descend_idx++]
+            }
+        }
+        cur = next
+    }
+    for (i in sorted_arr.indices) {
+        bw.write(sorted_arr[i].toString() + " ")
+    }
+    br.close()
+    bw.flush()
+    bw.close()
+}
+
+fun main_error_13415() {
+    val br = System.`in`.bufferedReader()
+    val size = br.readLine().toInt()
+    val list = Arrays.stream(br.readLine().split(" ".toRegex()).dropLastWhile { it.isEmpty() }
+        .toTypedArray()).mapToInt { s: String -> s.toInt() }.toArray()
+
+    val cnt = br.readLine().toInt()
+    var res = list.toList()
+    repeat(cnt) {
+        val ab = Arrays.stream(br.readLine().split(" ".toRegex()).dropLastWhile { it.isEmpty() }
+            .toTypedArray()).mapToInt { s: String -> s.toInt() }.toArray()
+        val a = ab[0]
+        val b = ab[1]
+        val aList = res.slice(0..<a).sorted() + res.slice(a..<res.size)
+        res = aList.slice(0..<b).sortedDescending() + aList.slice(b..<aList.size)
+    }
+    println(res.joinToString(" "))
 }
 
 fun main90() {
