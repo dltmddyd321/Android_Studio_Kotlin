@@ -34,7 +34,23 @@ fun mainTree() = with(System.out.bufferedWriter()) {
     close()
 }
 
-fun main() {
+fun main() = with(BufferedReader(InputStreamReader(System.`in`))) {
+    var tc = readLine().toInt()
+    while (tc-- > 0) {
+        val input = readLine().toInt()
+        val mp = HashMap<String, Int>()
+        for (i in 0 until input) {
+            val a = readLine().split(" ")[1]
+            if (mp.containsKey(a)) mp[a] = 1 + mp[a]!!
+            else mp[a] = 1
+        }
+        var ans = 1
+        for (a in mp.values) ans *= (a + 1)
+        println(ans - 1)
+    }
+}
+
+fun main534554() {
     val br = BufferedReader(InputStreamReader(System.`in`))
     val bw = BufferedWriter(OutputStreamWriter(System.out))
     val N = br.readLine().toInt()
@@ -52,8 +68,7 @@ fun main() {
         val str = br.readLine()
         val A = str.split(" ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()[0].toInt()
         val B = str.split(" ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()[1].toInt()
-        sort_max =
-            max(sort_max.toDouble(), max(A.toDouble(), B.toDouble())).toInt()
+        sort_max = max(sort_max.toDouble(), max(A.toDouble(), B.toDouble())).toInt()
         while (!deque.isEmpty() && abs(deque.last.toDouble()) <= A) {
             deque.pollLast()
         }
