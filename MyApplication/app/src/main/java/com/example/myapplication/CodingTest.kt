@@ -13,6 +13,115 @@ import java.util.regex.Matcher
 import java.util.regex.Pattern
 import kotlin.math.*
 
+
+fun stt(s: String): Int {
+    val (h, m) = s.split(":").map { it.toInt() }
+    return h * 100 + m
+}
+
+fun main() {
+    val br = System.`in`.bufferedReader()
+    val bw = System.out.bufferedWriter()
+
+    val num = br.readLine().toInt()
+    val mode = br.readLine().split(' ').map { it.toInt() }
+    val queueStack = br.readLine().split(' ').map { it.toInt() }
+    var m = br.readLine().toInt()
+    val insert = br.readLine().split(' ').map { it.toInt() }
+
+    val sb = StringBuilder()
+    for (i in num - 1 downTo 0) { // 마지막 큐부터 출력 -> 큐스택
+        if (m == 0) break // 삽입된만큼 출력하면 종료
+        if (mode[i] == 0) { // 큐
+            sb.append("${queueStack[i]} ")
+            m--
+        }
+    }
+    for (i in insert.indices) { // 삽입된 원소 출력
+        if (m == 0) break
+        sb.append("${insert[i]} ")
+        m--
+    }
+
+    bw.write(sb.toString())
+    bw.flush()
+    bw.close()
+    br.close()
+}
+
+
+fun main45345() {
+    val br = System.`in`.bufferedReader()
+    val (n, k) = br.readLine().split(" ").map { it.toInt() }
+    val coins = Array(n) { br.readLine().toInt() }
+    var res = 0
+    var tmp = k
+
+    for (index in n - 1 downTo 0) {
+        res += tmp / coins[index]
+        tmp %= coins[index]
+    }
+
+    println(res)
+}
+
+fun maint43() {
+    val scanner = Scanner(System.`in`)
+    val s = scanner.next()
+    val e = scanner.next()
+    val q = scanner.next()
+
+    val sTime = stt(s)
+    val eTime = stt(e)
+    val qTime = stt(q)
+
+    val us = mutableSetOf<String>()
+    val uscnt = mutableSetOf<String>()
+
+    while (scanner.hasNext()) {
+        val s1 = scanner.next()
+        if (s1 == "") break
+        val s2 = scanner.next()
+        if (s2 == "") break
+
+        val s1Time = stt(s1)
+
+        when {
+            s1Time <= sTime -> us.add(s2)
+            s1Time in eTime..qTime -> if (s2 in us) uscnt.add(s2)
+        }
+    }
+    println(uscnt.size)
+}
+
+fun main876() {
+    val reader = BufferedReader(InputStreamReader(System.`in`))
+    var temp = reader.readLine()?.split(" ".toRegex())?.dropLastWhile { it.isEmpty() }
+        ?.toTypedArray() ?: return
+    val s = temp[0]
+    val e = temp[1]
+    val q = temp[2]
+    val input = reader.readLine() ?: return
+    val chance = HashSet<String>()
+    val result = HashSet<String>()
+    var cnt = 0
+    while (true) {
+        temp = input.split(" ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+        if (temp.isEmpty()) break
+        if (s >= temp[0]) {
+            chance.add(temp[1])
+        } else if (temp[0] in e..q) {
+            result.add(temp[1])
+        }
+    }
+    for (str in chance) {
+        if (result.contains(str)) {
+            cnt++
+        }
+    }
+    println(cnt)
+}
+
 /*
 TreeMap
 우선 트라이를 쓰든 해쉬만 쓰든 정렬은 해야 한다.
@@ -34,7 +143,28 @@ fun mainTree() = with(System.out.bufferedWriter()) {
     close()
 }
 
-fun main() = with(BufferedReader(InputStreamReader(System.`in`))) {
+fun main654() {
+    val br = BufferedReader(InputStreamReader(System.`in`))
+    val n = br.readLine().toInt()
+    val m = br.readLine().toInt()
+    val arr = IntArray(n)
+    var cnt = 0
+    val ingredient = br.readLine().split(" ").toList()
+    for (i in ingredient.indices) {
+        arr[i] = (ingredient[i].toInt())
+    }
+    for (i in arr.indices) {
+        for (j in i + 1 until arr.size) {
+            if (arr[i] + arr[j] == m) {
+                cnt++
+                break
+            }
+        }
+    }
+    print(cnt)
+}
+
+fun main65467() = with(BufferedReader(InputStreamReader(System.`in`))) {
     var tc = readLine().toInt()
     while (tc-- > 0) {
         val input = readLine().toInt()
