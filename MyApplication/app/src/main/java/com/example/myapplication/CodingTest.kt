@@ -1,6 +1,9 @@
 package com.example.myapplication
 
-import java.io.*
+import java.io.BufferedReader
+import java.io.BufferedWriter
+import java.io.InputStreamReader
+import java.io.OutputStreamWriter
 import java.util.Arrays
 import java.util.Deque
 import java.util.LinkedList
@@ -11,7 +14,9 @@ import java.util.StringTokenizer
 import java.util.TreeMap
 import java.util.regex.Matcher
 import java.util.regex.Pattern
-import kotlin.math.*
+import kotlin.math.abs
+import kotlin.math.max
+import kotlin.math.sqrt
 
 
 fun stt(s: String): Int {
@@ -19,7 +24,52 @@ fun stt(s: String): Int {
     return h * 100 + m
 }
 
-fun main() {
+fun solution(new_id: String): String {
+    var answer = new_id
+
+    val reg1 = Regex("[a-z0-9-_.]")
+    val reg2 = Regex("[.]{2,}")
+
+    // 1단계
+    answer = answer.lowercase()
+    val temp = StringBuilder()
+
+    // 2단계
+    for (e in answer) {
+        if (reg1.containsMatchIn(e.toString())) {
+            temp.append(e)
+        }
+    }
+
+    // 3단계
+    answer = temp.toString().replace(reg2, ".")
+
+    // 4단계
+    if (answer.isNotEmpty() && answer.first() == '.') answer = answer.removeRange(0, 1)
+    if (answer.isNotEmpty() && answer.last() == '.') answer =
+        answer.removeRange(answer.length - 1, answer.length)
+
+    // 5단계
+    if (answer.isEmpty()) answer = "a"
+
+    // 6단계
+    if (answer.length >= 16) {
+        answer = answer.slice(0..14)
+    }
+
+    // 6단계 : 4단계 과정을 한번 더 해주는 이유는 위 과정을 거치고 마지막 문자가 .인 경우 제거해주기 위함.
+    if (answer.isNotEmpty() && answer.first() == '.') answer = answer.removeRange(0, 1)
+    if (answer.isNotEmpty() && answer.last() == '.') answer =
+        answer.removeRange(answer.length - 1, answer.length)
+
+    // 7단계
+    while (answer.length <= 2) {
+        answer += answer[answer.length - 1]
+    }
+    return answer
+}
+
+fun main5434() {
     val br = System.`in`.bufferedReader()
     val bw = System.out.bufferedWriter()
 
@@ -49,20 +99,16 @@ fun main() {
     br.close()
 }
 
-
-fun main45345() {
-    val br = System.`in`.bufferedReader()
-    val (n, k) = br.readLine().split(" ").map { it.toInt() }
-    val coins = Array(n) { br.readLine().toInt() }
-    var res = 0
-    var tmp = k
-
-    for (index in n - 1 downTo 0) {
-        res += tmp / coins[index]
-        tmp %= coins[index]
+fun main () {
+    val list = mutableListOf<String>()
+    val scanner = Scanner(System.`in`)
+    repeat(4) {
+        list.add(scanner.next())
     }
 
-    println(res)
+    for (i in list.indices.reversed()) {
+        println(list[i])
+    }
 }
 
 fun maint43() {
