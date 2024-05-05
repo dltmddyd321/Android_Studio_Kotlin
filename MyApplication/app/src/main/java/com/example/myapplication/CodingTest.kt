@@ -18,6 +18,111 @@ import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.sqrt
 
+fun main() {
+    val scanner = Scanner(System.`in`)
+    val (input, cnt) = scanner.nextLine().split(" ")
+    var arr = input.toCharArray()
+    fun check(str: String) {
+        val (mode, a, b) = str.split(" ")
+        when (mode.toInt()) {
+            1 -> {
+                val tmp1 = arr[a.toInt() - 1]
+                val tmp2 = arr[b.toInt() - 1]
+                arr[b.toInt() - 1] = tmp1
+                arr[a.toInt() - 1] = tmp2
+                println(arr.joinToString().replace(",", "").replace(" ", ""))
+            }
+            else -> {
+                val res = arr.joinToString().replace(a, b).replace(",", "").replace(" ", "")
+                arr = res.toCharArray()
+                println(res)
+            }
+        }
+    }
+
+    repeat(cnt.toInt()) {
+        check(scanner.nextLine())
+    }
+}
+
+fun main5885() {
+    val scanner = Scanner(System.`in`)
+    val arr = mutableListOf<Int>()
+    var temp = ""
+    val (first, second) = scanner.nextLine().split(" ")
+    fun check(input: String) {
+        val isInput = try {
+            input.toInt()
+            true
+        } catch (e: Exception) { false }
+        if (isInput) arr.add(input.toInt())
+        else {
+            for (i in input) {
+                if (i.isDigit()) temp += i
+                else {
+                    arr.add(temp.toInt())
+                    temp = ""
+                    return
+                }
+            }
+        }
+    }
+    check(first)
+    check(second)
+    println(arr[0] + arr[1])
+}
+
+fun mai432n() {
+    fun compressString(input: String): String {
+        if (input.isEmpty()) return ""
+        val result = StringBuilder()
+
+        var currentChar = input.first()
+        var count = 1
+
+        for (i in 1 until input.length) {
+            if (input[i] == currentChar) {
+                count++
+            } else {
+                result.append("$currentChar$count")
+                currentChar = input[i]
+                count = 1
+            }
+        }
+        result.append("$currentChar$count")
+
+        return result.toString()
+    }
+
+    val scanner = Scanner(System.`in`)
+    val input = scanner.nextLine()
+    val res = compressString(input)
+    println(res.length)
+    println(res)
+}
+
+fun main2(N: Int, stages: IntArray): IntArray {
+    var res = mutableMapOf<Int, Double>()
+    var players = stages.size
+
+    (1..N).forEach {
+        val failPlayer = stages.count { stage -> it == stage }
+        res[it - 1] =
+            if (players != 0) {
+                failPlayer.toDouble() / players.toDouble()
+            } else 0.0
+        players -= failPlayer
+    }
+
+    return res.toList().sortedByDescending { it.second }.map { it.first + 1 }.toIntArray()
+
+//    repeat(N) { cnt ->
+//        val player = stages.count { it <= cnt + 1 }
+//        val value = (player.toDouble() / stages.filter { it >= cnt + 1 }.size.toDouble()) * 100
+//        res[cnt + 1] = value
+//    }
+//    println(res.values)
+}
 
 fun stt(s: String): Int {
     val (h, m) = s.split(":").map { it.toInt() }
@@ -97,18 +202,6 @@ fun main5434() {
     bw.flush()
     bw.close()
     br.close()
-}
-
-fun main () {
-    val list = mutableListOf<String>()
-    val scanner = Scanner(System.`in`)
-    repeat(4) {
-        list.add(scanner.next())
-    }
-
-    for (i in list.indices.reversed()) {
-        println(list[i])
-    }
 }
 
 fun maint43() {
