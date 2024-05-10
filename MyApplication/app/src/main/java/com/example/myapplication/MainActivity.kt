@@ -48,56 +48,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@Composable
-fun TbLogo(
-    isDarkMode: Boolean,
-    logoIcon: Painter,
-    logoSize: Dp,
-    labelSize: TextUnit,
-    labelWeight: FontWeight
-) {
-    Box(
-        modifier = Modifier
-            .background(
-                if (isDarkMode) Color.Black else Color.White, shape = RoundedCornerShape(10.dp)
-            )
-            .padding(16.dp)
-    ) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Image(
-                painter = logoIcon,
-                contentDescription = "Logo",
-                modifier = Modifier.size(logoSize)
-            )
-            TbText(
-                modifier = Modifier.padding(start = 8.dp),
-                text = "TimeBlocks",
-                isDarkMode = isDarkMode,
-                labelSize = labelSize,
-                labelWeight = labelWeight
-            )
-        }
-    }
-}
 
-@Composable
-fun TbText(
-    modifier: Modifier,
-    text: String,
-    isDarkMode: Boolean,
-    labelSize: TextUnit,
-    labelWeight: FontWeight,
-    labelAlign: TextAlign = TextAlign.Center
-) {
-    Text(
-        text = text,
-        color = if (isDarkMode) Color.White else Color.Black,
-        fontSize = labelSize,
-        fontWeight = labelWeight,
-        textAlign = labelAlign,
-        modifier = modifier
-    )
-}
 
 @Composable
 fun Greeting(name: String) {
