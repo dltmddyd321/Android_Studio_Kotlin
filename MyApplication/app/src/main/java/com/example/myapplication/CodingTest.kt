@@ -18,24 +18,64 @@ import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.sqrt
 
-fun main() {
-    val scanner = Scanner(System.`in`)
-    val oddStr = StringBuilder()
-    val pairStr = StringBuilder()
-    val input = scanner.next().toInt()
-    val all = mutableListOf<Int>()
-    repeat(input) {
-        all.add(scanner.next().toInt())
-    }
-    all.forEach {
-        if (it % 2 == 0) {
-            pairStr.append("$it ")
-        } else {
-            oddStr.append("$it ")
+fun main23232() {
+
+    fun printPascalTriangle(triangle: List<List<Int>>) {
+        // 파스칼 삼각형 출력
+        for (row in triangle) {
+            for (number in row) {
+                print("$number ")
+            }
+            println()
         }
     }
-    pairStr.append(oddStr)
-    println(pairStr)
+
+    val scanner = Scanner(System.`in`)
+    val n = scanner.nextInt()
+    val triangle = MutableList(n) { MutableList(it + 1) { 1 } }
+
+    for (i in 2 until n) {
+        for (j in 1 until i) {
+            triangle[i][j] = triangle[i - 1][j - 1] + triangle[i - 1][j]
+        }
+    }
+
+    printPascalTriangle(triangle)
+}
+
+fun fillDiagonalMatrix(n: Int, m: Int): Array<Array<Int>> {
+    val matrix = Array(n) { Array(m) { 0 } }
+    var num = 1
+
+    // 대각선 방향으로 숫자 채우기
+    for (line in 1..<n + m) {
+        val startRow = maxOf(0, line - m)
+        val count = minOf(line, minOf((n - startRow), m))
+
+        for (j in 0 until count) {
+            matrix[startRow + j][minOf(m, line) - j - 1] = num++
+        }
+    }
+
+    return matrix
+}
+
+fun printMatrix(matrix: Array<Array<Int>>) {
+    for (row in matrix) {
+        for (num in row) {
+            print("$num ")
+        }
+        println()
+    }
+}
+
+fun main() {
+    val scanner = Scanner(System.`in`)
+    val n = scanner.nextInt()
+    val m = scanner.nextInt()
+
+    val matrix = fillDiagonalMatrix(n, m)
+    printMatrix(matrix)
 }
 
 fun main5885() {
@@ -47,7 +87,9 @@ fun main5885() {
         val isInput = try {
             input.toInt()
             true
-        } catch (e: Exception) { false }
+        } catch (e: Exception) {
+            false
+        }
         if (isInput) arr.add(input.toInt())
         else {
             for (i in input) {
