@@ -6,10 +6,4 @@
     <dimen name="normal_margin">16dp</dimen>
     <dimen name="big_margin">20dp</dimen>
     <dimen name="extra_margin">25dp</dimen>
-
-    <dimen name="corner_radius_none">0dp</dimen>
-    <dimen name="radius_01">4dp</dimen>
-    <dimen name="radius_02">6dp</dimen>
-    <dimen name="radius_03">8dp</dimen>
-    <dimen name="$radius_04">12dp</dimen>
 </resources>

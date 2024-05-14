@@ -20,29 +20,22 @@ import kotlin.math.sqrt
 
 fun main() {
     val scanner = Scanner(System.`in`)
-    val (input, cnt) = scanner.nextLine().split(" ")
-    var arr = input.toCharArray()
-    fun check(str: String) {
-        val (mode, a, b) = str.split(" ")
-        when (mode.toInt()) {
-            1 -> {
-                val tmp1 = arr[a.toInt() - 1]
-                val tmp2 = arr[b.toInt() - 1]
-                arr[b.toInt() - 1] = tmp1
-                arr[a.toInt() - 1] = tmp2
-                println(arr.joinToString().replace(",", "").replace(" ", ""))
-            }
-            else -> {
-                val res = arr.joinToString().replace(a, b).replace(",", "").replace(" ", "")
-                arr = res.toCharArray()
-                println(res)
-            }
+    val oddStr = StringBuilder()
+    val pairStr = StringBuilder()
+    val input = scanner.next().toInt()
+    val all = mutableListOf<Int>()
+    repeat(input) {
+        all.add(scanner.next().toInt())
+    }
+    all.forEach {
+        if (it % 2 == 0) {
+            pairStr.append("$it ")
+        } else {
+            oddStr.append("$it ")
         }
     }
-
-    repeat(cnt.toInt()) {
-        check(scanner.nextLine())
-    }
+    pairStr.append(oddStr)
+    println(pairStr)
 }
 
 fun main5885() {
