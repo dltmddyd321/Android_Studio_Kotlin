@@ -8,13 +8,12 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TooltipBox
 import androidx.compose.material3.TooltipState
@@ -43,32 +42,22 @@ class MainActivity : ComponentActivity() {
         setContent {
             TooltipTestTheme {
                 Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    CustomTooltipBox()
+                    CustomTooltipBox(TooltipDirection.Top)
                 }
             }
         }
     }
 }
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    TooltipTestTheme {
-        Greeting("Android")
-    }
+enum class TooltipDirection {
+    Top, Bottom, Left, Right
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CustomTooltipBox() {
+fun CustomTooltipBox(
+    direction: TooltipDirection
+) {
     val tooltipState = remember { TooltipState() }
     val coroutineScope = rememberCoroutineScope()
 
@@ -76,24 +65,85 @@ fun CustomTooltipBox() {
         TooltipBox(
             state = tooltipState,
             positionProvider = remember {
-                CustomTooltipPositionProvider()
+                CustomTooltipPositionProvider(direction)
             },
             tooltip = {
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Box(
-                        modifier = Modifier
-                            .clip(RoundedCornerShape(8.dp))
-                            .background(Color.DarkGray)
-                            .padding(horizontal = 8.dp, vertical = 4.dp)
-                    ) {
-                        Text(
-                            text = "툴팁 텍스트",
-                            modifier = Modifier.padding(8.dp),
-                            color = Color.White,
-                        )
+                when (direction) {
+                    TooltipDirection.Top -> {
+                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                            Box(
+                                modifier = Modifier
+                                    .clip(RoundedCornerShape(8.dp))
+                                    .background(Color.DarkGray)
+                                    .padding(horizontal = 8.dp, vertical = 4.dp)
+                            ) {
+                                Text(
+                                    text = "툴팁 텍스트",
+                                    modifier = Modifier.padding(8.dp),
+                                    color = Color.White,
+                                )
+                            }
+                            Canvas(modifier = Modifier.size(10.dp)) {
+                                drawTooltipArrow(this, Color.DarkGray, direction)
+                            }
+                        }
                     }
-                    Canvas(modifier = Modifier.size(10.dp)) {
-                        drawTooltipArrow(this, Color.DarkGray)
+                    TooltipDirection.Bottom -> {
+                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                            Canvas(modifier = Modifier.size(10.dp)) {
+                                drawTooltipArrow(this, Color.DarkGray, direction)
+                            }
+                            Box(
+                                modifier = Modifier
+                                    .clip(RoundedCornerShape(8.dp))
+                                    .background(Color.DarkGray)
+                                    .padding(horizontal = 8.dp, vertical = 4.dp)
+                            ) {
+                                Text(
+                                    text = "툴팁 텍스트",
+                                    modifier = Modifier.padding(8.dp),
+                                    color = Color.White,
+                                )
+                            }
+                        }
+                    }
+                    TooltipDirection.Left -> {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Box(
+                                modifier = Modifier
+                                    .clip(RoundedCornerShape(8.dp))
+                                    .background(Color.DarkGray)
+                                    .padding(horizontal = 8.dp, vertical = 4.dp)
+                            ) {
+                                Text(
+                                    text = "툴팁 텍스트",
+                                    modifier = Modifier.padding(8.dp),
+                                    color = Color.White,
+                                )
+                            }
+                            Canvas(modifier = Modifier.size(10.dp)) {
+                                drawTooltipArrow(this, Color.DarkGray, direction)
+                            }
+                        }
+                    }
+                    TooltipDirection.Right -> {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Canvas(modifier = Modifier.size(10.dp)) {
+                                drawTooltipArrow(this, Color.DarkGray, direction)
+                            }
+                            Box(
+                                modifier = Modifier
+                                    .clip(RoundedCornerShape(8.dp))
+                                    .background(Color.DarkGray)
+                                    .padding(horizontal = 8.dp, vertical = 4.dp)
+                            ) {
+                                Text(
+                                    text = "툴팁 텍스트",
+                                    modifier = Modifier.padding(8.dp),
+                                    color = Color.White,
+                                )
+                            }
+                        }
                     }
                 }
             },
@@ -113,11 +163,30 @@ fun CustomTooltipBox() {
     }
 }
 
-fun DrawScope.drawTooltipArrow(scope: DrawScope, color: Color) {
+fun DrawScope.drawTooltipArrow(scope: DrawScope, color: Color, direction: TooltipDirection) {
     val path = Path().apply {
-        moveTo(0f, 0f)
-        lineTo(size.width / 2, size.height)
-        lineTo(size.width, 0f)
+        when (direction) {
+            TooltipDirection.Top -> {
+                moveTo(0f, 0f)
+                lineTo(size.width / 2, size.height)
+                lineTo(size.width, 0f)
+            }
+            TooltipDirection.Bottom -> {
+                moveTo(0f, size.height)
+                lineTo(size.width / 2, 0f)
+                lineTo(size.width, size.height)
+            }
+            TooltipDirection.Left -> {
+                moveTo(size.width, size.height / 2)
+                lineTo(0f, 0f)
+                lineTo(0f, size.height)
+            }
+            TooltipDirection.Right -> {
+                moveTo(0f, size.height / 2)
+                lineTo(size.width, 0f)
+                lineTo(size.width, size.height)
+            }
+        }
         close()
     }
     scope.drawPath(
@@ -126,15 +195,38 @@ fun DrawScope.drawTooltipArrow(scope: DrawScope, color: Color) {
     )
 }
 
-class CustomTooltipPositionProvider : PopupPositionProvider {
+class CustomTooltipPositionProvider(private val direction: TooltipDirection) : PopupPositionProvider {
     override fun calculatePosition(
         anchorBounds: IntRect,
         windowSize: IntSize,
         layoutDirection: LayoutDirection,
         popupContentSize: IntSize
     ): IntOffset {
-        val x = anchorBounds.left + (anchorBounds.width / 2) - (popupContentSize.width / 2)
-        val y = anchorBounds.top - popupContentSize.height
+        val x: Int
+        val y: Int
+        when (direction) {
+            TooltipDirection.Top -> {
+                x = anchorBounds.left + (anchorBounds.width / 2) - (popupContentSize.width / 2)
+                y = anchorBounds.top - popupContentSize.height
+            }
+            TooltipDirection.Bottom -> {
+                x = anchorBounds.left + (anchorBounds.width / 2) - (popupContentSize.width / 2)
+                y = anchorBounds.bottom
+            }
+            TooltipDirection.Left -> {
+                x = anchorBounds.left - popupContentSize.width
+                y = anchorBounds.top + (anchorBounds.height / 2) - (popupContentSize.height / 2)
+            }
+            TooltipDirection.Right -> {
+                x = anchorBounds.right
+                y = anchorBounds.top + (anchorBounds.height / 2) - (popupContentSize.height / 2)
+            }
+        }
         return IntOffset(x, y)
     }
+}
+
+@Preview
+@Composable
+fun TestPreView() {
 }
