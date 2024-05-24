@@ -6,12 +6,11 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -27,9 +26,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowInsetsControllerCompat
 import com.example.programmerstest.ui.theme.ProgrammersTestTheme
-import org.dmfs.rfc5545.DateTime
-import org.dmfs.rfc5545.recur.RecurrenceRule
+import java.io.BufferedReader
+import java.io.InputStreamReader
 import java.util.*
+import kotlin.math.abs
+import kotlin.math.max
+
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -108,4 +110,60 @@ fun DefaultPreview() {
     ProgrammersTestTheme {
         Greeting("Android")
     }
+}
+
+fun main() {
+    val scanner = Scanner(System.`in`)
+    val p = scanner.nextInt()
+    val res = mutableMapOf<Int, Int>()
+
+    repeat(p) {
+        val t = scanner.nextInt()
+        val arr = mutableListOf<Int>()
+        repeat(20) {
+            arr.add(scanner.nextInt())
+        }
+
+        var cnt = 0
+        for (i in 0 until 20) {
+            val slice = arr.slice(0 until i)
+            cnt += slice.count { it > arr[i] }
+        }
+        res[t] = cnt
+    }
+    res.forEach { (t, u) ->
+        println("$t $u")
+    }
+}
+
+fun mainChecker() = with(System.`in`.bufferedReader()) {
+    val (N, M) = readLine().split(" ").map { it.toInt() }
+    val castle = Array(N) { readLine().toCharArray() } //구조를 입력받는다.
+    val row = BooleanArray(M) { false }
+    val col = BooleanArray(N) { false }
+
+    for (i in 0 until N) for (j in 0 until M) {
+        if (castle[i][j] == 'X') {
+            col[i] = true
+            row[j] = true
+        }
+    }
+
+    println(max(row.count { !it }, col.count { !it }))
+}
+
+fun mainAnt() {
+    val br = BufferedReader(InputStreamReader(System.`in`))
+    var st = StringTokenizer(br.readLine())
+    val W = st.nextToken().toInt()
+    val H = st.nextToken().toInt()
+    st = StringTokenizer(br.readLine())
+    val q = st.nextToken().toInt() //q가 컬럼
+    val p = st.nextToken().toInt() //p가 로우
+    val t = br.readLine().toInt()
+    var x = (q + t) % (2 * W)
+    var y = (p + t) % (2 * H)
+    x = (W - abs((W - x).toDouble())).toInt()
+    y = (H - abs((H - y).toDouble())).toInt()
+    println("$x $y")
 }
