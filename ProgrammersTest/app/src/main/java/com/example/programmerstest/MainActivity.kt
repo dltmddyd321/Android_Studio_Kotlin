@@ -112,28 +112,17 @@ fun DefaultPreview() {
     }
 }
 
-fun main() {
-    val scanner = Scanner(System.`in`)
-    val p = scanner.nextInt()
-    val res = mutableMapOf<Int, Int>()
+fun main(){
+    val scan = Scanner(System.`in`)
+    val n = scan.nextLine().toInt()
+    val arr = mutableListOf<Int>()
 
-    repeat(p) {
-        val t = scanner.nextInt()
-        val arr = mutableListOf<Int>()
-        repeat(20) {
-            arr.add(scanner.nextInt())
-        }
+    repeat(n) {
+        arr.add(scan.nextInt())
+    }
 
-        var cnt = 0
-        for (i in 0 until 20) {
-            val slice = arr.slice(0 until i)
-            cnt += slice.count { it > arr[i] }
-        }
-        res[t] = cnt
-    }
-    res.forEach { (t, u) ->
-        println("$t $u")
-    }
+    arr.sortDescending()
+    println("${arr.first()} ${arr[1]}")
 }
 
 fun mainChecker() = with(System.`in`.bufferedReader()) {
