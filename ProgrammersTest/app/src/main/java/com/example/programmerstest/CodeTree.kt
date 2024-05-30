@@ -2,13 +2,65 @@ package com.example.programmerstest
 
 import java.util.Scanner
 
-fun main() {
-    val scanner = Scanner(System.`in`)
-    val arr = scanner.nextLine().split(" ").map { it.toInt() }
-    val arrUnder = arr.filter { it < 500 }.sortedDescending()
-    val arrOver = arr.filter { it > 500 }.sorted()
+fun findPrimesUpTo(n: Int): List<Int> {
+    if (n < 2) return emptyList()
 
-    println("${arrUnder.first()} ${arrOver.first()}")
+    val isPrime = BooleanArray(n + 1) { true }
+    isPrime[0] = false
+    isPrime[1] = false
+
+    for (i in 2..n) {
+        if (isPrime[i]) {
+            for (j in i * 2..n step i) {
+                isPrime[j] = false
+            }
+        }
+    }
+
+    return isPrime.indices.filter { isPrime[it] }
+}
+
+fun sumOfDigits(s: String): Int {
+    return s.filter { it.isDigit() }.sumOf { it.toString().toInt() }
+}
+
+fun sortSerialNumbers(serialNumbers: List<String>): List<String> {
+    return serialNumbers.sortedWith(compareBy({ it.length }, { sumOfDigits(it) }, { it }))
+}
+
+fun main() {
+    // 입력을 받는 부분
+    val n = readln().toInt()
+    val serialNumbers = mutableListOf<String>()
+    repeat(n) {
+        serialNumbers.add(readln())
+    }
+
+    // 정렬된 시리얼 번호를 출력하는 부분
+    val sortedSerialNumbers = sortSerialNumbers(serialNumbers)
+    sortedSerialNumbers.forEach { println(it) }
+}
+fun mainChk() {
+    val scanner = Scanner(System.`in`)
+    val n = scanner.nextLine().toInt()
+    val arr = mutableListOf<Int>()
+    repeat(n) {
+        arr.add(scanner.nextInt())
+    }
+    val res = mutableListOf<Int>()
+    for (i in arr.indices) {
+        for (j in i + 1 until arr.size) {
+            val tmp = arr[i] - arr[j]
+            if (tmp < 0) res.add(tmp)
+        }
+    }
+    if (res.isEmpty()) {
+        println(0)
+        return
+    }
+
+    val res2 = res.map { it * -1 }
+    println(res2.max())
 }
 
 fun main909() {
