@@ -1,6 +1,64 @@
 package com.example.programmerstest
 
+import java.lang.StringBuilder
 import java.util.Scanner
+import java.util.Stack
+
+fun main() {}
+
+fun solution(numbers: IntArray, hand: String): String {
+    val phoneArray = listOf(
+        listOf("1", "2", "3"),
+        listOf("4", "5", "6"),
+        listOf("7", "8", "9"),
+        listOf("*", "0", "#")
+    )
+
+    var res = StringBuilder()
+
+    val leftNum = phoneArray.map { it[0] }
+    val rightNum = phoneArray.map { it[2] }
+
+    numbers.forEach {
+        val value = it.toString()
+        if (value in leftNum) {
+            res.append("L")
+        } else if (value in rightNum) {
+            res.append("R")
+        } else {
+            //TODO: 손가락 거리 별 계산 처리
+        }
+    }
+    return res.toString()
+}
+
+fun solution11(board: Array<IntArray>, moves: IntArray): Int {
+    var res = 0
+    val stack = Stack<Int>()
+
+    val newBoard = mutableListOf<MutableList<Int>>()
+    board.forEach { newBoard.add(it.toMutableList()) }
+
+    fun getLines(index: Int): List<Int> {
+        return newBoard.map { it[index] }
+    }
+
+    moves.forEach {
+        val lines = getLines(it - 1)
+        val target = lines.firstOrNull { num -> num != 0 } ?: 0
+        if (target != 0) {
+            val pos = lines.indexOfFirst { value -> value == target }
+            newBoard[pos][it - 1] = 0
+            if (stack.isNotEmpty() && stack.peek() == target) {
+                stack.pop()
+                res += 2
+            } else {
+                stack.push(target)
+            }
+        }
+    }
+    return res
+}
 
 fun findPrimesUpTo(n: Int): List<Int> {
     if (n < 2) return emptyList()
@@ -28,7 +86,7 @@ fun sortSerialNumbers(serialNumbers: List<String>): List<String> {
     return serialNumbers.sortedWith(compareBy({ it.length }, { sumOfDigits(it) }, { it }))
 }
 
-fun main() {
+fun mainSort() {
     // 입력을 받는 부분
     val n = readln().toInt()
     val serialNumbers = mutableListOf<String>()
@@ -40,6 +98,7 @@ fun main() {
     val sortedSerialNumbers = sortSerialNumbers(serialNumbers)
     sortedSerialNumbers.forEach { println(it) }
 }
+
 fun mainChk() {
     val scanner = Scanner(System.`in`)
     val n = scanner.nextLine().toInt()
