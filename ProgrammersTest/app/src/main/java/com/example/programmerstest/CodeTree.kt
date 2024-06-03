@@ -3,10 +3,55 @@ package com.example.programmerstest
 import java.lang.StringBuilder
 import java.util.Scanner
 import java.util.Stack
+import kotlin.math.abs
 
-fun main() {}
+fun main() {
+    println(solution(intArrayOf(44, 1, 0, 0, 31, 25), intArrayOf(31, 10, 45, 1, 6, 19)).joinToString(" "))
+}
 
-fun solution(numbers: IntArray, hand: String): String {
+fun solution(lottos: IntArray, win_nums: IntArray): IntArray {
+    var min = 0
+    var max = 0
+    val res = mutableListOf<Int>()
+    val winNumbers = win_nums.toMutableList()
+
+    fun check(value: Int): Int {
+        return when (value) {
+            6 -> 1
+            5 -> 2
+            4 -> 3
+            3 -> 4
+            2 -> 5
+            else -> 6
+        }
+    }
+
+    if (lottos.all { it != 0 }) { //0이 하나도 없을 경우, 교집합 개수를 반환
+        min = lottos.intersect(winNumbers.toSet()).size
+        repeat(2) { res.add(check(min)) }
+        return res.toIntArray()
+    }
+
+    val intersection = lottos.intersect(winNumbers.toSet())
+    min = intersection.size //0이 하나 있으면 무조건 1 더해준다.
+
+    winNumbers.removeIf { it in lottos }
+    val diff = winNumbers.size //아직 선택 가능한 정답 개수
+    val zeroCnt = lottos.count { it == 0 }
+
+    max = if (zeroCnt > diff) { //0의 공백을 정답으로 채우기 부족할 때,
+        intersection.size + diff
+    } else { //공백 개수랑 가능한 정답 개수가 동일할 경우 또는 공백 개수가 정답 개수보다 적을 경우
+        intersection.size + zeroCnt
+    }
+
+    res.add(check(max))
+    res.add(check(min))
+
+    return res.toIntArray()
+}
+
+fun solutionPhone(numbers: IntArray, hand: String): String {
     val phoneArray = listOf(
         listOf("1", "2", "3"),
         listOf("4", "5", "6"),
@@ -14,19 +59,50 @@ fun solution(numbers: IntArray, hand: String): String {
         listOf("*", "0", "#")
     )
 
-    var res = StringBuilder()
+    var (leftX, leftY) = Pair(0, 3)
+    var (rightX, rightY) = Pair(2, 3)
+
+    val res = StringBuilder()
 
     val leftNum = phoneArray.map { it[0] }
     val rightNum = phoneArray.map { it[2] }
 
-    numbers.forEach {
-        val value = it.toString()
+    numbers.forEach { num ->
+        val value = num.toString()
+
+        val y = phoneArray.indexOfFirst { value in it }
+        val x = phoneArray[y].indexOfFirst { it == value }
+
         if (value in leftNum) {
             res.append("L")
+            leftX = x
+            leftY = y
         } else if (value in rightNum) {
             res.append("R")
+            rightX = x
+            rightY = y
         } else {
-            //TODO: 손가락 거리 별 계산 처리
+            val leftDiff = abs(leftX - x) + abs(leftY - y)
+            val rightDiff = abs(rightX - x) + abs(rightY - y)
+            if (leftDiff > rightDiff) {
+                res.append("R")
+                rightX = x
+                rightY = y
+            } else if (leftDiff < rightDiff) {
+                res.append("L")
+                leftX = x
+                leftY = y
+            } else {
+                if (hand == "right") {
+                    res.append("R")
+                    rightX = x
+                    rightY = y
+                } else {
+                    res.append("L")
+                    leftX = x
+                    leftY = y
+                }
+            }
         }
     }
     return res.toString()
