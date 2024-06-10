@@ -1,15 +1,84 @@
 package com.example.programmerstest
 
+import java.lang.IllegalArgumentException
 import java.lang.StringBuilder
 import java.util.Scanner
 import java.util.Stack
 import kotlin.math.abs
 
 fun main() {
-    println(solution(intArrayOf(44, 1, 0, 0, 31, 25), intArrayOf(31, 10, 45, 1, 6, 19)).joinToString(" "))
+    fun solution(n: Int, m: Int, section: IntArray): Int {
+        var arr = mutableListOf<Int>()
+        repeat(n) { arr.add(it + 1) }
+
+        var cnt = 0
+        while (true) {
+            val isNeedToCheck = arr.any { it in section }
+            if (!isNeedToCheck) break
+
+            try {
+                val startIndex = arr.indexOfFirst { it in section } + m
+                arr = arr.subList(startIndex, arr.size - 1)
+            } catch (e: IllegalArgumentException) {
+                e.printStackTrace()
+                break
+            } finally {
+                cnt++
+            }
+        }
+        return cnt
+    }
+
+    println(solution(8, 4, intArrayOf(2, 3, 6)))
 }
 
-fun solution(lottos: IntArray, win_nums: IntArray): IntArray {
+fun main6453() {
+    val scanner = Scanner(System.`in`)
+    val start = scanner.nextInt()
+    val end = scanner.nextInt()
+
+    fun isPerfectNumber(n: Int): Boolean {
+        var sum = 0
+        for (i in 1 until n) {
+            if (n % i == 0) {
+                sum += i
+            }
+        }
+        return sum == n
+    }
+
+    var count = 0
+    for (n in start..end) {
+        if (isPerfectNumber(n)) {
+            count++
+        }
+    }
+
+    println(count)
+}
+
+fun solutionOne(brown: Int, yellow: Int): IntArray {
+    fun findPairsForProduct(n: Int): List<Pair<Int, Int>> {
+        val pairs = mutableListOf<Pair<Int, Int>>()
+
+        for (i in 1..n) {
+            if (n % i == 0) {
+                if (i >= 3 && (n / i) >= 3) {
+                    pairs.add(Pair(i, n / i))
+                }
+            }
+        }
+
+        return pairs
+    }
+
+    val list = findPairsForProduct(brown + yellow)
+    val res = list.find { it.first >= it.second && it.first >= 3 } ?: return intArrayOf()
+
+    return intArrayOf(res.first, res.second)
+}
+
+fun solutionLotto(lottos: IntArray, win_nums: IntArray): IntArray {
     var min = 0
     var max = 0
     val res = mutableListOf<Int>()
