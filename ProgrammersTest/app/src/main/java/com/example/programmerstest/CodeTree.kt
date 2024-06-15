@@ -6,7 +6,49 @@ import java.util.Scanner
 import java.util.Stack
 import kotlin.math.abs
 
+fun solutionHamburger(ingredient: IntArray): Int {
+    val set = "1231"
+    var res = 0
+    var temp = ingredient.joinToString("")
+    while (temp.contains(set)) {
+        temp = temp.replace(set, "")
+        res ++
+    }
+    return res
+}
+
 fun main() {
+    fun solution(a: Int, b: Int, n: Int): Int {
+        var temp = n
+        var res = 0
+
+        while (temp / a > 0) {
+            val mok = temp / a
+            val service = mok * b
+            temp = temp - (mok * a) + service
+            res += service
+        }
+
+        return res
+    }
+
+    println(solution(3, 1, 20))
+}
+
+fun main321() {
+    val scanner = Scanner(System.`in`)
+    val a = scanner.nextInt()
+    val b = scanner.nextInt()
+
+    val hap = a + b
+    val char = a - b
+
+    val result = hap.toDouble() / char.toDouble()
+    val roundedResult = "%.2f".format(result)
+    println(roundedResult)
+}
+
+fun main432() {
     fun solution(n: Int, m: Int, section: IntArray): Int {
         var arr = mutableListOf<Int>()
         repeat(n) { arr.add(it + 1) }
@@ -30,6 +72,25 @@ fun main() {
     }
 
     println(solution(8, 4, intArrayOf(2, 3, 6)))
+}
+
+fun solution1(n: Int, m: Int, section: IntArray): Int {
+    var curM = section[0] //현재 롤러의 시작 지점 위치
+    var answer = 1 //롤러가 움직인 횟수
+
+    for (i in section.indices) {
+        //칠해야 할 구역이
+        //현재 롤러가 움직인 범위 내에 있는 경우:
+        if (section[i] <= curM + m - 1) continue
+        //현재 롤러가 움직인 범위 밖에 있는 경우:
+        else {
+            //롤러의 시작 지점을 칠해야 할 구역으로 움직이고
+            curM = section[i]
+            //칠하기
+            answer++
+        }
+    }
+    return answer
 }
 
 fun main6453() {
