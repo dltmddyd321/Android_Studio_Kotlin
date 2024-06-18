@@ -1,6 +1,7 @@
 package com.example.programmerstest
 
 import java.lang.IllegalArgumentException
+import java.lang.Integer.min
 import java.lang.StringBuilder
 import java.util.Scanner
 import java.util.Stack
@@ -12,28 +13,56 @@ fun solutionHamburger(ingredient: IntArray): Int {
     var temp = ingredient.joinToString("")
     while (temp.contains(set)) {
         temp = temp.replace(set, "")
-        res ++
+        res++
     }
     return res
 }
 
-fun main() {
-    fun solution(a: Int, b: Int, n: Int): Int {
-        var temp = n
-        var res = 0
 
-        while (temp / a > 0) {
-            val mok = temp / a
-            val service = mok * b
-            temp = temp - (mok * a) + service
-            res += service
+fun isComposite(n: Int): Boolean {
+    if (n <= 1) return false
+    for (i in 2 until n) {
+        if (n % i == 0) return true
+    }
+    return false
+}
+
+fun main() {
+
+    fun solution(keymap: Array<String>, targets: Array<String>): IntArray {
+        val answer = IntArray(targets.size) { -1 } // -1로 모두 초기화
+
+        val map = mutableMapOf<Char, Int>()
+
+        keymap.forEach { str ->
+            val arr = str.toCharArray()
+            arr.forEach {
+                if (map.containsKey(it)) {
+                    map[it] = min(map[it]!!, arr.indexOf(it) + 1)
+                } else {
+                    map[it] = arr.indexOf(it) + 1
+                }
+            }
         }
 
-        return res
+        for (i in targets.indices) {
+            val arr = targets[i].toCharArray()
+            var count = 0
+            var flag = true
+            for (j in arr.indices) {
+                if (map.containsKey(arr[j])) {
+                    count += map[arr[j]]!!
+                } else {
+                    flag = false
+                    break
+                }
+            }
+            if (flag) answer[i] = count
+        }
+        return answer
     }
-
-    println(solution(3, 1, 20))
 }
+
 
 fun main321() {
     val scanner = Scanner(System.`in`)
