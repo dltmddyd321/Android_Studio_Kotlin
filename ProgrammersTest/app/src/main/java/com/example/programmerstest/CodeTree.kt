@@ -5,6 +5,7 @@ import java.lang.Integer.min
 import java.lang.StringBuilder
 import java.util.Scanner
 import java.util.Stack
+import java.util.StringTokenizer
 import kotlin.math.abs
 
 fun solutionHamburger(ingredient: IntArray): Int {
@@ -18,6 +19,57 @@ fun solutionHamburger(ingredient: IntArray): Int {
     return res
 }
 
+fun main() {
+    println(solution(arrayOf("AN", "CF", "MJ", "RT", "NA"), intArrayOf(5, 3, 2, 7, 5)))
+}
+
+fun solution(survey: Array<String>, choices: IntArray): String {
+
+    data class Check(
+        var key: Char,
+        var value: Int
+    )
+
+    val list = mutableListOf<Check>()
+
+    survey.forEachIndexed { index, s ->
+        val checkNum = choices[index]
+        var pick = s.first()
+        var value = checkNum
+        when {
+            checkNum < 4 -> {
+                value = checkNum
+            }
+            checkNum > 4 -> {
+                pick = s[1] //다음 철자로 등록
+                value -= 4
+            }
+            else -> {
+                value = 0
+            }
+        }
+        val exist = list.find { it.key == pick }
+        if (exist != null) {
+            val existValue = exist.value
+            list.remove(exist)
+            value += existValue
+        }
+        list.add(Check(pick, value))
+    }
+
+    fun cal(a: Char, b: Char): Char {
+        val temp = list.filter { it.key == a || it.key == b }
+        return temp.maxWith(compareBy<Check> { it.value }.thenBy { it.key }).key
+    }
+
+    val res = StringBuilder()
+    res.append(cal('R', 'T'))
+    res.append(cal('C', 'F'))
+    res.append(cal('J', 'M'))
+    res.append(cal('A', 'N'))
+
+    return res.toString()
+}
 
 fun isComposite(n: Int): Boolean {
     if (n <= 1) return false
@@ -27,7 +79,7 @@ fun isComposite(n: Int): Boolean {
     return false
 }
 
-fun main() {
+fun mai4324() {
 
     fun solution(keymap: Array<String>, targets: Array<String>): IntArray {
         val answer = IntArray(targets.size) { -1 } // -1로 모두 초기화
@@ -38,6 +90,7 @@ fun main() {
             val arr = str.toCharArray()
             arr.forEach {
                 if (map.containsKey(it)) {
+                    //키가 포함된 가장 가까운 위치 값 저장
                     map[it] = min(map[it]!!, arr.indexOf(it) + 1)
                 } else {
                     map[it] = arr.indexOf(it) + 1
@@ -50,6 +103,7 @@ fun main() {
             var count = 0
             var flag = true
             for (j in arr.indices) {
+                //포함되어 있다면 계산
                 if (map.containsKey(arr[j])) {
                     count += map[arr[j]]!!
                 } else {
