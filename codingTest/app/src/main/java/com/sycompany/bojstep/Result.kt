@@ -22,7 +22,7 @@ import kotlin.math.sqrt
 
 
 fun main() {
-    ternaryFlip(45)
+    println("TEST!!")
 }
 
 //3003번
@@ -1828,16 +1828,4 @@ fun basicSort() {
             o1.second.compareTo(o2.second) //다르면 second 를 비교한다.
         }
     }
-}
-
-fun morePlus(a: Int, b: Int): Int =
-    max((a.toString() + b.toString()).toInt(), (b.toString() + a.toString()).toInt())
-
-fun runningRace(players: Array<String>, callings: Array<String>): Array<String> {
-    val playerCntMap: MutableMap<String, Int> = mutableMapOf()
-    players.forEachIndexed { index, player -> playerCntMap[player] = index - callings.count { it == player } }
-    val values = playerCntMap.values.sortedBy { it }
-
-    val res: MutableList<String> = players.toMutableList()
-
 }
