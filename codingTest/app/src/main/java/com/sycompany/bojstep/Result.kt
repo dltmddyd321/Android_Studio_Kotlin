@@ -20,9 +20,62 @@ import kotlin.math.max
 import kotlin.math.roundToInt
 import kotlin.math.sqrt
 
+fun solution(survey: Array<String>, choices: IntArray): String {
+    var answer: String = ""
 
-fun main() {
-    println("TEST!!")
+    val person: CharArray = charArrayOf('R', 'T', 'C', 'F', 'J', 'M', 'A', 'N')
+    val score: IntArray = IntArray(8) { 0 }
+
+    for (i in survey.indices) {
+        score[person.indexOf(survey[i][1])] += choices[i] - 4
+    }
+
+    for (i in 0..7 step 2) {
+        answer += if (score[i] >= score[i + 1]) person[i] else person[i + 1]
+    }
+    return answer
+}
+
+fun main4123234() = with(System.`in`.bufferedReader()) {
+    val n = readLine().toInt()
+    val st = StringTokenizer(readLine())
+    val arr = Array(n) { st.nextToken().toInt() }
+    val dp = Array(n) { 0 }
+
+    dp[0] = arr.first()
+    var max = arr.first()
+
+    for (i in 1 until n) {
+        dp[i] = max(dp[i - 1] + arr[i], arr[i])
+        max = max(max, dp[i])
+    }
+    println(max)
+}
+
+fun mainCheck() {
+    val br = System.`in`.bufferedReader()
+    val bw = System.out.bufferedWriter()
+
+    val dp = IntArray(11)
+    dp[1] = 1
+    dp[2] = 2
+    dp[3] = 4
+
+    for (i in 4..10) {
+        dp[i] = dp[i - 3] + dp[i - 2] + dp[i - 1]
+    }
+
+    val str = StringBuilder()
+    val a = br.readLine().toInt()
+
+    repeat(a) {
+        str.append("${dp[br.readLine().toInt()]}\n")
+    }
+
+    bw.write("$str")
+    bw.flush()
+    bw.close()
+    br.close()
 }
 
 //3003번
@@ -1263,18 +1316,21 @@ fun characterPosition(keyInput: ArrayList<String>, board: IntArray): IntArray {
                 }
                 answer[0] -= 1
             }
+
             "right" -> {
                 if (answer[0] >= board[0] / 2) {
                     continue
                 }
                 answer[0] += 1
             }
+
             "up" -> {
                 if (answer[1] >= board[1] / 2) {
                     continue
                 }
                 answer[1] += 1
             }
+
             "down" -> {
                 if (answer[1] <= -(board[1] / 2)) {
                     continue
@@ -1797,6 +1853,7 @@ fun priorityQueue() {
                 o1.first > o2.first -> -1   //-1 -> o1을 높은 우선 순위로 둔다
                 else -> 0                   //0 -> 같은 우선 순위로 둔다
             }
+
             else -> when {
                 o1.second < o2.second -> 1
                 o1.second > o2.second -> -1
