@@ -10,6 +10,7 @@ import java.io.BufferedWriter
 import java.io.InputStreamReader
 import java.io.OutputStreamWriter
 import java.math.BigInteger
+import java.text.SimpleDateFormat
 import java.time.OffsetDateTime
 import java.time.ZoneId
 import java.util.*
@@ -19,6 +20,43 @@ import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.roundToInt
 import kotlin.math.sqrt
+
+fun main() {
+    val scanner = Scanner(System.`in`)
+    val input = scanner.nextInt()
+
+    if (input <= 0) return
+
+    // Check if input is a power of 2
+    if (input and (input - 1) != 0) return
+
+    // Calculate the exponent x
+    var n = input
+    var x = 0
+    while (n > 1) {
+        n /= 2
+        x++
+    }
+
+    println(x)
+}
+
+fun solution(today: String, terms: Array<String>, privacies: Array<String>): IntArray {
+    var answer: IntArray = intArrayOf()
+    return answer
+}
+
+fun stringToCalendar(dateString: String): Calendar {
+    val sdf = SimpleDateFormat("yyyy.MM.dd", Locale.getDefault())
+    val calendar = Calendar.getInstance()
+    try {
+        val date = sdf.parse(dateString)
+        if (date != null) calendar.time = date
+    } catch (e: Exception) {
+        e.printStackTrace()
+    }
+    return calendar
+}
 
 fun solution(survey: Array<String>, choices: IntArray): String {
     var answer: String = ""
