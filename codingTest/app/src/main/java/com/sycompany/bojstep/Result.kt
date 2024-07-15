@@ -74,6 +74,35 @@ fun solution(survey: Array<String>, choices: IntArray): String {
     return answer
 }
 
+@SuppressLint("DefaultLocale")
+fun main23132() {
+    // 주어진 2행 4열의 배열 예시
+    val array = arrayOf(
+        intArrayOf(1, 2, 3, 4),
+        intArrayOf(5, 6, 7, 8)
+    )
+
+    // 가로 평균 계산
+    val rowAverages = array.map { row -> row.average() }
+    println(rowAverages.joinToString(" ") { String.format("%.1f", it) })
+
+    // 세로 평균 계산
+    val colAverages = DoubleArray(4)
+    for (j in 0 until 4) {
+        var sum = 0.0
+        for (i in 0 until 2) {
+            sum += array[i][j]
+        }
+        colAverages[j] = sum / 2
+    }
+    println(colAverages.joinToString(" ") { String.format("%.1f", it) })
+
+    // 전체 평균 계산
+    val totalSum = array.sumOf { it.sumOf { it } }
+    val totalAverage = totalSum.toDouble() / (2 * 4)
+    println(String.format("%.1f", totalAverage))
+}
+
 fun main4123234() = with(System.`in`.bufferedReader()) {
     val n = readLine().toInt()
     val st = StringTokenizer(readLine())
