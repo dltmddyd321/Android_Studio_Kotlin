@@ -21,6 +21,40 @@ import kotlin.math.max
 import kotlin.math.roundToInt
 import kotlin.math.sqrt
 
+fun mainConvert() {
+    data class AttributesFirst(
+        val id: Int,
+        val name: String,
+        val url: String
+    )
+
+    data class AttributesSecond(
+        val id: Int,
+        val label: String,
+        val score: Double
+    )
+
+    data class Result(
+        val isSuccess: Boolean,
+        val data: HashMap<String, Any>
+    )
+
+
+
+    val hashMap = mutableMapOf<String, Any>()
+    hashMap["id"] = 1
+    hashMap["name"] = "Adam"
+    hashMap["url"] = "https://www.naver.com"
+
+    // Map을 JSON 문자열로 변환
+    val gson = Gson()
+    val json = gson.toJson(hashMap)
+
+    // JSON 문자열을 데이터 클래스로 변환
+    val user: AttributesFirst = gson.fromJson(json, AttributesFirst::class.java)
+    println("Converted User: $user")
+}
+
 fun main() {
     val scanner = Scanner(System.`in`)
     val input = scanner.nextInt()
