@@ -33,6 +33,24 @@ fun solution(clothes: Array<Array<String>>): Int {
     } - 1
 }
 
+fun main() {
+    println(solution(intArrayOf(1, 2, 3, 9, 10, 12), 7))
+}
+
+fun solution(scoville: IntArray, k: Int): Int {
+    val list = PriorityQueue(scoville.toList())
+    var res = 0
+
+    while (list.any { it <= k }) {
+        res ++
+        val first = list.poll() ?: break
+        val second = list.poll() ?: break
+        list.add(first + (second * 2))
+    }
+
+    return if (res == 0) -1 else res
+}
+
 fun mainConvert() {
     data class AttributesFirst(
         val id: Int,
@@ -65,26 +83,6 @@ fun mainConvert() {
     // JSON 문자열을 데이터 클래스로 변환
     val user: AttributesFirst = gson.fromJson(json, AttributesFirst::class.java)
     println("Converted User: $user")
-}
-
-fun main() {
-    val scanner = Scanner(System.`in`)
-    val input = scanner.nextInt()
-
-    if (input <= 0) return
-
-    // Check if input is a power of 2
-    if (input and (input - 1) != 0) return
-
-    // Calculate the exponent x
-    var n = input
-    var x = 0
-    while (n > 1) {
-        n /= 2
-        x++
-    }
-
-    println(x)
 }
 
 fun solution(today: String, terms: Array<String>, privacies: Array<String>): IntArray {
