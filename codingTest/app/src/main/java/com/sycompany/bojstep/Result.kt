@@ -34,7 +34,51 @@ fun solution(clothes: Array<Array<String>>): Int {
 }
 
 fun main() {
-    println(solution(intArrayOf(1, 2, 3, 9, 10, 12), 7))
+    println(solution(intArrayOf(3, 0, 6, 1, 5)))
+}
+
+fun solution(citations: IntArray): Int {
+    val list = citations.sortedDescending()
+    for (i in list.indices) {
+        if (list[i] <= i) return i
+    }
+    return list.size
+}
+
+@RequiresApi(Build.VERSION_CODES.N)
+fun orderQueueTest(operations: Array<String>): IntArray {
+    val answer = intArrayOf(0, 0)
+    val maxQue = PriorityQueue<Int>(Collections.reverseOrder())
+    val minQue = PriorityQueue<Int>()
+
+    for(input in operations) {
+        val op: List<String> = input.split(" ")
+        when(op[0]) {
+            "I" -> {
+                val num: Int = Integer.parseInt(op[1])
+                maxQue.offer(num)
+                minQue.offer(num)
+            }
+            "D" -> {
+                if (maxQue.isEmpty()) continue
+                when(op[1]) {
+                    "1" -> {
+                        val max = maxQue.poll()
+                        minQue.remove(max)
+                    }
+                    "-1" -> {
+                        val min = minQue.poll()
+                        maxQue.remove(min)
+                    }
+                }
+            }
+        }
+    }
+    if(!maxQue.isEmpty() && !minQue.isEmpty()) {
+        answer[0] = maxQue.poll()!!
+        answer[1] = minQue.poll()!!
+    }
+    return answer
 }
 
 fun solution(scoville: IntArray, k: Int): Int {
@@ -956,7 +1000,7 @@ fun parenthesisCheck() = with(BufferedReader(InputStreamReader(System.`in`))) {
 }
 
 //삼총사 - 프로그래머스 -> 세 수를 더하면 0이 나오는 모든 경우의 횟수를 구한다.
-fun solution(number: IntArray): Int {
+fun solution111(number: IntArray): Int {
     var answer = 0
     for (i in number.indices) {
         for (j in i + 1 until number.size) {
