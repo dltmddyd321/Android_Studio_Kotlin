@@ -8,6 +8,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.PriorityQueue;
 import java.util.Set;
@@ -49,32 +50,27 @@ public class Test {
         return new int[] {0, 0};
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public static void main(String[] args) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
-        // Read the number of cards in the first set
         int n = Integer.parseInt(reader.readLine());
-
-        // Read the cards and store them in a set
         Set<Integer> cardSet = new HashSet<>();
         String[] cards = reader.readLine().split(" ");
         for (String card : cards) {
             cardSet.add(Integer.parseInt(card));
         }
 
-        // Read the number of cards to check
         int m = Integer.parseInt(reader.readLine());
-
-        // Read the cards to check and print the result
         String[] checkCards = reader.readLine().split(" ");
         StringBuilder result = new StringBuilder();
+
+        HashMap<Integer, Integer> map = new HashMap<>();
         for (String card : checkCards) {
-            int num = Integer.parseInt(card);
-            if (cardSet.contains(num)) {
-                result.append("1 ");
-            } else {
-                result.append("0 ");
-            }
+            map.put(Integer.parseInt(card), map.getOrDefault(Integer.parseInt(card), 0) + 1);
+        }
+        for (int i = 1; i<= m; i++) {
+            result.append(map.getOrDefault(checkCards[i], 0));
         }
         System.out.println(result);
     }
