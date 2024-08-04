@@ -69,7 +69,7 @@ public class Test {
         for (String card : checkCards) {
             map.put(Integer.parseInt(card), map.getOrDefault(Integer.parseInt(card), 0) + 1);
         }
-        for (int i = 1; i<= m; i++) {
+        for (int i = 0; i<= m - 1; i++) {
             result.append(map.getOrDefault(checkCards[i], 0));
         }
         System.out.println(result);
