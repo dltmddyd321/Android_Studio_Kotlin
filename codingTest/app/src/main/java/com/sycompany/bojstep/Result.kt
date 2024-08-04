@@ -22,6 +22,9 @@ import kotlin.math.max
 import kotlin.math.roundToInt
 import kotlin.math.sqrt
 
+
+
+
 fun solution(clothes: Array<Array<String>>): Int {
     val arr = mutableMapOf<String, Int>()
 
@@ -33,8 +36,52 @@ fun solution(clothes: Array<Array<String>>): Int {
     } - 1
 }
 
-fun main() {
-    println(solution(intArrayOf(3, 0, 6, 1, 5)))
+fun main() = with(BufferedReader(InputStreamReader(System.`in`))) {
+
+    fun lowerBound(cards: List<Int>, target: Int): Int {
+        var left = 0
+        var right = cards.size
+
+        while (left < right) {
+            val mid = (left + right) / 2
+            if (cards[mid] >= target) {
+                right = mid
+            } else {
+                left = mid + 1
+            }
+        }
+        return left
+    }
+
+    fun upperBound(cards: List<Int>, target: Int): Int {
+        var left = 0
+        var right = cards.size
+
+        while (left < right) {
+            val mid = (left + right) / 2
+            if (cards[mid] > target) {
+                right = mid
+            } else {
+                left = mid + 1
+            }
+        }
+        return left
+    }
+
+    val n = readLine().toInt()
+    val cards = readLine().split(" ").map { it.toInt() }.sorted()
+    val m = readLine().toInt()
+    val queries = readLine().split(" ").map { it.toInt() }
+
+    val result = StringBuilder()
+
+    for (query in queries) {
+        val lowerBound = lowerBound(cards, query)
+        val upperBound = upperBound(cards, query)
+        result.append("${upperBound - lowerBound} ")
+    }
+
+    println(result.toString().trim())
 }
 
 fun solution(citations: IntArray): Int {
