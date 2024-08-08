@@ -7,8 +7,10 @@ import androidx.annotation.RequiresApi;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class Test {
@@ -35,5 +37,23 @@ public class Test {
             result.append(map.getOrDefault(checkCards[i], 0));
         }
         System.out.println(result);
+    }
+    public static List<String> result = new ArrayList<>();
+    public static List<Character> vowels = List.of('A', 'E', 'I', 'O', 'U');
+
+    public static void check(String currentWord) {
+        if (currentWord.length() <= 5) {
+            if (!currentWord.isEmpty()) {
+                result.add(currentWord);
+            }
+            for (Character vowel : vowels) {
+                check(currentWord + vowel);
+            }
+        }
+    }
+
+    public static int solution(String word) {
+        check("");
+        return result.indexOf(word) + 1;
     }
 }

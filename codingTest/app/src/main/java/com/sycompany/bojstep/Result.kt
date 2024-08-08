@@ -36,7 +36,30 @@ fun solution(clothes: Array<Array<String>>): Int {
     } - 1
 }
 
-fun main() = with(BufferedReader(InputStreamReader(System.`in`))) {
+fun solutionVowels(word: String): Int {
+    val vowels = listOf('A', 'E', 'I', 'O', 'U')
+    val result = mutableListOf<String>()
+
+    fun backtrack(currentWord: String) {
+        if (currentWord.length <= 5) {
+            if (currentWord.isNotEmpty()) {
+                result.add(currentWord)
+            }
+            for (vowel in vowels) {
+                backtrack(currentWord + vowel)
+            }
+        }
+    }
+    backtrack("")
+
+    return result.indexOf(word) + 1
+}
+
+fun main() {
+    println(solutionVowels("I"))
+}
+
+fun main11111() = with(BufferedReader(InputStreamReader(System.`in`))) {
 
     fun lowerBound(cards: List<Int>, target: Int): Int {
         var left = 0
