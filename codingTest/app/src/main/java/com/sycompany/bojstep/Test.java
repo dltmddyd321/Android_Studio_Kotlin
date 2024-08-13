@@ -56,4 +56,32 @@ public class Test {
         check("");
         return result.indexOf(word) + 1;
     }
+
+    public int solution(int storey) {
+        int temp = storey;
+        int cnt = 0;
+
+        while (temp > 0) {
+            int remain = temp % 10;
+            temp /= 10;
+
+            if (remain > 5) {
+                //반올림 처리
+                temp++;
+                cnt += 10 - remain;
+            } else if (remain == 5) {
+                //다음 자릿수를 보고 반올림 또는 내림 처리
+                if (temp % 10 >= 5) {
+                    temp++;
+                    cnt += 10 - remain;
+                } else {
+                    cnt += remain;
+                }
+            } else {
+                //5 미만인 경우 내림 처리
+                cnt += remain;
+            }
+        }
+        return cnt;
+    }
 }
