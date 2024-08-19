@@ -15,12 +15,97 @@ import java.text.SimpleDateFormat
 import java.time.OffsetDateTime
 import java.time.ZoneId
 import java.util.*
+import java.util.LinkedList
 import java.util.regex.Pattern
 import kotlin.collections.ArrayDeque
 import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.roundToInt
 import kotlin.math.sqrt
+
+fun lengthOfLIS(nums: IntArray): Int {
+    if (nums.isEmpty()) return 0
+
+    val sub = mutableListOf<Int>()
+
+    for (num in nums) {
+        // 이진 탐색으로 현재 num이 들어갈 위치를 찾습니다.
+        var left = 0
+        var right = sub.size
+
+        while (left < right) {
+            val mid = (left + right) / 2
+            if (sub[mid] < num) {
+                left = mid + 1
+            } else {
+                right = mid
+            }
+        }
+
+        // 만약 num이 sub의 모든 원소보다 크다면, sub 리스트에 추가합니다.
+        // 그렇지 않다면, 적절한 위치에 값을 갱신합니다.
+        if (left < sub.size) {
+            sub[left] = num
+        } else {
+            sub.add(num)
+        }
+    }
+
+    // 최종적으로 sub 리스트의 크기가 가장 긴 증가하는 부분 수열의 길이가 됩니다.
+    return sub.size
+}
+
+fun main() {
+    println(stackSolution("[](){}"))
+}
+
+fun stackSolution(s: String): Int {
+    val openBracket = charArrayOf('(', '{', '[')
+    val closeBracket = charArrayOf(')', '}', ']')
+    var res = 0
+
+    val queue: Queue<Char> = LinkedList()
+    s.forEach { queue.add(it) }
+
+    fun isSuccess(s: String): Boolean {
+        val stack = Stack<Char>()
+        var flag: Boolean
+        for (c in closeBracket) if (c == s[0]) return false
+
+        for (c in s) {
+            flag = false
+            for (i in openBracket.indices) {
+                if (stack.isNotEmpty() && stack.peek() == openBracket[i] && c == closeBracket[i]) flag = true
+            }
+            if (flag) stack.pop() else stack.add(c)
+        }
+        return stack.isEmpty()
+    }
+
+    repeat(s.length) {
+        if (isSuccess(queue.joinToString(""))) res ++
+        val last = queue.remove()
+        queue.offer(last)
+    }
+    return res
+}
+
+fun discountSolution(want: Array<String>, number: IntArray, discount: Array<String>): Int {
+    val itemMap = mutableMapOf<String, Int>()
+    for (i in want.indices) {
+        itemMap[want[i]] = number[i]
+    }
+
+    var res = 0
+    var startIndex = 0
+    while (startIndex <= discount.lastIndex - 10) {
+        val temp = discount.toMutableList().subList(startIndex, startIndex + 10)
+        val tempMap = temp.groupingBy { it }.eachCount()
+        if (tempMap == itemMap) res++
+        startIndex++
+    }
+    return res
+}
 
 fun bigNumber() {
     fun solution(number: String, k: Int): String {
@@ -57,17 +142,19 @@ fun magicalElevator(storey: Int): Int {
 
         when {
             remain > 5 -> { //반올림 처리
-                temp ++
+                temp++
                 cnt += 10 - remain
             }
+
             remain == 5 -> { //다음 자릿수에 따라 올림, 내림 처리가 결정된다.
                 if (temp % 10 >= 5) {
-                    temp ++
+                    temp++
                     cnt += 10 - remain
                 } else {
                     cnt += remain
                 }
             }
+
             else -> {
                 cnt += remain
             }
@@ -104,10 +191,6 @@ fun solutionVowels(word: String): Int {
     backtrack("")
 
     return result.indexOf(word) + 1
-}
-
-fun main() {
-    println(solutionVowels("I"))
 }
 
 fun main11111() = with(BufferedReader(InputStreamReader(System.`in`))) {
@@ -172,21 +255,23 @@ fun orderQueueTest(operations: Array<String>): IntArray {
     val maxQue = PriorityQueue<Int>(Collections.reverseOrder())
     val minQue = PriorityQueue<Int>()
 
-    for(input in operations) {
+    for (input in operations) {
         val op: List<String> = input.split(" ")
-        when(op[0]) {
+        when (op[0]) {
             "I" -> {
                 val num: Int = Integer.parseInt(op[1])
                 maxQue.offer(num)
                 minQue.offer(num)
             }
+
             "D" -> {
                 if (maxQue.isEmpty()) continue
-                when(op[1]) {
+                when (op[1]) {
                     "1" -> {
                         val max = maxQue.poll()
                         minQue.remove(max)
                     }
+
                     "-1" -> {
                         val min = minQue.poll()
                         maxQue.remove(min)
@@ -195,7 +280,7 @@ fun orderQueueTest(operations: Array<String>): IntArray {
             }
         }
     }
-    if(!maxQue.isEmpty() && !minQue.isEmpty()) {
+    if (!maxQue.isEmpty() && !minQue.isEmpty()) {
         answer[0] = maxQue.poll()!!
         answer[1] = minQue.poll()!!
     }
@@ -207,7 +292,7 @@ fun solution(scoville: IntArray, k: Int): Int {
     var res = 0
 
     while (list.any { it <= k }) {
-        res ++
+        res++
         val first = list.poll() ?: break
         val second = list.poll() ?: break
         list.add(first + (second * 2))
@@ -233,7 +318,6 @@ fun mainConvert() {
         val isSuccess: Boolean,
         val data: HashMap<String, Any>
     )
-
 
 
     val hashMap = mutableMapOf<String, Any>()
