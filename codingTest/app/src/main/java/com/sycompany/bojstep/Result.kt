@@ -22,6 +22,19 @@ import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.roundToInt
 import kotlin.math.sqrt
+//val indexedIntervals = intervals.mapIndexed { index, interval ->
+//        Triple(index, interval[0], interval[1])
+//    }.sortedBy { it.second }
+//for (interval in indexedIntervals) {
+//    val (_, _, end) = interval
+//    // 이진 탐색을 통해 가장 작은 시작 지점이 end 이상인 구간 찾기
+//    val rightIntervalIndex = indexedIntervals.binarySearch { it.second.compareTo(end) }
+//    val adjustedIndex = if (rightIntervalIndex < 0) -rightIntervalIndex - 1 else rightIntervalIndex
+//
+//    if (adjustedIndex < indexedIntervals.size) {
+//        result[interval.first] = indexedIntervals[adjustedIndex].first
+//    }
+//}
 
 fun lengthOfLIS(nums: IntArray): Int {
     if (nums.isEmpty()) return 0
