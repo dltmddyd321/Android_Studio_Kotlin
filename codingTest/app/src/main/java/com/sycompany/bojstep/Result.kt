@@ -8,6 +8,7 @@ import androidx.annotation.RequiresApi
 import com.google.gson.Gson
 import java.io.BufferedReader
 import java.io.BufferedWriter
+import java.io.IOException
 import java.io.InputStreamReader
 import java.io.OutputStreamWriter
 import java.math.BigInteger
@@ -20,6 +21,7 @@ import java.util.regex.Pattern
 import kotlin.collections.ArrayDeque
 import kotlin.math.abs
 import kotlin.math.max
+import kotlin.math.min
 import kotlin.math.roundToInt
 import kotlin.math.sqrt
 //val indexedIntervals = intervals.mapIndexed { index, interval ->
@@ -69,7 +71,31 @@ fun lengthOfLIS(nums: IntArray): Int {
 }
 
 fun main() {
-    println(stackSolution("[](){}"))
+    val s = Scanner(System.`in`)
+    val n = s.nextInt()
+    s.nextLine()
+    val arr = s.nextLine().split(" ").map { it.toInt() }
+    val start = s.nextInt()
+
+    val visited = BooleanArray(n) { false }
+    var cnt = 0
+
+    fun dfs(position: Int) {
+        //방문 여부 확인
+        if (visited[position]) return
+        visited[position] = true
+        cnt++
+
+        val left = position - arr[position]
+        val right = position + arr[position]
+
+        if (left >= 0) dfs(left)
+        if (right < n) dfs(right)
+    }
+
+    dfs(start - 1)
+
+    println(cnt)
 }
 
 fun stackSolution(s: String): Int {
@@ -88,7 +114,8 @@ fun stackSolution(s: String): Int {
         for (c in s) {
             flag = false
             for (i in openBracket.indices) {
-                if (stack.isNotEmpty() && stack.peek() == openBracket[i] && c == closeBracket[i]) flag = true
+                if (stack.isNotEmpty() && stack.peek() == openBracket[i] && c == closeBracket[i]) flag =
+                    true
             }
             if (flag) stack.pop() else stack.add(c)
         }
@@ -96,7 +123,7 @@ fun stackSolution(s: String): Int {
     }
 
     repeat(s.length) {
-        if (isSuccess(queue.joinToString(""))) res ++
+        if (isSuccess(queue.joinToString(""))) res++
         val last = queue.remove()
         queue.offer(last)
     }
