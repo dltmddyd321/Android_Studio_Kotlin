@@ -70,6 +70,68 @@ fun lengthOfLIS(nums: IntArray): Int {
     return sub.size
 }
 
+fun inequalityCheck() {
+    val k = readln().toInt()
+    val signs = readln().split(" ")
+
+    val used = BooleanArray(10)
+    val results = mutableListOf<String>()
+
+    fun check(a: Int, b: Int, sign: String): Boolean {
+        return if (sign == "<") {
+            a < b
+        } else {
+            a > b
+        }
+    }
+
+    fun backtracking(num: String, depth: Int) {
+        if (depth == k + 1) {
+            results.add(num)
+            return
+        }
+
+        for (i in 0..9) {
+            if (!used[i]) {
+                if (depth == 0 || check(num[depth - 1].toInt(), i, signs[depth - 1])) {
+                    used[i] = true
+                    backtracking(num + i, depth + 1)
+                    used[i] = false
+                }
+            }
+        }
+    }
+
+    backtracking("", 0)
+
+    results.sort()
+    println(results.last())
+    println(results.first())
+}
+
+fun targetNumber(numbers: IntArray, target: Int): Int {
+    var answer = 0
+
+    fun dfs(index: Int, currentSum: Int) {
+        // 모든 숫자를 사용한 경우
+        if (index == numbers.size) {
+            if (currentSum == target) {
+                answer++
+            }
+            return
+        }
+
+        // 다음 숫자를 더한 경우
+        dfs(index + 1, currentSum + numbers[index])
+        // 다음 숫자를 뺀 경우
+        dfs(index + 1, currentSum - numbers[index])
+    }
+
+    dfs(0, 0)
+
+    return answer
+}
+
 fun main() {
     val s = Scanner(System.`in`)
     val n = s.nextInt()
