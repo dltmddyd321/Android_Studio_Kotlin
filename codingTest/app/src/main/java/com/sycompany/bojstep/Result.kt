@@ -8,7 +8,6 @@ import androidx.annotation.RequiresApi
 import com.google.gson.Gson
 import java.io.BufferedReader
 import java.io.BufferedWriter
-import java.io.IOException
 import java.io.InputStreamReader
 import java.io.OutputStreamWriter
 import java.math.BigInteger
@@ -21,7 +20,6 @@ import java.util.regex.Pattern
 import kotlin.collections.ArrayDeque
 import kotlin.math.abs
 import kotlin.math.max
-import kotlin.math.min
 import kotlin.math.roundToInt
 import kotlin.math.sqrt
 //val indexedIntervals = intervals.mapIndexed { index, interval ->
@@ -37,6 +35,33 @@ import kotlin.math.sqrt
 //        result[interval.first] = indexedIntervals[adjustedIndex].first
 //    }
 //}
+
+@RequiresApi(Build.VERSION_CODES.N)
+fun solution(n: Int, k: Int, enemy: IntArray): Int {
+    var soldiers = n
+    var items = k
+    //라운드별로 병사를 통해 막은 적의 수를 저장하는 큐
+    val heap = PriorityQueue<Int>(compareByDescending { it })
+
+    for (i in enemy.indices) {
+        val target = enemy[i]
+        if (soldiers >= target) { //적의 데미지만큼 차감
+            soldiers -= target
+            heap.offer(target)
+        } else {
+            if (items > 0) {
+                if (heap.isNotEmpty() && heap.peek()!! > target) {
+                    soldiers += heap.poll()!! - target
+                    heap.offer(target)
+                }
+                items --
+            } else {
+                return i
+            }
+        }
+    }
+    return enemy.size
+}
 
 fun lengthOfLIS(nums: IntArray): Int {
     if (nums.isEmpty()) return 0
