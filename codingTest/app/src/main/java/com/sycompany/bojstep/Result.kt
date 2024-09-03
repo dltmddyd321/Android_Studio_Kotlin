@@ -31,20 +31,59 @@ import kotlin.math.min
 import kotlin.math.roundToInt
 import kotlin.math.sqrt
 
+fun sortSet() {
+    val set = mutableSetOf<Int>()
+    val br = BufferedReader(InputStreamReader(System.`in`))
+    val n = br.readLine().toInt()
+    val st = StringTokenizer(br.readLine())
+    val sb = StringBuilder()
 
-//val indexedIntervals = intervals.mapIndexed { index, interval ->
-//        Triple(index, interval[0], interval[1])
-//    }.sortedBy { it.second }
-//for (interval in indexedIntervals) {
-//    val (_, _, end) = interval
-//    // 이진 탐색을 통해 가장 작은 시작 지점이 end 이상인 구간 찾기
-//    val rightIntervalIndex = indexedIntervals.binarySearch { it.second.compareTo(end) }
-//    val adjustedIndex = if (rightIntervalIndex < 0) -rightIntervalIndex - 1 else rightIntervalIndex
-//
-//    if (adjustedIndex < indexedIntervals.size) {
-//        result[interval.first] = indexedIntervals[adjustedIndex].first
-//    }
-//}
+    repeat(n) {
+        set.add(st.nextToken().toInt())
+    }
+
+    set.sorted().forEach {
+        sb.append("$it ")
+    }
+    println(sb.trim())
+}
+
+fun decryptMessage() {
+    val br = BufferedReader(InputStreamReader(System.`in`))
+    val message = br.readLine()
+    val N = message.length
+    var R = 1
+    var C = N
+
+    // 가능한 R과 C를 찾기
+    for (r in 1..N) {
+        if (N % r == 0) {
+            val c = N / r
+            if (r <= c) {
+                R = r
+                C = c
+            }
+        }
+    }
+
+    // 행렬에 메시지를 채우기
+    val matrix = Array(R) { CharArray(C) }
+    var index = 0
+    for (i in 0 until R) {
+        for (j in 0 until C) {
+            matrix[i][j] = message[index++]
+        }
+    }
+
+    // 열 단위로 메시지 읽기
+    val result = StringBuilder()
+    for (j in 0 until C) {
+        for (i in 0 until R) {
+            result.append(matrix[i][j])
+        }
+    }
+    println(result.toString())
+}
 
 @RequiresApi(Build.VERSION_CODES.N)
 fun solution(n: Int, k: Int, enemy: IntArray): Int {
