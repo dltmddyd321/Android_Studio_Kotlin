@@ -14,7 +14,7 @@ import java.math.BigInteger
 import java.text.SimpleDateFormat
 import java.time.OffsetDateTime
 import java.time.ZoneId
-import java.util.Arrays
+import java.util.*
 import java.util.Calendar
 import java.util.Collections
 import java.util.LinkedList
@@ -30,6 +30,25 @@ import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.roundToInt
 import kotlin.math.sqrt
+
+@RequiresApi(Build.VERSION_CODES.N)
+fun roomNumber() {
+    val n = readln()
+    val count = IntArray(10)
+
+    for (ch in n) {
+        val num = ch.digitToInt()
+        count[num]++
+    }
+
+    // 6과 9는 합쳐서 사용 가능하므로 6과 9의 빈도를 합침
+    val sixNineCount = count[6] + count[9]
+    count[6] = sixNineCount / 2 + sixNineCount % 2
+    count[9] = 0
+
+    // 가장 많이 필요한 숫자의 개수를 반환
+    println(count.maxOrNull() ?: 0)
+}
 
 fun sortSet() {
     val set = mutableSetOf<Int>()
@@ -50,39 +69,31 @@ fun sortSet() {
 
 fun decryptMessage() {
     val br = BufferedReader(InputStreamReader(System.`in`))
-    val message = br.readLine()
-    val N = message.length
-    var R = 1
-    var C = N
-
-    // 가능한 R과 C를 찾기
-    for (r in 1..N) {
-        if (N % r == 0) {
-            val c = N / r
-            if (r <= c) {
-                R = r
-                C = c
-            }
+    val st = StringTokenizer(br.readLine())
+    val line = st.nextToken()
+    val length = line.length
+    var R = 0
+    for (i in 1 until length) {
+        if (length % i == 0) {
+            val quotient = length / i
+            if (i > quotient) break
+            R = i
         }
     }
-
-    // 행렬에 메시지를 채우기
-    val matrix = Array(R) { CharArray(C) }
-    var index = 0
+    val C = length / R
+    val arr = Array(R) { CharArray(C) }
+    var cnt = 0
+    for (i in 0 until C) {
+        for (j in 0 until R) {
+            arr[j][i] = line[cnt++]
+        }
+    }
     for (i in 0 until R) {
         for (j in 0 until C) {
-            matrix[i][j] = message[index++]
+            print(arr[i][j])
         }
     }
-
-    // 열 단위로 메시지 읽기
-    val result = StringBuilder()
-    for (j in 0 until C) {
-        for (i in 0 until R) {
-            result.append(matrix[i][j])
-        }
-    }
-    println(result.toString())
+    println()
 }
 
 @RequiresApi(Build.VERSION_CODES.N)
