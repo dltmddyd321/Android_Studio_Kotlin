@@ -31,6 +31,26 @@ import kotlin.math.min
 import kotlin.math.roundToInt
 import kotlin.math.sqrt
 
+fun longestCommonSubstring(s1: String, s2: String): String {
+    val len1 = s1.length
+    val len2 = s2.length
+    var maxLength = 0
+    var endIndex = 0
+
+    
+
+    // 가장 긴 공통 부분 문자열 추출
+    return s1.substring(endIndex - maxLength, endIndex)
+}
+
+fun main() {
+    val s1 = readLine()!!
+    val s2 = readLine()!!
+
+    val result = longestCommonSubstring(s1, s2)
+    println(result)
+}
+
 @RequiresApi(Build.VERSION_CODES.N)
 fun roomNumber() {
     val n = readln()
