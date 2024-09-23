@@ -32,21 +32,6 @@ import kotlin.math.roundToInt
 import kotlin.math.sqrt
 
 fun mainStack() {
-//    val stack = Stack<Int>()
-//    val n = readln().toInt()
-//    repeat(n) { stack.push(readln().toInt()) }
-//
-//    val map = mutableMapOf<Int, Int>()
-//
-//    while (stack.isNotEmpty()) {
-//        val item = stack.pop()
-//        if (!stack.any { it > item }) {
-//            map[item] = 0
-//        } else {
-//            if (item <= stack.peek()) stack.size
-//        }
-//    }
-
     val n = readln().toInt() // 탑의 수
     val heights = readln().split(" ").map { it.toInt() } // 탑들의 높이
     val result = IntArray(n) // 결과를 저장할 배열
@@ -67,6 +52,36 @@ fun mainStack() {
     }
 
     println(result.joinToString(" ")) // 결과 출력
+}
+
+fun main() {
+    val br = BufferedReader(InputStreamReader(System.`in`))
+    val allNumbers = mutableListOf<Int>()
+
+    // EOF(End of File)까지 입력 받기
+    while (true) {
+        val line = br.readLine() ?: break  // 더 이상 읽을 줄이 없으면 종료
+        val numbers = line.split(" ")
+
+        // 각 숫자를 뒤집고 정수로 변환해서 리스트에 추가
+        numbers.forEach {
+            if (it.isNotEmpty()) {
+                // 숫자를 뒤집고, 앞에 오는 0 제거 후 Int로 변환
+                val reversedStr = it.reversed().trimStart('0')
+                if (reversedStr.isNotEmpty()) {
+                    allNumbers.add(reversedStr.toInt())  // Int 변환
+                } else {
+                    allNumbers.add(0)  // 모든 숫자가 0일 경우
+                }
+            }
+        }
+    }
+
+    // 뒤집은 숫자들을 오름차순으로 정렬
+    allNumbers.sort()
+
+    // 결과 출력
+    allNumbers.forEach { println(it) }
 }
 
 @RequiresApi(Build.VERSION_CODES.N)
