@@ -54,34 +54,42 @@ fun mainStack() {
     println(result.joinToString(" ")) // 결과 출력
 }
 
+data class Message(
+    val key: Int,
+    var index: Int,
+    var count: Int
+)
+
 fun main() {
     val br = BufferedReader(InputStreamReader(System.`in`))
-    val allNumbers = mutableListOf<Int>()
+    val counts = br.readLine()
+    val inputs = br.readLine().split(" ").map { it.toInt() }
+    val temps = mutableListOf<Message>()
 
-    // EOF(End of File)까지 입력 받기
-    while (true) {
-        val line = br.readLine() ?: break  // 더 이상 읽을 줄이 없으면 종료
-        val numbers = line.split(" ")
-
-        // 각 숫자를 뒤집고 정수로 변환해서 리스트에 추가
-        numbers.forEach {
-            if (it.isNotEmpty()) {
-                // 숫자를 뒤집고, 앞에 오는 0 제거 후 Int로 변환
-                val reversedStr = it.reversed().trimStart('0')
-                if (reversedStr.isNotEmpty()) {
-                    allNumbers.add(reversedStr.toInt())  // Int 변환
-                } else {
-                    allNumbers.add(0)  // 모든 숫자가 0일 경우
-                }
-            }
+    inputs.forEachIndexed { index, input ->
+        val exist = temps.find { it.key == input } //같은 키 찾기
+        if (exist == null) {
+            temps.add(Message(input, index, 1))
+        } else {
+            temps
         }
     }
+}
 
-    // 뒤집은 숫자들을 오름차순으로 정렬
-    allNumbers.sort()
+fun main4343() {
+    val br = BufferedReader(InputStreamReader(System.`in`))
+    val nums = mutableListOf<String>()
+    while (true) {
+        val input = br.readLine()
+        if (input.isNullOrEmpty()) break
+        nums.addAll(input.split(" "))
+    }
 
-    // 결과 출력
-    allNumbers.forEach { println(it) }
+    val reversedNumbers = nums.map {
+        it.reversed().toInt()
+    }.sorted()
+
+    reversedNumbers.forEach { println(it) }
 }
 
 @RequiresApi(Build.VERSION_CODES.N)
@@ -167,7 +175,7 @@ fun solution(n: Int, k: Int, enemy: IntArray): Int {
                     soldiers += heap.poll()!! - target
                     heap.offer(target)
                 }
-                items --
+                items--
             } else {
                 return i
             }
@@ -223,11 +231,13 @@ fun solution(picks: IntArray, minerals: Array<String>): Int {
                         ip += 5
                         sp += 25
                     }
+
                     "iron" -> {
                         dp += 1
                         ip += 1
                         sp += 5
                     }
+
                     else -> {
                         dp += 1
                         ip += 1
@@ -367,7 +377,7 @@ fun targetNumber(numbers: IntArray, target: Int): Int {
     return answer
 }
 
-fun main() {
+fun main43242343() {
     val s = Scanner(System.`in`)
     val n = s.nextInt()
     s.nextLine()
