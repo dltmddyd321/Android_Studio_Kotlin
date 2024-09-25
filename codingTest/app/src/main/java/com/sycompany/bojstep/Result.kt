@@ -62,6 +62,52 @@ data class Message(
 
 fun main() {
     val br = BufferedReader(InputStreamReader(System.`in`))
+    val t = br.readLine().toInt() // 테스트 케이스 개수
+
+    fun binarySearch(arr: IntArray, target: Int): Int {
+        var low = 0
+        var high = arr.size
+
+        while (low < high) {
+            val mid = (low + high) / 2
+            if (arr[mid] > target) {
+                low = mid + 1
+            } else {
+                high = mid
+            }
+        }
+    }
+
+    repeat(t) {
+        // N과 M 입력받기
+        val (n, m) = br.readLine().split(" ").map { it.toInt() }
+
+        // A 배열 입력받기
+        val a = IntArray(n)
+        val st1 = StringTokenizer(br.readLine())
+        for (i in 0 until n) {
+            a[i] = st1.nextToken().toInt()
+        }
+
+        // B 배열 입력받기
+        val b = IntArray(m)
+        val st2 = StringTokenizer(br.readLine())
+        for (i in 0 until m) {
+            b[i] = st2.nextToken().toInt()
+        }
+        a.sort()
+        b.sort()
+
+        var cnt = 0
+        for (i in a.indices) {
+            cnt += binarySearch(b, a[i])
+        }
+        println(cnt)
+    }
+}
+
+fun mainFirst() {
+    val br = BufferedReader(InputStreamReader(System.`in`))
     val counts = br.readLine()
     val inputs = br.readLine().split(" ").map { it.toInt() }
     val temps = mutableListOf<Message>()
