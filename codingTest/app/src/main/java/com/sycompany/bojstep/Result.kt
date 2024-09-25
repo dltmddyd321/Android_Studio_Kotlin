@@ -71,9 +71,21 @@ fun main() {
         if (exist == null) {
             temps.add(Message(input, index, 1))
         } else {
-            temps
+            temps.remove(exist)
+            temps.add(Message(input, exist.index, exist.count + 1))
         }
     }
+    val sortedTemps = temps.sortedWith(
+        compareByDescending<Message> { it.count }
+            .thenBy { it.index }
+    )
+    val result = StringBuilder()
+    sortedTemps.forEach { value ->
+        repeat(value.count) {
+            result.append("${value.key} ")
+        }
+    }
+    println(result.toString())
 }
 
 fun main4343() {
