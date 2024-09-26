@@ -68,14 +68,15 @@ fun main() {
         var low = 0
         var high = arr.size
 
-        while (low < high) {
+        while (low < high) { //low 체크 완료 시까지
             val mid = (low + high) / 2
-            if (arr[mid] > target) {
+            if (arr[mid] < target) { //타깃이 중앙 값보다 크다면 low를 늘려주고
                 low = mid + 1
-            } else {
+            } else { //반대라면 최대를 중앙 값으로 줄인다.
                 high = mid
             }
         }
+        return low
     }
 
     repeat(t) {
