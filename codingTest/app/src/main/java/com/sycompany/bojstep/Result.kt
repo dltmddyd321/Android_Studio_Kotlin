@@ -62,6 +62,20 @@ data class Message(
 
 fun main() {
     val br = BufferedReader(InputStreamReader(System.`in`))
+    val map = mutableMapOf<String, Int>()
+    val (n, m) = br.readLine().split(" ").map { it.toInt() }
+
+    repeat(m) {
+        list.add(br.readLine())
+    }
+    val res = list.distinct().subList(0, n)
+    res.forEach {
+        println(it)
+    }
+}
+
+fun mainTest() {
+    val br = BufferedReader(InputStreamReader(System.`in`))
     val t = br.readLine().toInt() // 테스트 케이스 개수
 
     fun binarySearch(arr: IntArray, target: Int): Int {
