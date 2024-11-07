@@ -60,17 +60,25 @@ data class Message(
     var count: Int
 )
 
-fun main() {
-    val br = BufferedReader(InputStreamReader(System.`in`))
-    val map = mutableMapOf<String, Int>()
-    val (n, m) = br.readLine().split(" ").map { it.toInt() }
 
-    repeat(m) {
-        list.add(br.readLine())
+fun main() {
+    val bufferedReader = BufferedReader(InputStreamReader(System.`in`))
+    val set = LinkedHashSet<String>()
+
+    val arr = bufferedReader.readLine().split(" ")
+    for (i in 0 until arr[1].toInt()) {
+        val number = bufferedReader.readLine()
+        if (set.contains(number)) { set.remove(number) }
+        set.add(number)
     }
-    val res = list.distinct().subList(0, n)
-    res.forEach {
-        println(it)
+
+    val iterator = set.iterator()
+    var count = 1
+    while (iterator.hasNext()) {
+
+        println(iterator.next())
+        if (count == arr[0].toInt()) break
+        count++
     }
 }
 
