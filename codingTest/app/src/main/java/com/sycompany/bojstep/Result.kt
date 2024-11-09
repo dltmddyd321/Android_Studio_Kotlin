@@ -15,15 +15,7 @@ import java.text.SimpleDateFormat
 import java.time.OffsetDateTime
 import java.time.ZoneId
 import java.util.*
-import java.util.Calendar
-import java.util.Collections
 import java.util.LinkedList
-import java.util.Locale
-import java.util.PriorityQueue
-import java.util.Queue
-import java.util.Scanner
-import java.util.Stack
-import java.util.StringTokenizer
 import java.util.regex.Pattern
 import kotlin.math.abs
 import kotlin.math.max
@@ -60,15 +52,61 @@ data class Message(
     var count: Int
 )
 
-
 fun main() {
+    val br = BufferedReader(InputStreamReader(System.`in`))
+    val bw = BufferedWriter(OutputStreamWriter(System.out))
+    var st: StringTokenizer
+    val result = java.lang.StringBuilder()
+    val T = br.readLine().toInt() //테스트케이스 수
+
+    for (t in 0 until T) {
+        st = StringTokenizer(br.readLine())
+        val N = st.nextToken().toInt()
+        val M = st.nextToken().toInt()
+
+        val A = arrayOfNulls<Int>(N)
+        val B = arrayOfNulls<Int>(M)
+
+        st = StringTokenizer(br.readLine())
+        for (i in 0 until N) {
+            A[i] = st.nextToken().toInt()
+        }
+
+        st = StringTokenizer(br.readLine())
+        for (i in 0 until M) {
+            B[i] = st.nextToken().toInt()
+        }
+
+        Arrays.sort(A, Collections.reverseOrder())
+        Arrays.sort(B, Collections.reverseOrder())
+        var temp = 0
+        for (i in 0 until N) {
+            var cnt = 0
+            for (j in 0 until M) {
+                if (A[i]!! > B[j]!!) {
+                    temp += (M - cnt)
+                    break
+                } else cnt++
+            }
+        }
+        result.append(temp.toString() + "\n")
+    }
+
+    bw.write(result.toString() + "")
+    bw.flush()
+    bw.close()
+}
+
+fun main09() {
     val bufferedReader = BufferedReader(InputStreamReader(System.`in`))
     val set = LinkedHashSet<String>()
 
     val arr = bufferedReader.readLine().split(" ")
     for (i in 0 until arr[1].toInt()) {
         val number = bufferedReader.readLine()
-        if (set.contains(number)) { set.remove(number) }
+        if (set.contains(number)) {
+            set.remove(number)
+        }
         set.add(number)
     }
 
