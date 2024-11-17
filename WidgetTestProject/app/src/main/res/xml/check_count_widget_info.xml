@@ -1,0 +1,10 @@
+<appwidget-provider
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:minWidth="300dp"
+    android:minHeight="300dp"
+    android:updatePeriodMillis="0"
+    android:initialLayout="@layout/check_count_widget_initial"
+    android:resizeMode="horizontal|vertical"
+    android:widgetCategory="home_screen"
+    android:previewImage="@drawable/preview"
+    />
