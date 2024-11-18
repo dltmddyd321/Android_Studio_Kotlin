@@ -53,6 +53,22 @@ data class Message(
 )
 
 fun main() {
+    val (a, b, c) = readLine()!!.split(" ").map { it.toLong() }
+    println(powerMod(a, b, c))
+}
+
+// 재귀 함수로 거듭 제곱 계산
+fun powerMod(a: Long, b: Long, c: Long): Long {
+    if (b == 1L) return a % c // 종료 조건: B가 1일 때
+    val half = powerMod(a, b / 2, c)
+    return if (b % 2 == 0L) {
+        (half * half) % c // B가 짝수일 때
+    } else {
+        (half * half % c * a % c) % c // B가 홀수일 때
+    }
+}
+
+fun main23() {
     val br = BufferedReader(InputStreamReader(System.`in`))
     val bw = BufferedWriter(OutputStreamWriter(System.out))
     var st: StringTokenizer
