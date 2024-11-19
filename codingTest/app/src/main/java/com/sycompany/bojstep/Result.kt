@@ -53,7 +53,7 @@ data class Message(
 )
 
 fun main() {
-    val (a, b, c) = readLine()!!.split(" ").map { it.toLong() }
+    val (a, b, c) = readln().split(" ").map { it.toLong() }
     println(powerMod(a, b, c))
 }
 
