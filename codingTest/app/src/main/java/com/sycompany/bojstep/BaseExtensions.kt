@@ -267,3 +267,71 @@ fun dfsWithRepeat(graph: Array<MutableList<Int>>, n: Int, v: Int): String {
 //        this.toFloat(),
 //        Resources.getSystem().displayMetrics
 //    ).toInt()
+
+class GradientStrokeButton @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
+) : AppCompatImageButton(context, attrs, defStyleAttr) {
+
+    private var cornerRadius = 0f
+    private var borderWidth = 0f
+    private var startColor = 0
+    private var centerColor = 0
+    private var endColor = 0
+
+    private val path = Path()
+    private val borderPaint = Paint().apply {
+        style = Paint.Style.FILL
+    }
+
+    init {
+        context.withStyledAttributes(attrs, R.styleable.StyledButton) {
+            borderWidth = getDimension(R.styleable.StyledButton_borderWidth, 10f)
+            cornerRadius = getDimension(R.styleable.StyledButton_cornerRadius, 10f)
+            startColor = getColor(R.styleable.StyledButton_startColor, Color.WHITE)
+            centerColor = getColor(R.styleable.StyledButton_centerColor, Color.RED)
+            endColor = getColor(R.styleable.StyledButton_endColor, Color.BLACK)
+        }
+    }
+
+    override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
+        super.onSizeChanged(w, h, oldw, oldh)
+        borderPaint.shader = LinearGradient(
+            0f,
+            0f,
+            width.toFloat(),
+            height.toFloat(),
+            intArrayOf(startColor, centerColor, endColor),
+            null,
+            Shader.TileMode.CLAMP
+        )
+    }
+
+    override fun onDraw(canvas: Canvas) {
+        super.onDraw(canvas)
+        path.rewind()
+        path.addRoundRect(
+            borderWidth,
+            borderWidth,
+            width.toFloat() - borderWidth,
+            height.toFloat() - borderWidth,
+            cornerRadius - borderWidth / 2,
+            cornerRadius - borderWidth / 2,
+            Path.Direction.CCW
+        )
+        canvas.clipOutPath(path)
+
+        path.rewind()
+        path.addRoundRect(
+            0f,
+            0f,
+            width.toFloat(),
+            height.toFloat(),
+            cornerRadius,
+            cornerRadius,
+            Path.Direction.CCW
+        )
+        canvas.drawPath(path, borderPaint)
+    }
+}
